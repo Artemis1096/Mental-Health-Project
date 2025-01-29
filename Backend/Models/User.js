@@ -22,7 +22,17 @@ const userSchema = new mongoose.Schema({
             type : mongoose.Schema.Types.ObjectId,
             ref : "User",
             default : []
-    }]
+    }],
+    otp : {
+        type : String
+    },
+    otpExpiry : {
+        type : Date
+    },
+    isVerified : {
+        type : Boolean,
+        default : false
+    }
 });
 
 const User = mongoose.model("User", userSchema);

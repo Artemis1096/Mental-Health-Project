@@ -8,6 +8,7 @@
     "lint": "eslint src/",
     "format": "prettier --write src/"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",

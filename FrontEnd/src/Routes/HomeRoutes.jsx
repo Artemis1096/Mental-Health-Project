@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router";
-import Homepage from "../pages/Homepage";
-import Profile from "../pages/Profile";
-import Login from "../pages/Login";
-import AboutUs from "../pages/AboutUs";
+import Homepage from "../Views/Homepage";
+import Profile from "../Views/Profile";
+import Login from "../Views/Login";
+import AboutUs from "../Views/AboutUs";
 function HomeRoutes() {
   return (
     <Routes>

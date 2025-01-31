@@ -7,6 +7,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import connectDB from './Config/DBConfig.js';
 import AuthRoutes from './Routes/AuthRoutes.js';
+import MessageRoutes from './Routes/MessageRoutes.js'
 import {setupGoogleAuth} from './Config/googleAuthConfig.js';
 import { verify } from './Utils/WebToken.js';
 
@@ -42,7 +43,8 @@ const imagesDir = path.join(__dirname, "public/images");
 app.use("/api/auth", AuthRoutes);
 app.use("/music", express.static(musicDir));
 app.use("/images", express.static(imagesDir));
-
+app.use("/api/auth", AuthRoutes);
+app.use("/api/message",MessageRoutes)
 app.get('/dashboard', (req, res) => {
     if (req.isAuthenticated()) {
         return res.send('dashboard');

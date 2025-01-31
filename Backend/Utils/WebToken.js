@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../Models/User.js";
 
 export const generate = (userId, res) => {
   const token = jwt.sign({ userId }, process.env.SECRET_KEY, {
@@ -6,20 +7,40 @@ export const generate = (userId, res) => {
   });
   res.cookie("jwt", token, {
     httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.PHASE === "production",
-    maxAge: 3 * 24 * 60 * 60 * 1000,
+    sameSite: "None",
+    secure: true,
   });
 };
 
-export const verify = (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (!token) return res.status(400).json({ error: "Authentication failed" });
+export const verify = async (request, response, next) => {
+  try {
+    const token = request.cookies.jwt;
 
-  jwt.verify(token, process.env.SECRET_KEY, async (error, data) => {
-    if (error) return res.status(400).json({ error: "Invalid token" });
+    if (!token) {
+      return response
+        .status(401)
+        .json({ message: "You are not authorized to access this resource" });
+    }
 
-    req.userId = data.userId;
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+    if (!decoded) {
+      return response
+        .status(401)
+        .json({ message: "You are not authorized to access this resource" });
+    }
+
+    const user = await User.findById(decoded.userId).select("-password");
+
+    if (!user) {
+      return response.status(401).json({ message: "User not found" });
+    }
+
+    request.user = user;
+
     next();
-  });
+  } catch (error) {
+    console.log("Error in protected route middleware", error.message);
+    response.status(400).json("Internal server error");
+  }
 };

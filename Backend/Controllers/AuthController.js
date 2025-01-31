@@ -69,7 +69,10 @@ export const login = async (req, res) => {
 
     generate(user._id, res);
 
-    res.status(200).json({ message: "Logged in successfully" });
+    res.status(200).json({
+      user,
+      message: "Logged in successfully",
+    });
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Internal server error" });

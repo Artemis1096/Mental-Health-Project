@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { addUser } from "../Features/User/UserSlice";
+import { useDispatch } from "react-redux";
+import { addUser } from "../Features/User/UserSlice";
 
 import axios from "axios";
 import Button from "../Components/Button";
@@ -13,9 +13,14 @@ function Login() {
   const [flag, setFlag] = useState(false); //to toggle between login and register
   const [isSubmitted, setIsSubmitted] = useState(false); //to check if form is submitted
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/login");
+  }, []);
+
   // Handle login submission
   const handleSubmitLogin = (e) => {
     e.preventDefault();
@@ -34,6 +39,7 @@ function Login() {
 
   const handleSetFlag = () => {
     setFlag(!flag);
+    navigate("/register");
   };
 
   // UseEffect for making the login API call
@@ -43,7 +49,7 @@ function Login() {
     const fetchData = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:8080/api/auth/login",
+          "http://localhost:8000/api/auth/login",
           {
             email,
             password,
@@ -57,8 +63,16 @@ function Login() {
         // If login is successful, move to OTP submission
         console.log("Login successful:", res);
         if (res.data.message === "Logged in successfully") {
-          Navigate("/");
-          //dispatch(addUser({ }))
+          navigate("/");
+          const newUser = {
+            id: res.data.user._id,
+            name: res.data.user.name,
+            email: res.data.user.email,
+          };
+
+          console.log(newUser);
+
+          dispatch(addUser(newUser));
         }
 
         // Assume backend responds to trigger OTP (this step depends on your backend logic)

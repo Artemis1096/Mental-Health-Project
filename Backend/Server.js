@@ -32,7 +32,6 @@ app.listen(PORT, () => {
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     origin: true,

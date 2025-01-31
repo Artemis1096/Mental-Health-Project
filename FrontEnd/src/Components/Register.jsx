@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 import axios from "axios";
 import PropTypes from "prop-types";
@@ -12,6 +13,8 @@ function Register({ email, setEmail, password, setPassword, flag, setFlag }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [otpFlag, setOtpFlag] = useState(false); // Handling OTP flag internally
   const [isOtpSubmitted, setIsOtpSubmitted] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmitRegister = (e) => {
     e.preventDefault();
@@ -40,7 +43,7 @@ function Register({ email, setEmail, password, setPassword, flag, setFlag }) {
     const fetchData = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:8080/api/auth/register",
+          "http://localhost:8000/api/auth/register",
           {
             name: fullName,
             email: email,
@@ -52,6 +55,7 @@ function Register({ email, setEmail, password, setPassword, flag, setFlag }) {
 
         //console.log(res.data);
         setOtpFlag(true); // Set OTP flag to true after successful registration
+        navigate("/otpVerification");
       } catch (error) {
         console.error("Error:", error.response?.data || error.message);
       } finally {

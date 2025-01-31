@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../Features/User/UserSlice";
 import * as FaIcons from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 function NavBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const user = useSelector((state) => state.User);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn); // Access isLoggedIn from Redux
+
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(logout()); // Dispatch logout to clear the user and update state
+  };
+
+  useEffect(() => {
+    // This will log the changes in isLoggedIn state
+    console.log("IsLoggedIn:", isLoggedIn);
+  }, [isLoggedIn]);
 
   return (
     <nav className="flex justify-between items-center bg-gray-800 p-4 text-white">
@@ -24,7 +37,6 @@ function NavBar() {
             </Link>
           </li>
           <li>
-            {/* Add a toggle so that, when a user is logged in , he dont see the login button */}
             {!isLoggedIn ? (
               <Link
                 to="/login"
@@ -32,7 +44,9 @@ function NavBar() {
               >
                 Log In
               </Link>
-            ) : null}
+            ) : (
+              <button onClick={handleLogOut}>Log Out</button>
+            )}
           </li>
           <li>
             <Link

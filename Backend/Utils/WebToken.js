@@ -8,15 +8,33 @@ export const generate = (userId, res) => {
     });
 };
 
-export const verify = (req, res, next) => {
-    const token = req.cookies.jwt;
-    if (!token) return res.redirect('/'); // Redirect if no token
+export const verify = async (req, res, next) => {
+    try {
+        const token = req.cookies.jwt;
 
-    jwt.verify(token, process.env.SECRET_KEY, async (error, data) => {
-        if (error) return res.redirect('/'); // Redirect if token is invalid
+        if(!token){
+            return res.status(400).json({message: "You are not authorized to access this resource"})
+        }
 
-        req.userId = data.userId;
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+        if(!decoded){
+            return res.status(400).json({message: "You are not authorized to access this resource"})
+        }
+
+        const user = await User.findById(decoded.userId).select("-password");
+
+        if(!user){
+            return res.status(400).json({message: "User not found"});
+        }
+
+        req.user = user;
+
         next();
-    });
+
+    } catch (error) {
+        console.log("Error in verify middleware", error.message);
+        res.status(400).json("Internal server error");
+    }
 };
 

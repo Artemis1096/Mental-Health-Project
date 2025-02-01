@@ -18,7 +18,7 @@ export const verify = async (request, response, next) => {
 
     if (!token) {
       return response
-        .status(401)
+        .status(400)
         .json({ message: "You are not authorized to access this resource" });
     }
 
@@ -26,14 +26,14 @@ export const verify = async (request, response, next) => {
 
     if (!decoded) {
       return response
-        .status(401)
+        .status(400)
         .json({ message: "You are not authorized to access this resource" });
     }
 
     const user = await User.findById(decoded.userId).select("-password");
 
     if (!user) {
-      return response.status(401).json({ message: "User not found" });
+      return response.status(400).json({ message: "User not found" });
     }
 
     request.user = user;
@@ -41,7 +41,7 @@ export const verify = async (request, response, next) => {
     next();
   } catch (error) {
     console.log("Error in protected route middleware", error.message);
-    response.status(400).json("Internal server error");
+    response.status(500).json("Internal server error");
   }
 };
 <<<<<<< HEAD

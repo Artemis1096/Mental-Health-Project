@@ -11,6 +11,8 @@ function NavBar() {
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
+    console.log("logout");
+
     dispatch(logout()); // Dispatch logout to clear the user and update state
   };
 
@@ -45,7 +47,7 @@ function NavBar() {
                 Log In
               </Link>
             ) : (
-              <button onClick={handleLogOut}>Log Out</button>
+              <button onClick={handleLogOut}>LogOut</button>
             )}
           </li>
           <li>

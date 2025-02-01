@@ -4,7 +4,7 @@ import { logout } from "../Features/User/UserSlice";
 import * as FaIcons from "react-icons/fa";
 import { useState, useEffect } from "react";
 
-function NavBar() {
+function SideBar() {
   const user = useSelector((state) => state.User);
   const isLoggedIn = useSelector((state) => state.isLoggedIn); // Access isLoggedIn from Redux
 

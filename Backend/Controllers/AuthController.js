@@ -6,7 +6,7 @@ import { generateOTP, sendMail} from '../Utils/verification.js';
 // for register
 export const register = async (req, res) => {
     try {
-        const {name, email, password, confirmPassword, dob} = req.body;
+        const {name, email, password, confirmPassword, dob, userType} = req.body;
 
         const user = await User.findOne({email});
         if(user)
@@ -28,6 +28,7 @@ export const register = async (req, res) => {
             password : hashedPassword,
             otp : OTP,
             otpExpiry : otpExpiry,
+            userType
         });
 
         if(newUser){
@@ -67,7 +68,8 @@ export const login = async(req, res)=>{
         generate(user._id, res);
 
         res.status(200).json({
-            user,
+            name : user.name,
+            email : user.email,
             message : "Logged in successfully"
         });
 

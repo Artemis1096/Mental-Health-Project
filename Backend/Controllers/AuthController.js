@@ -5,8 +5,8 @@ import { generateOTP, sendMail } from "../Utils/verification.js";
 
 // for register
 export const register = async (req, res) => {
-  try {
-    const { name, email, password, confirmPassword, dob } = req.body;
+    try {
+        const {name, email, password, confirmPassword, dob, userType} = req.body;
 
     const user = await User.findOne({ email });
     if (user) return res.status(400).json("Email already registered!");
@@ -20,14 +20,15 @@ export const register = async (req, res) => {
     const salt = await bcryptjs.genSalt(12);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
-    const newUser = new User({
-      name,
-      dob,
-      email,
-      password: hashedPassword,
-      otp: OTP,
-      otpExpiry: otpExpiry,
-    });
+        const newUser = new User({
+            name,
+            dob,
+            email,
+            password : hashedPassword,
+            otp : OTP,
+            otpExpiry : otpExpiry,
+            userType
+        });
 
     if (newUser) {
       await newUser.save();
@@ -69,22 +70,24 @@ export const login = async (req, res) => {
 
     generate(user._id, res);
 
-    res.status(200).json({
-      user,
-      message: "Logged in successfully",
-    });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
+        res.status(200).json({
+            name : user.name,
+            email : user.email,
+            message : "Logged in successfully"
+        });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({error : "Internal server error"});
+    }
+}
 
 // for logout
 export const logout = async (req, res) => {
   try {
-    if (!req.cookies?.jwt) {
-      return res.status(400).json({ error: "No active session found" });
-    }
+    // if (!req.cookies?.jwt) {
+    //   return res.status(400).json({ error: "No active session found" });
+    // }
 
     res
       .clearCookie("jwt", { sameSite: "None", secure: true })

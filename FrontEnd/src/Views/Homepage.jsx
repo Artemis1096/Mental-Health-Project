@@ -5,7 +5,8 @@ import { useMemo } from "react";
 import { Experience } from "../Components/HomePage/Experience";
 import { Overlay } from "../Components/HomePage/Overlay";
 import { usePlay } from "../Context/Play";
-import "../Styles/Homepage.css"
+import "../Styles/Homepage.css";
+import MainContainer from "./MainContainer";
 
 function Homepage() {
   const { play, end } = usePlay();

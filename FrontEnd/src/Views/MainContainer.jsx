@@ -1,14 +1,31 @@
-import React from 'react'
-import SideBar from "../Components/SideBar"
-import "../Styles/Container.css"
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import SideBar from "../Components/SideBar";
+import AboutUs from "./AboutUs";
 
-const MainContainer = () => {
+function MainContainer() {
+  const user = useSelector((state) => state.User);
+
+  //   console.log(user);
+
   return (
-    <>
-        <div id='bg'></div>
-        <SideBar/>
-    </>
-  )
+    <div className=" flex h-screen">
+      {/* Sidebar */}
+
+      <SideBar />
+      {/* Main Content */}
+      <div className="ml-20 flex-1 p-8 bg-gray-100">
+        <h2 className="text-3xl font-semibold text-purple-900">Hi..</h2>
+        <div className="mt-4 text-xl text-gray-800">
+          {user.map((user) => (
+            <h1 key={user.id}>{user.name}</h1>
+          ))}
+        </div>
+        <Outlet />
+      </div>
+    </div>
+  );
 }
 
-export default MainContainer
+export default MainContainer;

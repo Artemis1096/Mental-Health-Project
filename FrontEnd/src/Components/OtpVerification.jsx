@@ -34,7 +34,7 @@ function OtpVerification({ isOtpSubmitted, setIsOtpSubmitted, email }) {
           { email: email, otp: otp }
         );
         console.log(res.data);
-        navigate("/");
+        navigate("/login");
       } catch (error) {
         console.error("Error:", error.response?.data || error.message);
       } finally {

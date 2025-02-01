@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 import axios from "axios";
-import PropTypes from "prop-types";
+
 import Button from "./Button";
 import OtpVerification from "./OtpVerification";
 
-function Register({ email, setEmail, password, setPassword, flag, setFlag }) {
+function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [fullName, setFullName] = useState("");
   const [dob, setDob] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -55,7 +58,6 @@ function Register({ email, setEmail, password, setPassword, flag, setFlag }) {
 
         //console.log(res.data);
         setOtpFlag(true); // Set OTP flag to true after successful registration
-        navigate("/otpVerification");
       } catch (error) {
         console.error("Error:", error.response?.data || error.message);
       } finally {
@@ -145,14 +147,5 @@ function Register({ email, setEmail, password, setPassword, flag, setFlag }) {
     </>
   );
 }
-
-Register.propTypes = {
-  email: PropTypes.string.isRequired,
-  setEmail: PropTypes.func.isRequired,
-  password: PropTypes.string.isRequired,
-  setPassword: PropTypes.func.isRequired,
-  flag: PropTypes.bool.isRequired,
-  setFlag: PropTypes.func.isRequired,
-};
 
 export default Register;

@@ -85,9 +85,9 @@ export const login = async (req, res) => {
 // for logout
 export const logout = async (req, res) => {
   try {
-    if (!req.cookies?.jwt) {
-      return res.status(400).json({ error: "No active session found" });
-    }
+    // if (!req.cookies?.jwt) {
+    //   return res.status(400).json({ error: "No active session found" });
+    // }
 
     res
       .clearCookie("jwt", { sameSite: "None", secure: true })

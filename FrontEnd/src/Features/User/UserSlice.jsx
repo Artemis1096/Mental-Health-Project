@@ -27,6 +27,8 @@ export const UserSlice = createSlice({
     },
 
     logout: (state) => {
+      console.log("logout");
+
       state.User = []; // Clear the user data
       state.isLoggedIn = false; // Set isLoggedIn to false
       localStorage.removeItem("user"); // Remove user data from localStorage

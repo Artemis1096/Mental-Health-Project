@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"; // Ensure you import from react-router-dom
+import "../Styles/SideBar.css"
 
-function NavBar() {
+function SideBar() {
   return (
-    <nav className="flex justify-between items-center bg-gray-800 p-4 text-white">
+    <nav className="h-screen w-1/5 flex flex-col justify-between items-center bg-gray-800 p-4 text-white">
       <h2 className="text-2xl font-bold">
         <Link to="/" className="text-white hover:text-orange-500">
           Logo
@@ -40,4 +41,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default SideBar;

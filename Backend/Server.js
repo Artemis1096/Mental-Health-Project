@@ -24,14 +24,15 @@ dotenv.config();
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
-    try {
-        connectDB();
-        console.log(`Server is running on port ${PORT}`);
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    connectDB();
+    console.log(`Server is running on port ${PORT}`);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({

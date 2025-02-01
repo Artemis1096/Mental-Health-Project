@@ -44,6 +44,7 @@ export const verify = async (request, response, next) => {
     response.status(400).json("Internal server error");
   }
 };
+<<<<<<< HEAD
 
 export const isAdmin = (req, res, next) => {
   console.log(req.user);
@@ -52,3 +53,5 @@ export const isAdmin = (req, res, next) => {
   }
   next();
 };
+=======
+>>>>>>> 3b818ba506f38783802b7200b950d42ce08ae5bf

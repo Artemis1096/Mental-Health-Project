@@ -1,8 +1,3 @@
-*{
-    margin: 0;
-    padding: 0;
-    color:aqua;
-}
 #bg{
     position: absolute;
     background: url("bg2.jpg");

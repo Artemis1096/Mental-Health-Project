@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+    color:aqua;
+}
+#bg{
+    position: absolute;
+    background: url("bg2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Features/User/UserSlice";
-
 import axios from "axios";
 import Button from "../Components/Button";
 import Register from "../Components/Register";

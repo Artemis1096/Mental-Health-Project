@@ -1,25 +1,19 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Features/User/UserSlice";
 
 import axios from "axios";
 import Button from "../Components/Button";
-import Register from "../Components/Register";
+import NavBar from "../Components/NavBar";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [flag, setFlag] = useState(false); //to toggle between login and register
+
   const [isSubmitted, setIsSubmitted] = useState(false); //to check if form is submitted
-
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    navigate("/login");
-  }, []);
+  const dispatch = useDispatch();
 
   // Handle login submission
   const handleSubmitLogin = (e) => {
@@ -35,11 +29,6 @@ function Login() {
     }
     setIsSubmitted(true);
     // Mark that login is being attempted
-  };
-
-  const handleSetFlag = () => {
-    setFlag(!flag);
-    navigate("/register");
   };
 
   // UseEffect for making the login API call
@@ -87,23 +76,14 @@ function Login() {
   }, [isSubmitted]); // This useEffect triggers on login submission
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          {flag ? "Register" : "Login"}
-        </h1>
+    <>
+      <NavBar />
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
+          <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
+            Login
+          </h1>
 
-        {flag ? (
-          <Register
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            flag={flag}
-            setFlag={setFlag}
-          />
-        ) : (
-          // Login Form
           <form className="space-y-4" onSubmit={handleSubmitLogin}>
             <div>
               <label className="block text-gray-700 font-medium mb-1">
@@ -139,20 +119,19 @@ function Login() {
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
             />
           </form>
-        )}
 
-        <p className="mt-4 text-center text-gray-600">
-          {flag ? "Don't have an account?" : "Already have an account?"}{" "}
-          <button
-            type="button"
-            onClick={handleSetFlag}
-            className="text-blue-600 hover:underline font-medium"
-          >
-            {flag ? "Login here" : "Register here"}
-          </button>
-        </p>
+          <p className="mt-4 text-center text-gray-600">
+            Dont have an account?{" "}
+            <Link
+              to="/register"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Register here
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

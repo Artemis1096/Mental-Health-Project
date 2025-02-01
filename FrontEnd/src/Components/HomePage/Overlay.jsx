@@ -1,5 +1,6 @@
 import { useProgress } from "@react-three/drei";
 import { usePlay } from "../../Context/Play";
+import { Link } from "react-router";
 
 export const Overlay = () => {
   const { progress } = useProgress();
@@ -32,10 +33,17 @@ export const Overlay = () => {
         </div>
       )}
       <div className={`outro ${end ? "outro--appear" : ""}`}>
-        <p className="outro__text">WE WELCOME YOU <br/>TO YOUR OWN SAFE SPACE.</p>
+        <p className="outro__text">
+          WE WELCOME YOU <br />
+          TO YOUR OWN SAFE SPACE.
+        </p>
         <div className="button-class">
-          <button className="btn"><a href="#">Login</a></button>
-          <button className="btn"><a href="#">Signup</a></button>
+          <button className="btn">
+            <Link to="/login">Login</Link>
+          </button>
+          <button className="btn">
+            <Link to="/register">Signup</Link>
+          </button>
         </div>
       </div>
     </div>

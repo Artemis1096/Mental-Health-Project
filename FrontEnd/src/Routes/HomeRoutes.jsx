@@ -12,6 +12,8 @@ function HomeRoutes() {
       <Route path="/app" element={<MainContainer />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Login />} />
+      <Route path="/otpVerification" element={<Login />} />
       <Route path="/aboutus" element={<AboutUs />} />
     </Routes>
   );

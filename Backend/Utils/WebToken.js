@@ -44,4 +44,3 @@ export const verify = async (request, response, next) => {
     response.status(400).json("Internal server error");
   }
 };
-

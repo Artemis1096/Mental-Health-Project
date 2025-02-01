@@ -7,6 +7,7 @@ import Register from "../Components/Register";
 import SignUp from "../Views/SignUp";
 import MainContainer from "../Views/MainContainer";
 import Articles from "../Views/Articles";
+import MeditationTimer from "../Views/MeditationTimer";
 
 function HomeRoutes() {
   return (
@@ -17,9 +18,10 @@ function HomeRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/app" element={<MainContainer />}>
-        <Route path="aboutus" element={<AboutUs />} />
-        <Route path="articles" element={<Articles />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="meditate" element={<MeditationTimer />} />
+        <Route path="articles" element={<Articles />} />
+        <Route path="aboutus" element={<AboutUs />} />
       </Route>
     </Routes>
   );

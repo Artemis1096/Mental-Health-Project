@@ -38,7 +38,8 @@ function SideBar() {
       link: "aboutus",
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
-    { id: 4, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
+    { id: 4, title: "Meditate", symbol: <CgProfile />, link: "meditate" },
+    { id: 5, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
   ];
 
   return (

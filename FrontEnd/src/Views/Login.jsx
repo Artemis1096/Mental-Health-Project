@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../Features/User/UserSlice";
 import axios from "axios";
 import Button from "../Components/Button";
-import NavBar from "../Components/NavBar";
+// import NavBar from "../Components/NavBar";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -76,7 +76,7 @@ function Login() {
 
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
           <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">

@@ -1,23 +1,48 @@
-import Footer from "../Components/Footer";
-import HomeComponent from "../Components/HomeComponent";
-import NavBar from "../Components/NavBar";
-import { useSelector } from "react-redux";
+import { ScrollControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { EffectComposer, Noise } from "@react-three/postprocessing";
+import { useMemo } from "react";
+import { Experience } from "../Components/HomePage/Experience";
+import { Overlay } from "../Components/HomePage/Overlay";
+import { usePlay } from "../Context/Play";
+import "../Styles/Homepage.css"
+
 function Homepage() {
-  const users = useSelector((state) => state.User);
+  const { play, end } = usePlay();
+
+  const effects = useMemo(
+    () => (
+      <EffectComposer>
+        <Noise opacity={0.08} />
+      </EffectComposer>
+    ),
+    []
+  );
 
   return (
-    <div>
-      <div>
-        <h1>Hi ...</h1>
-        <ul>
-          {users.length > 0
-            ? users.map((user) => <li key={user.id}>{user.name}</li>)
-            : "SomeOne"}
-        </ul>
-      </div>
-      <HomeComponent />
-      <Footer />
-    </div>
+    <>
+      <Canvas>
+        <color attach="background" args={["#ececec"]} />
+        <ScrollControls
+          pages={play && !end ? 20 : 0}
+          damping={0.5}
+          style={{
+            top: "10px",
+            left: "0px",
+            bottom: "10px",
+            right: "10px",
+            width: "auto",
+            height: "auto",
+            animation: "fadeIn 2.4s ease-in-out 1.2s forwards",
+            opacity: 0,
+          }}
+        >
+          <Experience />
+        </ScrollControls>
+        {effects}
+      </Canvas>
+      <Overlay />
+    </>
   );
 }
 

@@ -6,6 +6,7 @@ import { Experience } from "../Components/HomePage/Experience";
 import { Overlay } from "../Components/HomePage/Overlay";
 import { usePlay } from "../Context/Play";
 import "../Styles/Homepage.css";
+import MainContainer from "./MainContainer";
 
 function Homepage() {
   const { play, end } = usePlay();
@@ -21,7 +22,7 @@ function Homepage() {
 
   return (
     <>
-      {/* <Canvas>
+      <Canvas>
         <color attach="background" args={["#ececec"]} />
         <ScrollControls
           pages={play && !end ? 20 : 0}
@@ -41,7 +42,7 @@ function Homepage() {
         </ScrollControls>
         {effects}
       </Canvas>
-      <Overlay /> */}
+      <Overlay />
     </>
   );
 }

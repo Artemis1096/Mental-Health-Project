@@ -13,7 +13,7 @@ function NavBar() {
   const handleLogOut = () => {
     console.log("logout");
 
-    dispatch(logout()); // Dispatch logout to clear the user and update state
+    // dispatch(logout()); // Dispatch logout to clear the user and update state
   };
 
   useEffect(() => {

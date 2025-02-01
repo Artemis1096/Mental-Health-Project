@@ -52,7 +52,7 @@ function Login() {
         // If login is successful, move to OTP submission
         console.log("Login successful:", res);
         if (res.data.message === "Logged in successfully") {
-          navigate("/");
+          navigate("/app");
           const newUser = {
             id: res.data.user._id,
             name: res.data.user.name,

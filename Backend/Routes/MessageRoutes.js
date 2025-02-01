@@ -5,5 +5,4 @@ const router=express.Router()
 router.post("/send/:id",verify,sendMessage)
 router.get("/get/:id",verify,getMessage)
 
- 
 export default router

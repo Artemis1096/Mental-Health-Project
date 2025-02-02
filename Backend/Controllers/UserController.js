@@ -4,10 +4,12 @@ import User from "../Models/User.js";
 // returns the list of all users except the current user
 export const getUsers = async (req, res) => {
     try {
-        const { id } = req.params; // Extract the user ID from request parameters
+        // const { id } = req.params; // Extract the user ID from request parameters
+        const id = req.user._id;
         const users = await User.find({ 
             _id: { $ne: id }, 
-            userType :{$ne : "admin"} 
+            userType :{$ne : "admin"},
+            isVerified : true
         }).select("-password"); // Exclude the given ID & password field
 
         res.status(200).json({ message: "success", data: users });

@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import SideBar from "../Components/SideBar";
 import AboutUs from "./AboutUs";
 
+
 function MainContainer() {
   const user = useSelector((state) => state.User);
 
@@ -23,6 +24,7 @@ function MainContainer() {
           ))}
         </div>
         <Outlet />
+       
       </div>
     </div>
   );

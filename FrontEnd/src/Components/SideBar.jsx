@@ -51,7 +51,7 @@ function SideBar() {
       <div
         onClick={() => setOpen(!open)}
         className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
-         border-2 border-purple-900 bg-white text-purple-900 rounded-full 
+         border-2 border-purple-900  text-xl bg-white text-purple-900 rounded-full 
          cursor-pointer shadow-md ${!open && "rotate-180"} `}
       >
         <HiArrowNarrowLeft />
@@ -59,11 +59,11 @@ function SideBar() {
 
       {/* Logo Section */}
       <div className="flex gap-x-4 items-center">
-        <div className={`cursor-pointer duration-500`}>
+        <div className={`cursor-pointer text-3xl duration-500`}>
           <GiRamProfile />
         </div>
         <h1
-          className={`text-white origin-left font-medium text-xl duration-300 ${
+          className={`text-white origin-left font-medium text-2xl duration-300 ${
             !open && "scale-0"
           }`}
         >
@@ -76,9 +76,12 @@ function SideBar() {
         {Menu.map((menu) => (
           <li
             key={menu.id}
-            className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-purple-600 rounded-md"
+            className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-purple-600 rounded-md"
           >
-            {menu.symbol}
+            <div className={`cursor-pointer text-2xl duration-500`}>
+              {menu.symbol}
+            </div>
+
             <span className={`${!open && "hidden"} origin-left duration-200`}>
               {menu.action ? (
                 <button className="cursor-pointer" onClick={menu.action}>

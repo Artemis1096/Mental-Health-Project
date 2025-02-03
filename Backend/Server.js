@@ -5,14 +5,18 @@ import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import connectDB from './Config/DBConfig.js';
+// routes
 import AuthRoutes from './Routes/AuthRoutes.js';
 import MessageRoutes from './Routes/MessageRoutes.js';
 import ArticleRoutes from './Routes/ArticleRoutes.js';
+import FriendshipRoutes from './Routes/FriendshipRoutes.js';
+import UserRoutes from './Routes/UserRoutes.js';
+//middlewares and utils
 import { setupGoogleAuth } from './Config/googleAuthConfig.js';
+import connectDB from './Config/DBConfig.js';
 import { verify } from './Utils/WebToken.js';
 import upload from './Middlewares/upload.js';
-import UserRoutes from './Routes/UserRoutes.js'
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -48,7 +52,10 @@ app.use("/api/message", MessageRoutes);
 app.use("/api/user",UserRoutes)
 app.use("/music", express.static(musicDir));
 app.use("/images", express.static(imagesDir));
-app.use("/article", ArticleRoutes);
+app.use("/api/message", MessageRoutes);
+app.use("/api/articles", ArticleRoutes);
+app.use("/api/friends", FriendshipRoutes);
+app.use("/api/users", UserRoutes);
 
 // ------------------------------------------------------------------------------------------------------------------------------
 app.get('/dashboard', (req, res) => {

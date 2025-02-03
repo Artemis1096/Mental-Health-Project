@@ -38,17 +38,18 @@ function Login() {
           { withCredentials: true }
         );
 
-        console.log("Login successful:", res.data);
+        console.log(res);
+        // If login is successful, move to OTP submission
 
         if (res.data.message === "Logged in successfully") {
-          navigate("/app");
-          dispatch(
-            addUser({
-              id: res.data._id,
-              name: res.data.name,
-              email: res.data.email,
-            })
-          );
+          navigate("/app/home");
+          const newUser = {
+            id: res.data.userId,
+            name: res.data.name,
+            email: res.data.email,
+          };
+          dispatch(addUser(newUser));
+
         }
       } catch (error) {
         console.error("Login error:", error.response?.data || error.message);

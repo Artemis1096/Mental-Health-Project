@@ -28,6 +28,7 @@ export const register = async (req, res) => {
       otp: OTP,
       otpExpiry: otpExpiry,
       userType,
+
     });
 
     if (newUser) {
@@ -71,24 +72,23 @@ export const login = async (req, res) => {
     generate(user._id, res);
 
     res.status(200).json({
-      _id: user._id,
       name: user.name,
       email: user.email,
-      message: "Logged in successfully",
+      userId: user._id,
+      message: "Logged in successfully"
     });
+
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Internal server error" });
   }
+
 };
+
 
 // for logout
 export const logout = async (req, res) => {
   try {
-    // if (!req.cookies?.jwt) {
-    //   return res.status(400).json({ error: "No active session found" });
-    // }
-
     res
       .clearCookie("jwt", { sameSite: "None", secure: true })
       .status(200)

@@ -1,50 +1,18 @@
-import { ScrollControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { EffectComposer, Noise } from "@react-three/postprocessing";
-import { useMemo } from "react";
-import { Experience } from "../Components/HomePage/Experience";
-import { Overlay } from "../Components/HomePage/Overlay";
-import { usePlay } from "../Context/Play";
-import "../Styles/Homepage.css";
-import MainContainer from "./MainContainer";
-
-function Homepage() {
-  const { play, end } = usePlay();
-
-  const effects = useMemo(
-    () => (
-      <EffectComposer>
-        <Noise opacity={0.08} />
-      </EffectComposer>
-    ),
-    []
-  );
-
-  return (
-    <>
-      <Canvas>
-        <color attach="background" args={["#ececec"]} />
-        <ScrollControls
-          pages={play && !end ? 20 : 0}
-          damping={0.5}
-          style={{
-            top: "10px",
-            left: "0px",
-            bottom: "10px",
-            right: "10px",
-            width: "auto",
-            height: "auto",
-            animation: "fadeIn 2.4s ease-in-out 1.2s forwards",
-            opacity: 0,
-          }}
-        >
-          <Experience />
-        </ScrollControls>
-        {effects}
-      </Canvas>
-      <Overlay />
-    </>
-  );
+import React, { useState } from 'react';
+import axios from "axios";
+import "../Styles/HomePage.css"
+const Homepage = () => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    const userId = userData && Array.isArray(userData) ? userData[0].id : null;
+    const userName = userData && Array.isArray(userData) ? userData[0].name : null;
+    return (
+        <div className='main'>
+            <div className="Heading">
+                <p className='Heading-welcome'>Welcome</p>
+                <p className='Heading-username'>{userName}</p>
+            </div>
+        </div>
+    )
 }
 
-export default Homepage;
+export default Homepage

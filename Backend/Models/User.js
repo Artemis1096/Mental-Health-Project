@@ -17,11 +17,6 @@ const userSchema = new mongoose.Schema({
         type : String,
         minLength : 6
     },
-    friends : [{
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "User",
-            default : []
-    }],
     otp : {
         type : String
     },

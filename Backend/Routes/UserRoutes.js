@@ -1,10 +1,10 @@
-import express from 'express'
-import { verify } from '../Utils/WebToken.js'
-import { getFriends, getUsers } from '../Controllers/UserController.js'
+import express from 'express';
+import { getUsers, getUser} from '../Controllers/UserController.js';
+import { verify } from '../Utils/WebToken.js';
 
+const router = express.Router();
 
-const router=express.Router()
-router.get('/conversation',verify,getFriends)
-router.get('/allusers',verify,getUsers)
+router.get("/", verify, getUsers);
+router.get("/:id", verify,getUser);
 
-export default router
+export default router;

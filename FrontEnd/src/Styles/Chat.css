@@ -1,0 +1,27 @@
+.Chat-container{
+    background-color: white;
+    /* margin: 1.2rem; */
+    height: 100%;
+    color: black;
+}
+.Receiver-Name{
+    border: 1px solid black;
+    padding: 1rem;
+    padding-left: 4rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    width: 100%;
+}
+.chat-area{
+    border: 1px solid black;
+    padding: 1rem;
+    width: 100%;
+}
+.send-message{
+    border: 1px solid black;
+    padding: 1rem;
+    width: 100%;
+}
+.send-button{
+    color: black;
+}

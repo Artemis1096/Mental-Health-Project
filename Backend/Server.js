@@ -49,7 +49,6 @@ const imagesDir = path.join(__dirname, "public/images");
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/message", MessageRoutes);
-app.use("/api/user",UserRoutes)
 app.use("/music", express.static(musicDir));
 app.use("/images", express.static(imagesDir));
 app.use("/api/message", MessageRoutes);

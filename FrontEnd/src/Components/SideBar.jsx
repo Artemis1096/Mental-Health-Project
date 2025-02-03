@@ -8,6 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { GrArticle } from "react-icons/gr";
 import { LuMailQuestion } from "react-icons/lu";
 import { IoMdLogOut } from "react-icons/io";
+import { GiHeatHaze } from "react-icons/gi";
 
 import axios from "axios";
 
@@ -38,7 +39,8 @@ function SideBar() {
       link: "aboutus",
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
-    { id: 4, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
+    { id: 4, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
+    { id: 5, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
   ];
 
   return (

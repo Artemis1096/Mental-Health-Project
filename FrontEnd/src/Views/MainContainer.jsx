@@ -16,13 +16,13 @@ function MainContainer() {
 
       <SideBar />
       {/* Main Content */}
-      <div className="ml-20 flex-1 p-8 bg-gray-100">
-        <h2 className="text-3xl font-semibold text-purple-900">Hi..</h2>
+      <div className="ml-20 flex-1 p-8">
+        {/* <h2 className="text-3xl font-semibold text-purple-900">Hi..</h2>
         <div className="mt-4 text-xl text-gray-800">
           {user.map((user) => (
             <h1 key={user.id}>{user.name}</h1>
           ))}
-        </div>
+        </div> */}
         <Outlet />
        
       </div>

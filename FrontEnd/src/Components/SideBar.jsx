@@ -16,8 +16,6 @@ function SideBar() {
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
-    console.log("logout");
-
     try {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
       console.log(res);
@@ -39,8 +37,9 @@ function SideBar() {
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
     { id: 4, title: "Meditate", symbol: <CgProfile />, link: "meditate" },
-    { id: 5, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
-    { id: 6, title: "Soulmate Finder", symbol: <IoMdLogOut />,  link: "allUsers" },
+    { id: 5, title: "Soulmate Finder", symbol: <IoMdLogOut />,  link: "allUsers" },
+    { id: 6, title: "Friends", symbol: <IoMdLogOut />,  link: "friends" },
+    { id: 7, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
   ];
 
   return (

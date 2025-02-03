@@ -10,6 +10,7 @@ import Articles from "../Views/Articles";
 import MeditationTimer from "../Views/MeditationTimer";
 import AllUsersList from "../Views/AllUsersList"
 import HomePage from "../Views/HomePage"
+import FriendsList from "../Views/FriendsList"
 
 function HomeRoutes() {
   return (
@@ -22,6 +23,7 @@ function HomeRoutes() {
       <Route path="/app" element={<MainContainer />}>
         <Route path="home" element={<HomePage />} />
         <Route path="allUsers" element={<AllUsersList />} />
+        <Route path="friends" element={<FriendsList />} />
         <Route path="profile" element={<Profile />} />
         <Route path="meditate" element={<MeditationTimer />} />
         <Route path="articles" element={<Articles />} />

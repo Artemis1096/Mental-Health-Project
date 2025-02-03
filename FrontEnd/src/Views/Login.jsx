@@ -51,14 +51,12 @@ function Login() {
         // If login is successful, move to OTP submission
 
         if (res.data.message === "Logged in successfully") {
-          navigate("/app");
+          navigate("/app/home");
           const newUser = {
             id: res.data.userId,
             name: res.data.name,
             email: res.data.email,
           };
-          // console.log(newUser);
-          localStorage.setItem("user", JSON.stringify(newUser));
           dispatch(addUser(newUser));
         }
 

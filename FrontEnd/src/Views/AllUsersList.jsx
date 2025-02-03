@@ -28,7 +28,8 @@ function AllUsersList() {
                 const res = await axios.get(`http://localhost:8000/api/friends/pending/${userId}`, {
                     withCredentials: true,
                 });
-                setFriendRequests(res.data.requests || []);
+                console.log(res);
+                setFriendRequests(res.data.pendingRequests || []);
             } catch (err) {
                 console.error("Error fetching friend requests:", err);
             }
@@ -59,19 +60,48 @@ function AllUsersList() {
 
     const acceptFriendRequest = async (requestId) => {
         try {
-            const res = await axios.post(
+            const res = await axios.patch(
                 `http://localhost:8000/api/friends/acceptrequest/${requestId}`,
-                {},
-                { withCredentials: true }
+                {}, // Add request body if needed
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
             );
+    
             alert(res.data.message);
-            setFriendRequests(friendRequests.filter((req) => req._id !== requestId)); // Remove accepted request from list
+    
+            // Ensure state updates correctly
+            setFriendRequests((prevRequests) =>
+                prevRequests.filter((req) => req._id !== requestId)
+            );
         } catch (err) {
-            console.error("Error accepting friend request:", err);
-            alert("Failed to accept the friend request.");
+            console.error("Error accepting friend request:", err.response ? err.response.data : err.message);
+            alert(err.response?.data?.message || "Failed to accept the friend request.");
         }
     };
-
+    
+    const declineFriendRequest = async (requestId) => {
+        try {
+            const res = await axios.delete(
+                `http://localhost:8000/api/friends/rejectrequest/${requestId}`,
+                {
+                    withCredentials: true,
+                }
+            );
+    
+            alert(res.data.message);
+    
+            // Update state to remove the declined request
+            setFriendRequests((prevRequests) =>
+                prevRequests.filter((req) => req._id !== requestId)
+            );
+        } catch (err) {
+            console.error("Error declining friend request:", err.response ? err.response.data : err.message);
+            alert(err.response?.data?.message || "Failed to decline the friend request.");
+        }
+    };
+    
     if (loading) return <p>Loading users...</p>;
     if (error) return <p>{error}</p>;
 
@@ -102,9 +132,10 @@ function AllUsersList() {
                         {friendRequests.map((request) => (
                             <li key={request._id}>
                                 <div className="acceptFriend flex justify-between">
-                                    {request.sender.name} sent you a friend request
+                                    {request.user1.name} sent you a friend request
                                     <button className="btn" onClick={() => acceptFriendRequest(request._id)}>Accept</button>
-                                </div>
+                                    <button className="btn" onClick={() => declineFriendRequest(request._id)}>Decline</button>
+                                    </div>
                             </li>
                         ))}
                     </ul>

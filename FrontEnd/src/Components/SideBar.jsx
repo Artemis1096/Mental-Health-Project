@@ -21,7 +21,7 @@ function SideBar() {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
       console.log(res);
       dispatch(logout());
-      navigate("/"); // ✅ Correct logout navigation
+      navigate("/login"); // ✅ Correct logout navigation
     } catch (err) {
       console.log(err);
     }

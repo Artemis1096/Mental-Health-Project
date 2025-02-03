@@ -15,7 +15,7 @@
 .chat-area{
     border: 1px solid black;
     padding: 1rem;
-    width: 100%;
+    /* width: 100%; */
 }
 .send-message{
     border: 1px solid black;
@@ -24,4 +24,31 @@
 }
 .send-button{
     color: black;
+}
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.message {
+    max-width: 60%;
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin: 5px 0;
+    word-wrap: break-word;
+}
+
+.received {
+    align-self: flex-start;
+    background-color: #007bff;
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.sent {
+    align-self: flex-end;
+    background-color: #e5e5ea;
+    color: black;
+    border-bottom-left-radius: 5px;
 }

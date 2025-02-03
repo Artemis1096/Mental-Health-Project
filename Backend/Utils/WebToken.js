@@ -48,7 +48,7 @@ export const verify = async (request, response, next) => {
 export const isAdmin = (req, res, next) => {
   console.log(req.user);
   if (req.user?.userType !== "admin") {
-      return res.status(403).json({ message: "Access denied: Admins only" });
+    return res.status(403).json({ message: "Access denied: Admins only" });
   }
   next();
 };

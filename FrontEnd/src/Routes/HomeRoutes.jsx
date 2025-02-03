@@ -12,7 +12,7 @@ import AllUsersList from "../Views/AllUsersList";
 import HomePage from "../Views/HomePage";
 import FriendsList from "../Views/FriendsList";
 import ArticleDetails from "../Views/ArticleDetails";
-
+import Chat from "../Views/Chat"
 function HomeRoutes() {
   return (
     <Routes>

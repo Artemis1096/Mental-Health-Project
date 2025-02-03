@@ -22,7 +22,7 @@ export const sendMessage = async (req, res) => {
     const { message } = req.body;
     const { id: receiverid } = req.params;
     const senderid = req.user._id;
-    const encryptedMessage = encryptMessage(message);
+    const msg=message;
     
     let conversation = await Conversation.findOne({
       participants: { $all: [senderid, receiverid] },
@@ -37,7 +37,7 @@ export const sendMessage = async (req, res) => {
     const newmessage = new Message({
       senderid,
       receiverid,
-      message:encryptedMessage,
+      message:msg,
     });
 
     if (newmessage) {
@@ -95,13 +95,13 @@ export const getMessage = async (req, res) => {
     });
 
     // 🔓 Decrypt messages before sending to frontend
-    const decryptedMessages = messages.map((msg) => ({
-      ...msg._doc,
-      message: decryptMessage(msg.message),
-    }));
+    // const decryptedMessages = messages.map((msg) => ({
+    //   ...msg._doc,
+    //   message: decryptMessage(msg.message),
+    // }));
 
     res.status(200).json({
-      messages: decryptedMessages,
+      messages: messages,
     });
   } catch (error) {
     console.error("Error in getMessages:", error);

@@ -1,5 +1,4 @@
 import express from 'express';
-import { getUsers, getUser} from '../Controllers/UserController.js';
 import { addJournal, getJournals, deleteJournal } from '../Controllers/JournalController.js';
 import { getUsers, getUser, editProfile, deleteProfile} from '../Controllers/UserController.js';
 import { verify } from '../Utils/WebToken.js';

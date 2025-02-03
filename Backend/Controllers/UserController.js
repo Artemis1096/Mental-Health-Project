@@ -35,3 +35,55 @@ export const getUser = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 }
+
+export const editProfile = async (req, res) => {
+    try {
+      const userId = req.user._id; // Logged-in user ID
+      const { name, DOB } = req.body;
+  
+      // Convert DOB from "DD-MM-YYYY" to a valid Date object
+      let formattedDOB;
+      if (DOB) {
+        const [day, month, year] = DOB.split("-");
+        formattedDOB = new Date(`${year}-${month}-${day}`); // Convert to "YYYY-MM-DD"
+      }
+  
+      // Update user profile
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { name, DOB: formattedDOB },
+        { new: true, runValidators: true }
+      ).select("name DOB");
+  
+      res.status(200).json({
+        success: true,
+        message: "Profile updated successfully",
+        user: updatedUser,
+      });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({
+        error: "Internal server error",
+      });
+    }
+  };
+
+
+  export const deleteProfile = async (req, res) => {
+    try {
+      const userId = req.user._id; // Logged-in user ID
+  
+      // Delete user profile
+      await User.findByIdAndDelete(userId);
+  
+      res.status(200).json({
+        success: true,
+        message: "Profile deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting profile:", error);
+      res.status(500).json({
+        error: "Internal server error",
+      });
+    }
+  };

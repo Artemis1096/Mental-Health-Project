@@ -8,7 +8,6 @@ import { CgProfile } from "react-icons/cg";
 import { GrArticle } from "react-icons/gr";
 import { LuMailQuestion } from "react-icons/lu";
 import { IoMdLogOut } from "react-icons/io";
-
 import axios from "axios";
 
 function SideBar() {
@@ -17,8 +16,6 @@ function SideBar() {
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
-    console.log("logout");
-
     try {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
       console.log(res);
@@ -30,6 +27,7 @@ function SideBar() {
   };
 
   const Menu = [
+    { id: 0, title: "Home", symbol: <GrArticle />, link: "home" },
     { id: 1, title: "Article", symbol: <GrArticle />, link: "articles" },
     {
       id: 2,
@@ -39,20 +37,22 @@ function SideBar() {
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
     { id: 4, title: "Meditate", symbol: <CgProfile />, link: "meditate" },
-    { id: 5, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
+    { id: 5, title: "Soulmate Finder", symbol: <IoMdLogOut />,  link: "allUsers" },
+    { id: 6, title: "Friends", symbol: <IoMdLogOut />,  link: "friends" },
+    { id: 7, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
   ];
 
   return (
     <div
       className={`${
         open ? "w-72" : "w-20"
-      } duration-300 h-screen p-5 pt-8 bg-purple-900 text-white absolute`}
+      } duration-300 h-screen p-5 pt-8 bg-green-800 text-white absolute`}
     >
       {/* Toggle Sidebar Button */}
       <div
         onClick={() => setOpen(!open)}
         className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
-         border-2 border-purple-900 bg-white text-purple-900 rounded-full 
+         border-2 border-green-800 bg-white text-green-800 rounded-full 
          cursor-pointer shadow-md ${!open && "rotate-180"} `}
       >
         <HiArrowNarrowLeft />

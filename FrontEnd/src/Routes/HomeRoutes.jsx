@@ -6,12 +6,13 @@ import AboutUs from "../Views/AboutUs";
 import Register from "../Components/Register";
 import SignUp from "../Views/SignUp";
 import MainContainer from "../Views/MainContainer";
-import Articles from "../Views/Articles";
+import ArticlesPage from "../Views/ArticlesPage";
 import MeditationTimer from "../Views/MeditationTimer";
 import AllUsersList from "../Views/AllUsersList";
 import HomePage from "../Views/HomePage";
 import FriendsList from "../Views/FriendsList";
-import Chat from "../Views/Chat.jsx";
+import ArticleDetails from "../Views/ArticleDetails";
+
 function HomeRoutes() {
   return (
     <Routes>
@@ -20,6 +21,8 @@ function HomeRoutes() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
+
+      {/* Main container and its nested routes */}
       <Route path="/app" element={<MainContainer />}>
         <Route path="home" element={<HomePage />} />
         <Route path="chat" element={<Chat />} />
@@ -27,7 +30,8 @@ function HomeRoutes() {
         <Route path="friends" element={<FriendsList />} />
         <Route path="profile" element={<Profile />} />
         <Route path="meditate" element={<MeditationTimer />} />
-        <Route path="articles" element={<Articles />} />
+        <Route path="articles" element={<ArticlesPage />} />
+        <Route path="articles/:id" element={<ArticleDetails />} />
         <Route path="aboutus" element={<AboutUs />} />
       </Route>
     </Routes>

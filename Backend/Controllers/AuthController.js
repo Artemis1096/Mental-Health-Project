@@ -27,7 +27,8 @@ export const register = async (req, res) => {
       password: hashedPassword,
       otp: OTP,
       otpExpiry: otpExpiry,
-      userType
+      userType,
+
     });
 
     if (newUser) {
@@ -81,7 +82,9 @@ export const login = async (req, res) => {
     console.log(error.message);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+
+};
+
 
 // for logout
 export const logout = async (req, res) => {

@@ -47,19 +47,18 @@ function Login() {
             Headers: { "content-type": "application/json" },
           }
         );
-
+        console.log(res);
         // If login is successful, move to OTP submission
-        console.log("Login successful:", res);
+
         if (res.data.message === "Logged in successfully") {
           navigate("/app");
           const newUser = {
-            id: res.data.user._id,
-            name: res.data.user.name,
-            email: res.data.user.email,
+            id: res.data.userId,
+            name: res.data.name,
+            email: res.data.email,
           };
-
-          console.log(newUser);
-
+          // console.log(newUser);
+          localStorage.setItem("user", JSON.stringify(newUser));
           dispatch(addUser(newUser));
         }
 

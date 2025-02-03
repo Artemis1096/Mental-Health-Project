@@ -5,11 +5,15 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import connectDB from "./Config/DBConfig.js";
+// routes
 import AuthRoutes from "./Routes/AuthRoutes.js";
 import MessageRoutes from "./Routes/MessageRoutes.js";
 import ArticleRoutes from "./Routes/ArticleRoutes.js";
+import FriendshipRoutes from "./Routes/FriendshipRoutes.js";
+import UserRoutes from "./Routes/UserRoutes.js";
+//middlewares and utils
 import { setupGoogleAuth } from "./Config/googleAuthConfig.js";
+import connectDB from "./Config/DBConfig.js";
 import { verify } from "./Utils/WebToken.js";
 import upload from "./Middlewares/upload.js";
 
@@ -49,7 +53,9 @@ app.use("/api/auth", AuthRoutes);
 app.use("/music", express.static(musicDir));
 app.use("/images", express.static(imagesDir));
 app.use("/api/message", MessageRoutes);
-app.use("/article", ArticleRoutes);
+app.use("/api/articles", ArticleRoutes);
+app.use("/api/friends", FriendshipRoutes);
+app.use("/api/users", UserRoutes);
 
 // ------------------------------------------------------------------------------------------------------------------------------
 app.get("/dashboard", (req, res) => {

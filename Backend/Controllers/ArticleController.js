@@ -82,6 +82,19 @@ export const getArticleDetails = async (req, res) => {
     }
 }
 
+export const getArticles = async (req, res) => {
+    try {
+        const articles = await Article.find();
+        res.status(200).json({
+            message : "success", 
+            data : articles
+        });
+    } catch (error) {
+        console.log("Error getting articles", error.message);
+        res.status(500).json({error : "Internal server error"});
+    }
+}
+
 export const like = async (req, res) => {
     try {
         const id = req.params.id;

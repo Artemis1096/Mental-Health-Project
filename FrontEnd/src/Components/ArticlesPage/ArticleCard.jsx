@@ -1,29 +1,44 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Sunset from "../../Assets/sunset.jpg";
-import { FaHeart } from "react-icons/fa";
 import LikeButton from "../ArticlesPage/LikeButton";
-import { Link } from "react-router";
-import Button from "../Button";
+import axios from "axios";
 
 const ArticleCard = ({ article }) => {
-  const [likes, setLikes] = useState(article.likes || 0);
-  //   console.log(article.id);
+  const [likes, setLikes] = useState(article.likes);
+  const [isLiked, setIsLiked] = useState(false); // Track the state of like (whether it's liked or not)
 
-  const handleLike = () => {
-    setLikes((prevLikes) => prevLikes + 1);
+  const handleLike = async () => {
+    try {
+      // Optimistically update the like count
+      setLikes((prevLikes) => prevLikes + (isLiked ? -1 : 1)); // Increase or decrease likes based on the previous state
+      setIsLiked((prevIsLiked) => !prevIsLiked); // Toggle the liked state
+
+      // Send the like/unlike request to the backend
+      await axios.put(`http://localhost:8000/api/articles/like/${article._id}`);
+    } catch (error) {
+      console.log(error);
+      // If the API call fails, revert the UI update
+      setLikes((prevLikes) => prevLikes - (isLiked ? -1 : 1));
+      setIsLiked((prevIsLiked) => !prevIsLiked);
+    }
   };
 
   return (
-    <div className="max-w-84 rounded-xl  shadow-lg bg-gray-900 p-4">
-      <img className="w-full" src={Sunset} alt="Sunset in the mountains" />
+    <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4">
+      <img
+        className="w-full"
+        src={article.image || Sunset}
+        alt="Sunset in the mountains"
+      />
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2 text-white">{article.title}</div>
         <p className="text-white text-base">{article.content}</p>
       </div>
 
       <div className="flex justify-center m-5">
-        <Link to={`${article.id}`}>
-          <button className="!bg-purple-500  hover:!bg-purple-700 text-white font-semibold rounded-full px-4 py-2 transition duration-300  ease-in-out whitespace-nowrap">
+        <Link to={`${article._id}`}>
+          <button className="!bg-purple-500 hover:!bg-purple-700 text-white font-semibold rounded-full px-4 py-2 transition duration-300 ease-in-out whitespace-nowrap">
             Read More
           </button>
         </Link>
@@ -43,7 +58,7 @@ const ArticleCard = ({ article }) => {
         </div>
 
         {/* Like Section */}
-        <LikeButton likes={likes} handleLike={handleLike} />
+        <LikeButton likes={likes} handleLike={handleLike} isLiked={isLiked} />
       </div>
     </div>
   );

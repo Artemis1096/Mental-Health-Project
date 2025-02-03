@@ -14,10 +14,10 @@ function HomeRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
-      <Route path="/app" element={<MainContainer />} />
-      <Route path="/profile" element={<Profile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
+
+      {/* Main container and its nested routes */}
       <Route path="/app" element={<MainContainer />}>
         <Route path="profile" element={<Profile />} />
         <Route path="meditate" element={<MeditationTimer />} />

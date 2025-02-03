@@ -7,3 +7,98 @@
 .light-white {
   background-color: "rgba(255,255,255,0.17)";
 }
+
+/* From Uiverse.io by TroyRandall */
+/* The switch - the box around the slider */
+.comment-react {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  padding: 3px; /* Reduced padding */
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  scale: 1.2; /* Slightly reduced scale */
+  width: 80px; /* Reduced width */
+}
+
+.comment-react button {
+  width: 28px; /* Reduced button size */
+  height: 28px; /* Reduced button size */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+}
+
+.comment-react button:after {
+  content: "";
+  width: 32px; /* Reduced ripple size */
+  height: 32px; /* Reduced ripple size */
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background-color: #f5356e;
+  border-radius: 50%;
+  z-index: 0;
+  transform: scale(0);
+}
+
+.comment-react button svg {
+  position: relative;
+  z-index: 9;
+}
+
+.comment-react button:hover:after {
+  animation: ripple 0.6s ease-in-out forwards;
+}
+
+.comment-react button:hover svg {
+  fill: #f5356e;
+}
+
+.comment-react button:hover svg path {
+  stroke: #f5356e;
+  fill: #f5356e;
+}
+
+.comment-react hr {
+  width: 80%;
+  height: 1px;
+  background-color: #dfe1e6;
+  margin: auto;
+  border: 0;
+}
+
+.comment-react span {
+  height: 28px; /* Reduced text span size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  font-size: 16px; /* Reduced font size */
+  font-weight: 600;
+  color: #707277;
+  padding-right: 8px; /* Reduced padding */
+  text-align: center;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.permanent-marker-regular {
+  font-family: "Permanent Marker", serif;
+  font-weight: 400;
+  font-style: normal;
+}

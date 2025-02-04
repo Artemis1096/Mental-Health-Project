@@ -17,8 +17,7 @@ import { BsFillJournalBookmarkFill } from "react-icons/bs";
 import axios from "axios";
 import JournalPage from "../Views/JournalPage";
 
-function SideBar() {
-  const [open, setOpen] = useState(false);
+function SideBar({ open, setOpen }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,7 +26,7 @@ function SideBar() {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
       console.log(res);
       dispatch(logout());
-      navigate("/login"); // ✅ Correct logout navigation
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +58,6 @@ function SideBar() {
       link: "journal",
     },
     { id: 8, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
-
   ];
 
   return (
@@ -101,32 +99,25 @@ function SideBar() {
             key={menu.id}
             className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md"
           >
-            <div className={`cursor-pointer text-2xl duration-500`}>
-              {menu.symbol}
-            </div>
+            <Link to={menu.link}>
+              <div className={`cursor-pointer text-2xl duration-500`}>
+                {menu.symbol}
+              </div>
+            </Link>
 
             <span className={`${!open && "hidden"} origin-left duration-200`}>
               {menu.action ? (
-                <button className="cursor-pointer" onClick={menu.action}>
+                <button className="cursor-pointer   " onClick={menu.action}>
                   {menu.title}
                 </button>
               ) : (
-                <Link to={menu.link}>{menu.title}</Link>
+                <Link to={menu.link} className="cursor-pointer ">
+                  {menu.title}
+                </Link>
               )}
             </span>
           </li>
         ))}
-        <li
-          className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md mt-4"
-          onClick={handleLogOut}
-        >
-          <div className="cursor-pointer text-2xl">
-            <IoMdLogOut />
-          </div>
-          <span className={`${!open && "hidden"} origin-left duration-200`}>
-            Log Out
-          </span>
-        </li>
       </ul>
     </div>
   );

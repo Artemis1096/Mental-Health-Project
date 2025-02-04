@@ -71,7 +71,10 @@ function Register() {
   return (
     <>
       {!otpFlag ? (
-        <form className="space-y-4" onSubmit={handleSubmitRegister}>
+        <form
+          className="space-y-3 p-4 w-full bg-white shadow rounded-md  "
+          onSubmit={handleSubmitRegister}
+        >
           <div>
             <label className="block text-black font-medium">Full Name</label>
             <input

@@ -9,7 +9,13 @@ import { GrArticle } from "react-icons/gr";
 import { LuMailQuestion } from "react-icons/lu";
 import { IoMdLogOut } from "react-icons/io";
 import { GiHeatHaze } from "react-icons/gi";
+import { CiHome } from "react-icons/ci";
+import { FaUserFriends } from "react-icons/fa";
+import { GiThreeFriends } from "react-icons/gi";
+import { BsFillJournalBookmarkFill } from "react-icons/bs";
+
 import axios from "axios";
+import JournalPage from "../Views/JournalPage";
 
 function SideBar() {
   const [open, setOpen] = useState(false);
@@ -28,8 +34,8 @@ function SideBar() {
   };
 
   const Menu = [
-    { id: 0, title: "Home", symbol: <GrArticle />, link: "home" },
-    { id: 1, title: "Article", symbol: <GrArticle />, link: "articles" },
+    { id: 0, title: "Home", symbol: <CiHome />, link: "home" },
+    { id: 1, title: "Articles", symbol: <GrArticle />, link: "articles" },
     {
       id: 2,
       title: "About Us",
@@ -38,8 +44,22 @@ function SideBar() {
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
     { id: 4, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
-    { id: 5, title: "Soulmate Finder", symbol: <IoMdLogOut />,  link: "allUsers" },
-    { id: 6, title: "Friends", symbol: <IoMdLogOut />,  link: "friends" }
+
+    {
+      id: 5,
+      title: "Soulmate Finder",
+      symbol: <FaUserFriends />,
+      link: "allUsers",
+    },
+    { id: 6, title: "Friends", symbol: <GiThreeFriends />, link: "friends" },
+    {
+      id: 7,
+      title: "Journal",
+      symbol: <BsFillJournalBookmarkFill />,
+      link: "journal",
+    },
+    { id: 8, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
+
   ];
 
   return (

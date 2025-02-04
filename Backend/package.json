@@ -31,6 +31,7 @@
     "nodemailer": "^6.10.0",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "socket.io": "^4.8.1",
     "url": "^0.11.4"
   },
   "devDependencies": {

@@ -7,12 +7,16 @@ import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import Button from "../Components/Button";
 
+import useGoogleAuth from "../Hooks/useGoogleAuthentication";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const authenticate = useGoogleAuth();
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
@@ -49,7 +53,6 @@ function Login() {
             email: res.data.email,
           };
           dispatch(addUser(newUser));
-
         }
       } catch (error) {
         console.error("Login error:", error.response?.data || error.message);
@@ -61,9 +64,11 @@ function Login() {
     fetchData();
   }, [isSubmitted]);
 
-  const handleGoogleLogin = () => {
-    window.open("http://localhost:8000/api/auth/google", "_self");
-  };
+  // const handleGoogleLogin = () => {
+  //   authenticate();
+  // };
+  
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -74,7 +79,7 @@ function Login() {
 
         <form className="space-y-4" onSubmit={handleSubmitLogin}>
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
+            <label className="block text-black  font-medium mb-1 rounded-md">
               Enter your Email
             </label>
             <input
@@ -82,13 +87,13 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
+            <label className="block  text-black font-medium mb-1">
               Enter your Password
             </label>
             <input
@@ -96,7 +101,7 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -104,18 +109,22 @@ function Login() {
           <Button
             label="Login"
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+            className="w-full !bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
           />
         </form>
 
         <div className="text-center mt-4">OR</div>
 
         <button
-          onClick={handleGoogleLogin}
+
+          onClick={authenticate}
           className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
+
         >
           <FaGoogle />
-          Continue with Google
+          <span className="text-black whitespace-nowrap ">
+            Continue with Google
+          </span>
         </button>
 
         <p className="mt-4 text-center text-gray-600">

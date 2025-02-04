@@ -8,11 +8,12 @@ import SignUp from "../Views/SignUp";
 import MainContainer from "../Views/MainContainer";
 import ArticlesPage from "../Views/ArticlesPage";
 import MeditationTimer from "../Views/MeditationTimer";
-import AllUsersList from "../Views/AllUsersList"
-import HomePage from "../Views/HomePage"
-import FriendsList from "../Views/FriendsList"
+import AllUsersList from "../Views/AllUsersList";
+import HomePage from "../Views/HomePage";
+import FriendsList from "../Views/FriendsList";
 import ArticleDetails from "../Views/ArticleDetails";
-
+import Chat from "../Views/Chat";
+import JournalPage from "../Views/JournalPage";
 
 function HomeRoutes() {
   return (
@@ -26,6 +27,7 @@ function HomeRoutes() {
       {/* Main container and its nested routes */}
       <Route path="/app" element={<MainContainer />}>
         <Route path="home" element={<HomePage />} />
+        <Route path="chat" element={<Chat />} />
         <Route path="allUsers" element={<AllUsersList />} />
         <Route path="friends" element={<FriendsList />} />
         <Route path="profile" element={<Profile />} />
@@ -33,6 +35,7 @@ function HomeRoutes() {
         <Route path="articles" element={<ArticlesPage />} />
         <Route path="articles/:id" element={<ArticleDetails />} />
         <Route path="aboutus" element={<AboutUs />} />
+        <Route path="journal" element={<JournalPage />} />
       </Route>
     </Routes>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import "../Styles/FriendsList.css"
 function AllUsersList() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -68,9 +68,9 @@ function AllUsersList() {
                     withCredentials: true,
                 }
             );
-    
+
             alert(res.data.message);
-    
+
             // Ensure state updates correctly
             setFriendRequests((prevRequests) =>
                 prevRequests.filter((req) => req._id !== requestId)
@@ -80,7 +80,7 @@ function AllUsersList() {
             alert(err.response?.data?.message || "Failed to accept the friend request.");
         }
     };
-    
+
     const declineFriendRequest = async (requestId) => {
         try {
             const res = await axios.delete(
@@ -89,9 +89,9 @@ function AllUsersList() {
                     withCredentials: true,
                 }
             );
-    
+
             alert(res.data.message);
-    
+
             // Update state to remove the declined request
             setFriendRequests((prevRequests) =>
                 prevRequests.filter((req) => req._id !== requestId)
@@ -101,47 +101,54 @@ function AllUsersList() {
             alert(err.response?.data?.message || "Failed to decline the friend request.");
         }
     };
-    
+
     if (loading) return <p>Loading users...</p>;
     if (error) return <p>{error}</p>;
 
     return (
         <div>
-            <h2 className="text-center">All Users List</h2>
-            <div className="friend-list ml-10">
-                {users.length > 0 ? (
-                    <ul>
-                        {users.map((user) => (
-                            <li key={user._id}>
-                                <div className="addFriend flex justify-between">
-                                    {user.name}
-                                    <button className="btn" onClick={() => sendFriendRequest(user._id)}>Add</button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No users found.</p>
-                )}
-            </div>
-
-            <h2 className="text-center mt-6">Friend Requests</h2>
-            <div className="friend-requests ml-10">
-                {friendRequests.length > 0 ? (
-                    <ul>
-                        {friendRequests.map((request) => (
-                            <li key={request._id}>
-                                <div className="acceptFriend flex justify-between">
-                                    {request.user1.name} sent you a friend request
-                                    <button className="btn" onClick={() => acceptFriendRequest(request._id)}>Accept</button>
-                                    <button className="btn" onClick={() => declineFriendRequest(request._id)}>Decline</button>
+            <div className="main-container flex">
+                <div className="AllUsersList">
+                    <h2 className="text-center text-4xl m-3">All Users List</h2>
+                    <div className="friend-container ml-10">
+                        {users.length > 0 ? (
+                            <ul>
+                                {users.map((user) => (
+                                    <li key={user._id}>
+                                        <div className="addFriend flex justify-between">
+                                            <label className="user-name">{user.name}</label>
+                                            <button className="f-btn" onClick={() => sendFriendRequest(user._id)}>Add</button>
+                                        </div>
+                                        <hr />
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No users found.</p>
+                        )}
+                    </div>
+                </div>
+                <div className="requestList">
+                <h2 className="text-center text-4xl m-3">Friend Requests</h2>
+                <div className="friend-container ml-10">
+                    {friendRequests.length > 0 ? (
+                        <ul>
+                            {friendRequests.map((request) => (
+                                <li key={request._id}>
+                                    <div className="acceptFriend flex justify-between">
+                                        <label className="user-name">{request.user1.name} sent you a friend request</label>
+                                        <button className="f-btn" onClick={() => acceptFriendRequest(request._id)}>Accept</button>
+                                        <button className="f-btn" onClick={() => declineFriendRequest(request._id)}>Decline</button>
                                     </div>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No pending friend requests.</p>
-                )}
+                                    <hr />
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <label className="user-name">No pending friend requests.</label>
+                    )}
+                </div>
+                </div>
             </div>
         </div>
     );

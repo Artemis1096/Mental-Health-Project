@@ -9,7 +9,13 @@ import { GrArticle } from "react-icons/gr";
 import { LuMailQuestion } from "react-icons/lu";
 import { IoMdLogOut } from "react-icons/io";
 import { GiHeatHaze } from "react-icons/gi";
+import { CiHome } from "react-icons/ci";
+import { FaUserFriends } from "react-icons/fa";
+import { GiThreeFriends } from "react-icons/gi";
+import { BsFillJournalBookmarkFill } from "react-icons/bs";
+
 import axios from "axios";
+import JournalPage from "../Views/JournalPage";
 
 function SideBar() {
   const [open, setOpen] = useState(false);
@@ -21,15 +27,15 @@ function SideBar() {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
       console.log(res);
       dispatch(logout());
-      navigate("/"); // ✅ Correct logout navigation
+      navigate("/login"); // ✅ Correct logout navigation
     } catch (err) {
       console.log(err);
     }
   };
 
   const Menu = [
-    { id: 0, title: "Home", symbol: <GrArticle />, link: "home" },
-    { id: 1, title: "Article", symbol: <GrArticle />, link: "articles" },
+    { id: 0, title: "Home", symbol: <CiHome />, link: "home" },
+    { id: 1, title: "Articles", symbol: <GrArticle />, link: "articles" },
     {
       id: 2,
       title: "About Us",
@@ -38,9 +44,21 @@ function SideBar() {
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
     { id: 4, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
-    { id: 5, title: "Soulmate Finder", symbol: <IoMdLogOut />,  link: "allUsers" },
-    { id: 6, title: "Friends", symbol: <IoMdLogOut />,  link: "friends" },
-    { id: 7, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
+
+    {
+      id: 5,
+      title: "Soulmate Finder",
+      symbol: <FaUserFriends />,
+      link: "allUsers",
+    },
+    { id: 6, title: "Friends", symbol: <GiThreeFriends />, link: "friends" },
+    {
+      id: 7,
+      title: "Journal",
+      symbol: <BsFillJournalBookmarkFill />,
+      link: "journal",
+    },
+    { id: 8, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
 
   ];
 
@@ -48,14 +66,14 @@ function SideBar() {
     <div
       className={`${
         open ? "w-72" : "w-20"
-      } duration-300 h-screen p-5 pt-8 bg-green-800 text-white absolute`}
+      } duration-300 h-screen p-5 pt-8 bg-purple-600 text-white absolute`}
     >
       {/* Toggle Sidebar Button */}
       <div
         onClick={() => setOpen(!open)}
         className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
 
-         border-2 border-green-800 bg-white text-green-800 rounded-full 
+         border-2 border-white bg-white text-purple-600 rounded-full 
 
          cursor-pointer shadow-md ${!open && "rotate-180"} `}
       >
@@ -81,7 +99,7 @@ function SideBar() {
         {Menu.map((menu) => (
           <li
             key={menu.id}
-            className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-purple-600 rounded-md"
+            className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md"
           >
             <div className={`cursor-pointer text-2xl duration-500`}>
               {menu.symbol}
@@ -98,6 +116,17 @@ function SideBar() {
             </span>
           </li>
         ))}
+        <li
+          className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md mt-4"
+          onClick={handleLogOut}
+        >
+          <div className="cursor-pointer text-2xl">
+            <IoMdLogOut />
+          </div>
+          <span className={`${!open && "hidden"} origin-left duration-200`}>
+            Log Out
+          </span>
+        </li>
       </ul>
     </div>
   );

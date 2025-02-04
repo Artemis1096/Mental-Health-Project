@@ -11,13 +11,16 @@ const JournalPage = () => {
   const [sortOrder, setSortOrder] = useState("desc");
 
   const user = useSelector((state) => state.user);
-  const userId = user.User[0].id;
+  // console.log(user.User.id);
+
+  const userId = user.User.id;
 
   useEffect(() => {
     const fetchJournals = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/users/journals/${userId}`
+          `http://localhost:8000/api/users/journals/${userId}`,
+          { withCredentials: true }
         );
         setJournals(sortJournalsByDate(res.data.journals, sortOrder));
       } catch (err) {
@@ -25,7 +28,7 @@ const JournalPage = () => {
       }
     };
     fetchJournals();
-  }, [userId, sortOrder]);
+  }, [userId, sortOrder, journals]);
 
   const sortJournalsByDate = (journals, order) => {
     return [...journals].sort((a, b) => {
@@ -46,10 +49,11 @@ const JournalPage = () => {
 
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/users/journals/delete/${id}`
+        `http://localhost:8000/api/users/journals/delete/${id}`,
+        { withCredentials: true }
       );
       console.log(res);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +72,8 @@ const JournalPage = () => {
           {
             ...newNote,
             userId,
-          }
+          },
+          { withCredentials: true }
         );
         setJournals((prev) =>
           sortJournalsByDate([...prev, res.data.journal], sortOrder)

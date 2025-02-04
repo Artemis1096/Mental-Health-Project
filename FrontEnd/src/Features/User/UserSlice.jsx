@@ -21,7 +21,7 @@ export const UserSlice = createSlice({
         name: action.payload.name,
         email: action.payload.email,
       };
-      state.User.push(user);
+      state.User = user;
       state.isLoggedIn = true; // Set isLoggedIn to true when a user logs in
       localStorage.setItem("user", JSON.stringify(state.User)); // Store user in localStorage
     },

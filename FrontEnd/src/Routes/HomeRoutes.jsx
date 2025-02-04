@@ -12,7 +12,9 @@ import AllUsersList from "../Views/AllUsersList";
 import HomePage from "../Views/HomePage";
 import FriendsList from "../Views/FriendsList";
 import ArticleDetails from "../Views/ArticleDetails";
-import Chat from "../Views/Chat"
+import Chat from "../Views/Chat";
+import JournalPage from "../Views/JournalPage";
+
 function HomeRoutes() {
   return (
     <Routes>
@@ -33,6 +35,7 @@ function HomeRoutes() {
         <Route path="articles" element={<ArticlesPage />} />
         <Route path="articles/:id" element={<ArticleDetails />} />
         <Route path="aboutus" element={<AboutUs />} />
+        <Route path="journal" element={<JournalPage />} />
       </Route>
     </Routes>
   );

@@ -7,12 +7,16 @@ import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import Button from "../Components/Button";
 
+import useGoogleAuth from "../Hooks/useGoogleAuthentication";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const authenticate = useGoogleAuth();
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
@@ -61,9 +65,11 @@ function Login() {
     fetchData();
   }, [isSubmitted]);
 
-  const handleGoogleLogin = () => {
-    window.open("http://localhost:8000/api/auth/google", "_self");
-  };
+  // const handleGoogleLogin = () => {
+  //   authenticate();
+  // };
+  
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -111,7 +117,7 @@ function Login() {
         <div className="text-center mt-4">OR</div>
 
         <button
-          onClick={handleGoogleLogin}
+          onClick={authenticate}
           className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
         >
           <FaGoogle />

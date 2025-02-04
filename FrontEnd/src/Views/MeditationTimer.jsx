@@ -12,7 +12,8 @@ function MeditationTimer() {
   const [breakMinutes, setBreakMinutes] = useState(15);
 
   return (
-    <main>
+    <main className='p-8'>
+      <h1 className='m-6 text-4xl'>Meditate</h1>
       <SettingsContext.Provider value={{
         showSettings,
         workMinutes,

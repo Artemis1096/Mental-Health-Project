@@ -7,7 +7,6 @@ import SettingsContext from "../../Context/SettingsContext";
 import "../../Styles/Slider.css"
 
 const red = '#f54e4e';
-const green = '#4aec8c';
 
 function Timer() {
   const settingsInfo = useContext(SettingsContext);

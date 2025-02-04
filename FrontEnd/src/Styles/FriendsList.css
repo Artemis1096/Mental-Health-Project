@@ -1,3 +1,31 @@
 .f-btn{
-    border: 1px solid white;
+    border: 1px solid black;
+    margin: 0.5rem;
+    color: black;
+    border-radius: 10px;
+    padding: 0.5rem;
+} 
+.friends-list{
+    padding: 1rem;
+    font-size: 1.3rem;
+}
+.user-name{
+    margin: 1rem;
+    width: 39%;
+}
+.friend-container{
+    color: black;
+    background-color: white;
+    margin: 1rem;
+    border-radius: 15px;
+}
+.main-container{
+    /* display: flex; */
+}
+.AllUsersList{
+    width: 50%;
+    /* height: 100%; */
+}
+.requestList{
+    width: 50%;
 }

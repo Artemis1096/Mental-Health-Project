@@ -39,23 +39,21 @@ function SideBar() {
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
     { id: 4, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
     { id: 5, title: "Soulmate Finder", symbol: <IoMdLogOut />,  link: "allUsers" },
-    { id: 6, title: "Friends", symbol: <IoMdLogOut />,  link: "friends" },
-    { id: 7, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
-
+    { id: 6, title: "Friends", symbol: <IoMdLogOut />,  link: "friends" }
   ];
 
   return (
     <div
       className={`${
         open ? "w-72" : "w-20"
-      } duration-300 h-screen p-5 pt-8 bg-green-800 text-white absolute`}
+      } duration-300 h-screen p-5 pt-8 bg-purple-600 text-white absolute`}
     >
       {/* Toggle Sidebar Button */}
       <div
         onClick={() => setOpen(!open)}
         className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
 
-         border-2 border-green-800 bg-white text-green-800 rounded-full 
+         border-2 border-white bg-white text-purple-600 rounded-full 
 
          cursor-pointer shadow-md ${!open && "rotate-180"} `}
       >
@@ -81,7 +79,7 @@ function SideBar() {
         {Menu.map((menu) => (
           <li
             key={menu.id}
-            className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-purple-600 rounded-md"
+            className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md"
           >
             <div className={`cursor-pointer text-2xl duration-500`}>
               {menu.symbol}
@@ -98,6 +96,17 @@ function SideBar() {
             </span>
           </li>
         ))}
+        <li
+          className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md mt-4"
+          onClick={handleLogOut}
+        >
+          <div className="cursor-pointer text-2xl">
+            <IoMdLogOut />
+          </div>
+          <span className={`${!open && "hidden"} origin-left duration-200`}>
+            Log Out
+          </span>
+        </li>
       </ul>
     </div>
   );

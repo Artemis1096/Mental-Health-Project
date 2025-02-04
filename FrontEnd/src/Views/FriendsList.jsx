@@ -56,14 +56,14 @@ const FriendsList = () => {
 
     return (
         <div>
-            <h2 className="text-center">Your Friends</h2>
-            <div className="friend-list ml-10 mt-2">
+            <h2 className="text-center text-4xl m-3">Your Friends</h2>
+            <div className="friend-container ml-10 mt-2">
                 {users.length > 0 ? (
-                    <ul>
+                    <ul className='friends-list'>
                         {users.map((user) => (
                             <li key={user._id}>
                                 <div className="flex justify-between">
-                                    {user.name}
+                                    <label className="user-name">{user.name}</label>
                                     <div className="btns">
                                         <button
                                             className="f-btn"
@@ -74,6 +74,7 @@ const FriendsList = () => {
                                         <button className="f-btn" onClick={() => removeFriend(user._id)}>Remove</button>
                                     </div>
                                 </div>
+                                <hr />
                             </li>
                         ))}
                     </ul>

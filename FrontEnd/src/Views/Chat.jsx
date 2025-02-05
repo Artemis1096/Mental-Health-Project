@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import "../Styles/Chat.css";
 import axios from "axios";
 
+import useListenMessages from "../Hooks/useListenMessages.js";
+
 const Chat = () => {
     const location = useLocation();
     const friendId = location.state?.friendId;
@@ -12,8 +14,9 @@ const Chat = () => {
     const chatEndRef = useRef(null); // Ref for auto-scrolling
     const userData = JSON.parse(localStorage.getItem("user"));
     const userId = userData && Array.isArray(userData) ? userData[0].id : null;
-
+    useListenMessages({messages, setMessages});
     useEffect(() => {
+        
         if (!friendId) return;
 
         const fetchMessages = async () => {

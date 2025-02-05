@@ -16,18 +16,18 @@ import { setupGoogleAuth } from "./Config/googleAuthConfig.js";
 import connectDB from "./Config/DBConfig.js";
 import { verify } from "./Utils/WebToken.js";
 import upload from "./Middlewares/upload.js";
+import {app, server} from './socket/socket.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
 setupGoogleAuth(app);
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   try {
     connectDB();
     console.log(`Server is running on port ${PORT}`);

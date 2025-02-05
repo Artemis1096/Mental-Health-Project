@@ -1,14 +1,28 @@
 import Register from "../Components/Register";
-import { Link } from "react-router";
+import { Link } from "react-router-dom"; // Fixed import
+import { FaGoogle } from "react-icons/fa";
+import bg from "../Assets/bg-register.jpg";
+import useGoogleAuth from "../Hooks/useGoogleAuthentication";
 
 function SignUp() {
+  const authenticate = useGoogleAuth();
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white shadow-lg rounded-xl">
+    <div className="relative h-screen overflow-y-auto flex items-center justify-start min-h-screen pl-16 ">
+      {/* Background Image */}
+      <img
+        src={bg}
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover -z-10"
+      />
+
+      {/* SignUp Card (Shifted Left, Smaller) */}
+      <div className=" w-full max-w-sm m-10 p-6 mb-5 bg-white shadow-lg rounded-xl z-10 ">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
           Sign Up
         </h2>
         <Register />
+
         <p className="mt-4 text-center text-gray-600">
           Already have an account?{" "}
           <Link
@@ -18,6 +32,15 @@ function SignUp() {
             Login here
           </Link>
         </p>
+
+        <h2 className="text-black text-center p-1">OR</h2>
+
+        <button
+          onClick={authenticate}
+          className="w-full mt-4 rounded-3xl p-2 !bg-amber-800"
+        >
+          Continue with Google
+        </button>
       </div>
     </div>
   );

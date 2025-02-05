@@ -71,15 +71,18 @@ function Register() {
   return (
     <>
       {!otpFlag ? (
-        <form className="space-y-4" onSubmit={handleSubmitRegister}>
+        <form
+          className="space-y-3 p-4 w-full bg-white shadow rounded-md  "
+          onSubmit={handleSubmitRegister}
+        >
           <div>
-            <label className="block text-gray-700 font-medium">Full Name</label>
+            <label className="block text-black font-medium">Full Name</label>
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-1 px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -90,7 +93,7 @@ function Register() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-1 px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -102,7 +105,7 @@ function Register() {
               type="date"
               value={dob}
               onChange={(e) => setDob(e.target.value)}
-              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-1 px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -113,7 +116,7 @@ function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-1 px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -126,7 +129,7 @@ function Register() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
-              className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full mt-1 px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -134,7 +137,7 @@ function Register() {
           <Button
             label="Register"
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+            className="w-full bg-blue-800"
           />
         </form>
       ) : (

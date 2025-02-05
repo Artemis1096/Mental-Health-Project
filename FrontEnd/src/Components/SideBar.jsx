@@ -9,27 +9,36 @@ import { GrArticle } from "react-icons/gr";
 import { LuMailQuestion } from "react-icons/lu";
 import { IoMdLogOut } from "react-icons/io";
 import { GiHeatHaze } from "react-icons/gi";
-import axios from "axios";
+import { CiHome } from "react-icons/ci";
+import { FaUserFriends } from "react-icons/fa";
+import { GiThreeFriends } from "react-icons/gi";
+import { BsFillJournalBookmarkFill } from "react-icons/bs";
 
-function SideBar() {
-  const [open, setOpen] = useState(false);
+import axios from "axios";
+import JournalPage from "../Views/JournalPage";
+import {UseAuthContext} from '../Context/AuthContext.jsx';
+
+function SideBar({ open, setOpen }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {setAuth} = UseAuthContext();
 
   const handleLogOut = async () => {
     try {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
       console.log(res);
       dispatch(logout());
-      navigate("/"); // ✅ Correct logout navigation
+      setAuth(null);
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }
   };
 
   const Menu = [
-    { id: 0, title: "Home", symbol: <GrArticle />, link: "home" },
-    { id: 1, title: "Article", symbol: <GrArticle />, link: "articles" },
+    { id: 0, title: "Home", symbol: <CiHome />, link: "home" },
+    { id: 1, title: "Articles", symbol: <GrArticle />, link: "articles" },
     {
       id: 2,
       title: "About Us",
@@ -38,8 +47,21 @@ function SideBar() {
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
     { id: 4, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
-    { id: 5, title: "Soulmate Finder", symbol: <IoMdLogOut />,  link: "allUsers" },
-    { id: 6, title: "Friends", symbol: <IoMdLogOut />,  link: "friends" }
+
+    {
+      id: 5,
+      title: "Soulmate Finder",
+      symbol: <FaUserFriends />,
+      link: "allUsers",
+    },
+    { id: 6, title: "Friends", symbol: <GiThreeFriends />, link: "friends" },
+    {
+      id: 7,
+      title: "Journal",
+      symbol: <BsFillJournalBookmarkFill />,
+      link: "journal",
+    },
+    { id: 8, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
   ];
 
   return (
@@ -81,32 +103,25 @@ function SideBar() {
             key={menu.id}
             className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md"
           >
-            <div className={`cursor-pointer text-2xl duration-500`}>
-              {menu.symbol}
-            </div>
+            <Link to={menu.link}>
+              <div className={`cursor-pointer text-2xl duration-500`}>
+                {menu.symbol}
+              </div>
+            </Link>
 
             <span className={`${!open && "hidden"} origin-left duration-200`}>
               {menu.action ? (
-                <button className="cursor-pointer" onClick={menu.action}>
+                <button className="cursor-pointer   " onClick={menu.action}>
                   {menu.title}
                 </button>
               ) : (
-                <Link to={menu.link}>{menu.title}</Link>
+                <Link to={menu.link} className="cursor-pointer ">
+                  {menu.title}
+                </Link>
               )}
             </span>
           </li>
         ))}
-        <li
-          className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-white hover:text-black rounded-md mt-4"
-          onClick={handleLogOut}
-        >
-          <div className="cursor-pointer text-2xl">
-            <IoMdLogOut />
-          </div>
-          <span className={`${!open && "hidden"} origin-left duration-200`}>
-            Log Out
-          </span>
-        </li>
       </ul>
     </div>
   );

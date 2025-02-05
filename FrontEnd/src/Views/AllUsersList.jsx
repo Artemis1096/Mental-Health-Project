@@ -6,6 +6,7 @@ function AllUsersList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [friendRequests, setFriendRequests] = useState([]); // Store friend requests
+  const [searchQuery, setSearchQuery] = useState("");
 
   const userData = JSON.parse(localStorage.getItem("user"));
   const userId = userData.id;
@@ -117,29 +118,46 @@ function AllUsersList() {
     }
   };
 
+  //handle search query
+  const filteredUsers = users.filter((user) => {
+    const searchedUsers = user.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    return searchedUsers;
+  });
+
   if (loading) return <p>Loading users...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <div className="main-container flex">
+      <div className="w-full flex justify-center p-3">
+        <input
+          type="search"
+          className="w-auto m-2 border-1 p-2 rounded-md"
+          placeholder="search friends"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+      <div className=" flex bg-purple-900 rounded-xl border-1   border-purple-400 shadow-md  ml-2 mr-2">
         <div className="AllUsersList">
           <h2 className="text-center text-4xl m-3">All Users List</h2>
-          <div className="friend-container ml-10">
-            {users.length > 0 ? (
+          <div className=" h-screen shadow-4xl  ml-5 overflow-y-auto">
+            {filteredUsers.length > 0 ? (
               <ul>
-                {users.map((user) => (
+                {filteredUsers.map((user) => (
                   <li key={user._id}>
-                    <div className="addFriend flex justify-between">
+                    <div className="addFriend flex justify-between shadow-sm shadow-purple-400 bg-blue-400 mb-2 rounded-md">
                       <label className="user-name">{user.name}</label>
                       <button
-                        className="f-btn"
+                        className="f-btn  "
                         onClick={() => sendFriendRequest(user._id)}
                       >
                         Add
                       </button>
                     </div>
-                    <hr />
                   </li>
                 ))}
               </ul>

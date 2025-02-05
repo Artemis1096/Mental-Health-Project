@@ -3,6 +3,7 @@ import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import axios from "axios";
 // import {useSelector} from "react-redux"
 import { UseAuthContext } from "../Context/AuthContext";
+import bg from "../Assets/articlebg.jpg";
 
 function ArticlesPage() {
    
@@ -83,6 +84,11 @@ function ArticlesPage() {
 
   return (
     <>
+      <img
+        src={bg}
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover -z-10"
+      />
       <h1 className="text-5xl font-bold text-center py-4 permanent-marker-regular">
         Articles
       </h1>
@@ -107,7 +113,7 @@ function ArticlesPage() {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+          className="p-2 border bg-purple-900 border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
         >
           <option value="All">All Categories</option>
           {categories.map((cat, index) => (

@@ -9,6 +9,7 @@ import Button from "../Components/Button";
 import BackgroundVideo from "../Components/LoginPage/BackgroundVideo";
 
 import useGoogleAuth from "../Hooks/useGoogleAuthentication";
+import { UseAuthContext } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,8 @@ function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const {setAuth} = UseAuthContext();
 
   const authenticate = useGoogleAuth();
 
@@ -54,6 +57,7 @@ function Login() {
             email: res.data.email,
           };
           dispatch(addUser(newUser));
+          setAuth(newUser);
         }
       } catch (error) {
         console.error("Login error:", error.response?.data || error.message);

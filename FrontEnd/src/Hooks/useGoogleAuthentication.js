@@ -1,8 +1,10 @@
 import { useDispatch } from "react-redux";
 import { useCallback } from "react";
 import { addUser } from "../Features/User/UserSlice";
+import {UseAuthContext} from '../Context/AuthContext.jsx';
 
 const useGoogleAuth = () => {
+  const {setAuth} = UseAuthContext();
   const dispatch = useDispatch();
   const googleAuthUrl = "http://localhost:8000/api/auth/google"; // Ensure this matches your backend URL
 
@@ -29,6 +31,8 @@ const useGoogleAuth = () => {
           email: event.data.user.email,
         };
         dispatch(addUser(newUser));
+        setAuth(newUser);
+
 
         // Redirect to home or dashboard page
         window.location.href = "/login"; // Adjust URL to match your frontend route

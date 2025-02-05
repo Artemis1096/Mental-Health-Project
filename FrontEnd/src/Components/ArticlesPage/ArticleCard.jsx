@@ -5,6 +5,7 @@ import LikeButton from "../ArticlesPage/LikeButton";
 import axios from "axios";
 
 const ArticleCard = ({ article }) => {
+  console.log(`http://localhost:8000/public/article_images/${article.image}`);
   const [likes, setLikes] = useState(article.likes);
   const [isLiked, setIsLiked] = useState(false); // Track the state of like (whether it's liked or not)
 
@@ -28,7 +29,7 @@ const ArticleCard = ({ article }) => {
     <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4">
       <img
         className="w-full"
-        src={article.image || Sunset}
+        src={article.image ? `http://localhost:8000/public/article_images/${article.image}` : Sunset}
         alt="Sunset in the mountains"
       />
       <div className="px-6 py-4">

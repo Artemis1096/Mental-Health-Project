@@ -31,7 +31,7 @@ const useGoogleAuth = () => {
         dispatch(addUser(newUser));
 
         // Redirect to home or dashboard page
-        window.location.href = "/app/home"; // Adjust URL to match your frontend route
+        window.location.href = "/login"; // Adjust URL to match your frontend route
         console.log("User logged in successfully:", event.data.user);
       }
     };

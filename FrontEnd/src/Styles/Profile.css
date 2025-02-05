@@ -1,0 +1,25 @@
+.main-container{
+    color: black;
+    height: 80vh;
+}
+.pic{
+    background-color: white;
+    width: 30%;
+    border: 2px solid black;
+    border-radius: 50%;
+    margin-top: -4rem;
+}
+.pic img{
+    border-radius: 50%;
+}
+.user-data{
+    background-color: white;
+    width: 60%;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+.upper-design{
+    height: 35%;
+    background-color: black;
+    border-radius: 16px;
+}

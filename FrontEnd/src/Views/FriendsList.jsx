@@ -4,12 +4,17 @@ import axios from 'axios'
 import "../Styles/FriendsList.css"
 import { useNavigate } from "react-router-dom"
 
+import { UseAuthContext } from '../context/AuthContext';
+
+
 const FriendsList = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const {auth} = UseAuthContext();
     const userData = JSON.parse(localStorage.getItem("user"));
-    const userId = userData && Array.isArray(userData) ? userData[0].id : null;
+    // const userId = userData && Array.isArray(userData) ? userData[0].id : null;
+    const userId = auth.id;
     let navigate = useNavigate();
     useEffect(() => {
         const fetchUsers = async () => {

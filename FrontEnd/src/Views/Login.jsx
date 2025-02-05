@@ -6,8 +6,10 @@ import { addUser } from "../Features/User/UserSlice";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import Button from "../Components/Button";
+import BackgroundVideo from "../Components/LoginPage/BackgroundVideo";
 
 import useGoogleAuth from "../Hooks/useGoogleAuthentication";
+import { UseAuthContext } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,6 +17,8 @@ function Login() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const {setAuth} = UseAuthContext();
 
   const authenticate = useGoogleAuth();
 
@@ -53,6 +57,7 @@ function Login() {
             email: res.data.email,
           };
           dispatch(addUser(newUser));
+          setAuth(newUser);
         }
       } catch (error) {
         console.error("Login error:", error.response?.data || error.message);
@@ -67,19 +72,21 @@ function Login() {
   // const handleGoogleLogin = () => {
   //   authenticate();
   // };
-  
-  
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
-        <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
+    <div className="relative flex items-center justify-center min-h-screen bg-amber-100">
+      {/* Background Video */}
+      <BackgroundVideo />
+
+      {/* Login Form */}
+      <div className="absolute bg-amber-200 p-8 rounded-2xl shadow-lg w-96 z-10 opacity-70">
+        <h1 className="text-4xl font-bold text-center mb-6 text-gray-800 permanent-marker-regular ">
           Login
         </h1>
 
         <form className="space-y-4" onSubmit={handleSubmitLogin}>
           <div>
-            <label className="block text-black  font-medium mb-1 rounded-md">
+            <label className="block text-black font-medium mb-1 rounded-md">
               Enter your Email
             </label>
             <input
@@ -93,7 +100,7 @@ function Login() {
           </div>
 
           <div>
-            <label className="block  text-black font-medium mb-1">
+            <label className="block text-black font-medium mb-1">
               Enter your Password
             </label>
             <input
@@ -113,18 +120,12 @@ function Login() {
           />
         </form>
 
-        <div className="text-center mt-4">OR</div>
+        <div className="text-center text-black mt-4">OR</div>
 
-        <button
-
-          onClick={authenticate}
-          className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition"
-
-        >
-          <FaGoogle />
-          <span className="text-black whitespace-nowrap ">
-            Continue with Google
-          </span>
+        <button onClick={authenticate} className="w-full yoyo  ">
+          <div className="my-3">
+            <FaGoogle />
+          </div>
         </button>
 
         <p className="mt-4 text-center text-gray-600">

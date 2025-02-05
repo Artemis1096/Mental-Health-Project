@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../Styles/HomePage.css"
+import "../Styles/HomePage.css";
 const Homepage = () => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const userId = userData && Array.isArray(userData) ? userData[0].id : null;
-    const userName = userData && Array.isArray(userData) ? userData[0].name : null;
-    return (
-        <div className='main'>
-            <div className="Heading">
-                <p className='Heading-welcome'>Welcome</p>
-                <p className='Heading-username'>{userName}</p>
-            </div>
-        </div>
-    )
-}
+  const userData = JSON.parse(localStorage.getItem("user"));
 
-export default Homepage
+  // console.log(userData);
+
+  return (
+    <div className="main">
+      <div className="Heading">
+        <p className="Heading-welcome">Welcome</p>
+        <p className="Heading-username">{userData.name}</p>
+      </div>
+    </div>
+  );
+};
+
+export default Homepage;

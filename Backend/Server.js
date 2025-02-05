@@ -11,6 +11,7 @@ import MessageRoutes from "./Routes/MessageRoutes.js";
 import ArticleRoutes from "./Routes/ArticleRoutes.js";
 import FriendshipRoutes from "./Routes/FriendshipRoutes.js";
 import UserRoutes from "./Routes/UserRoutes.js";
+import TaskRoutes from "./Routes/TaskRoutes.js"
 //middlewares and utils
 import { setupGoogleAuth } from "./Config/googleAuthConfig.js";
 import connectDB from "./Config/DBConfig.js";
@@ -57,6 +58,7 @@ app.use("/api/message", MessageRoutes);
 app.use("/api/articles", ArticleRoutes);
 app.use("/api/friends", FriendshipRoutes);
 app.use("/api/users", UserRoutes);
+app.use("/api/tasks", TaskRoutes);
 
 // ------------------------------------------------------------------------------------------------------------------------------
 app.get("/dashboard", (req, res) => {

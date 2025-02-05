@@ -16,16 +16,20 @@ import { BsFillJournalBookmarkFill } from "react-icons/bs";
 
 import axios from "axios";
 import JournalPage from "../Views/JournalPage";
+import {UseAuthContext} from '../Context/AuthContext.jsx';
 
 function SideBar({ open, setOpen }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {setAuth} = UseAuthContext();
 
   const handleLogOut = async () => {
     try {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
       console.log(res);
       dispatch(logout());
+      setAuth(null);
       navigate("/login");
     } catch (err) {
       console.log(err);

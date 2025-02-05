@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Conversation from "../Models/conversation.js";
 import Message from "../Models/message.js";
+import {io, getReceiverSocketId} from '../socket/socket.js';
 
 export const sendMessage = async (req, res) => {
   try {
@@ -30,6 +31,12 @@ export const sendMessage = async (req, res) => {
     }
 
     await Promise.all([conversation.save(), newmessage.save()]);
+
+    const receiverSocketId = getReceiverSocketId(receiverid);
+    if(receiverSocketId){
+      // console.log("wroking");
+      io.to(receiverSocketId).emit("newMessage", newmessage);
+    }
 
     res.status(200).json({
       message: "Message sent successfully",

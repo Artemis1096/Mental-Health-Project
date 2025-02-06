@@ -24,6 +24,7 @@
     "animated-backgrounds": "^1.1.0",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
+    "chartjs": "^0.3.24",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.4.0",
     "gsap": "^3.11.5",

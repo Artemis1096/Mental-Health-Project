@@ -3,8 +3,8 @@ import { FaUserEdit, FaCog } from "react-icons/fa";
 import profile from "../Assets/ProfileVideo.gif";
 import { useSelector } from "react-redux";
 
-import { Chart as ChartJS } from "chart.js/auto";
-import { Bar, Doughnut, Line } from "react-chartjs-2";
+// import { Chart as ChartJS } from "chart.js";
+// import { Bar, Doughnut, Line } from "react-chartjs-2";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -42,7 +42,7 @@ const Profile = () => {
       <div className="w-full h-xl mt-5 text-black p-2 bg-white rounded-lg">
         <h1 className="text-center">Data visualization</h1>
 
-        <Bar
+        {/* <Bar
           data={{
             labels: ["A", "B", "C"],
             datasets: [
@@ -56,7 +56,7 @@ const Profile = () => {
               },
             ],
           }}
-        />
+        /> */}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, confirmPassword, dob, userType, username} = req.body;
 
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (user) return res.status(400).json("Email already registered!");
 
     user = await User.findOne({username});
@@ -61,7 +61,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const user = null;
+    let user = null;
     if(!username)
       user = await User.findOne({ email });
     else

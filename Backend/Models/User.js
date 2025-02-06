@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema({
     DOB : {
         type : Date
     },
+    username : {
+        type : String,
+        required : true,
+        unique : true
+    },
     email : {
         type : String,
         required : true,

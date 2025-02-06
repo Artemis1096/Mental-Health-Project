@@ -70,7 +70,7 @@ export const googleAuthCallback = (req, res, next) => {
           user: { 
             name: "${dbUser.name}", 
             email: "${dbUser.email}", 
-            userId: "${dbUser._id.toString()}" 
+            userId: "${dbUser._id.toString()}",
           }
         }, "*");
         window.close();

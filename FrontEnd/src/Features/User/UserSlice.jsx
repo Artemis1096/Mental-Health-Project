@@ -20,6 +20,7 @@ export const UserSlice = createSlice({
         id: action.payload.id ? action.payload.id : nanoid(),
         name: action.payload.name,
         email: action.payload.email,
+        userType: action.payload.userType,
       };
       state.User = user;
       state.isLoggedIn = true; // Set isLoggedIn to true when a user logs in

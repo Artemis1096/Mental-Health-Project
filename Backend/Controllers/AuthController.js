@@ -10,7 +10,6 @@ export const register = async (req, res) => {
       req.body;
 
     let user = await User.findOne({ email });
-    let user = await User.findOne({ email });
     if (user) return res.status(400).json("Email already registered!");
 
     user = await User.findOne({ username });

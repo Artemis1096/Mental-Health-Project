@@ -27,7 +27,7 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/users/679c51c205c13eeb404ab4b5`,
+          `http://localhost:8000/api/users/${userData.id}`,
           {
             withCredentials: true,
           }

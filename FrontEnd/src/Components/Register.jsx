@@ -36,8 +36,6 @@ function Register() {
       return;
     }
 
-    // const data = { fullName, email, dob, password, confirmPassword };
-    // console.log(data);
     setIsSubmitted(true);
   };
 
@@ -58,7 +56,6 @@ function Register() {
           }
         );
 
-        //console.log(res.data);
         setOtpFlag(true); // Set OTP flag to true after successful registration
       } catch (error) {
         console.error("Error:", error.response?.data || error.message);
@@ -74,7 +71,7 @@ function Register() {
     <>
       {!otpFlag ? (
         <form
-          className="space-y-3 p-4 w-full bg-white shadow rounded-md  "
+          className="space-y-3 p-4 w-full bg-orange-200 shadow rounded-xl  h-96 overflow-y-scroll "
           onSubmit={handleSubmitRegister}
         >
           <div>
@@ -100,7 +97,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">Email</label>
+            <label className="block text-black font-medium">Email</label>
             <input
               type="email"
               value={email}
@@ -111,7 +108,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-black font-medium">
               Date of Birth
             </label>
             <input
@@ -123,7 +120,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">Password</label>
+            <label className="block text-black font-medium">Password</label>
             <input
               type="password"
               value={password}
@@ -134,7 +131,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-black font-medium">
               Confirm Password
             </label>
             <input
@@ -150,7 +147,7 @@ function Register() {
           <Button
             label="Register"
             type="submit"
-            className="w-full bg-blue-800"
+            className="w-full bg-blue-900 "
           />
         </form>
       ) : (

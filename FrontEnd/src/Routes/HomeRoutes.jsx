@@ -15,6 +15,7 @@ import ArticleDetails from "../Views/ArticleDetails";
 import Chat from "../Views/Chat";
 import JournalPage from "../Views/JournalPage";
 import Aichat from "../Views/AIchat";
+import QuoteReel from "../Views/QuotesReel";
 import { UseAuthContext } from "../Context/AuthContext";
 
 function HomeRoutes() {
@@ -70,6 +71,10 @@ function HomeRoutes() {
         <Route
           path="meditate"
           element={!auth ? <Navigate to="/login" /> : <MeditationTimer />}
+        />
+        <Route
+          path="quotes"
+          element={!auth ? <Navigate to="/login" /> : <QuoteReel />}
         />
         <Route
           path="aichat"

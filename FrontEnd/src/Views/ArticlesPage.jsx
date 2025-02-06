@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
 import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import axios from "axios";
+// import {useSelector} from "react-redux"
+import { UseAuthContext } from "../Context/AuthContext";
 import bg from "../Assets/articlebg.jpg";
 
 function ArticlesPage() {
+   
+  // const user = useSelector((state)=>state.user);
+  // console.log(user);
+  
+  const {auth} = UseAuthContext();
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
@@ -14,8 +21,11 @@ function ArticlesPage() {
     title: "",
     content: "",
     category: "",
+    image: ""
   });
   const [image, setImage] = useState(null);
+
+  // const ad = user.userType === "admin";
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -33,50 +43,36 @@ function ArticlesPage() {
     };
     fetchArticles();
 
-    // Check if user is admin
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.role === "admin") {
+    if (auth && auth.userType==="admin") {
       setIsAdmin(true);
     }
-  }, []);
+  }, [showModal]);
 
-  // Handle adding a new article
   const handleAddArticle = async () => {
-    if (
-      !newArticle.title ||
-      !newArticle.content ||
-      !newArticle.category ||
-      !image
-    ) {
-      alert("All fields are required!");
-      return;
-    }
+    setShowModal(true);
 
-    const formData = new FormData();
-    formData.append("title", newArticle.title);
-    formData.append("content", newArticle.content);
-    formData.append("category", newArticle.category);
-    formData.append("image", image);
-    formData.append("likes", 0); // Default likes to 0
+    if(image){
+      const data = new FormData();
+      const fileName = Date.now() + image.name;
+      data.append("img", fileName);
+      data.append("file", image);
+      newArticle.image =  fileName;
+      try {
+        await axios.post("http://localhost:8000/api/upload", data);
+      } catch (error) {
+        console.log("error uploading image\n", error.message);
+      }
+    }
 
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/articles/create",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-
-      setArticles([...articles, res.data.newArticle]); // Update UI with new article
-      setShowModal(false);
-      setNewArticle({ title: "", content: "", category: "" });
-      setImage(null);
+      const res = await axios.post("http://localhost:8000/api/articles/create", newArticle, {withCredentials : true});
     } catch (error) {
-      console.error("Error adding article:", error);
+      console.log("error creating article : client", error.message);
     }
-  };
 
+    setShowModal(false);
+  }
+  
   const filteredArticles = articles.filter((article) => {
     const matchesSearch = article.title
       .toLowerCase()

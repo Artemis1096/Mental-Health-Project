@@ -46,22 +46,23 @@ function SideBar({ open, setOpen }) {
       link: "aboutus",
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
-    { id: 4, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
+    { id: 4, title: "Ai Chat", symbol: <CgProfile />, link: "aichat" },
+    { id: 5, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
 
     {
-      id: 5,
+      id: 6,
       title: "Soulmate Finder",
       symbol: <FaUserFriends />,
       link: "allUsers",
     },
-    { id: 6, title: "Friends", symbol: <GiThreeFriends />, link: "friends" },
+    { id: 7, title: "Friends", symbol: <GiThreeFriends />, link: "friends" },
     {
-      id: 7,
+      id: 8,
       title: "Journal",
       symbol: <BsFillJournalBookmarkFill />,
       link: "journal",
     },
-    { id: 8, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
+    { id: 9, title: "Log Out", symbol: <IoMdLogOut />, action: handleLogOut },
   ];
 
   return (

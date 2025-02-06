@@ -9,7 +9,7 @@ import Button from "../Components/Button";
 import BackgroundVideo from "../Components/LoginPage/BackgroundVideo";
 
 import useGoogleAuth from "../Hooks/useGoogleAuthentication";
-import { UseAuthContext } from "../context/AuthContext";
+import { UseAuthContext } from "../Context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -47,7 +47,6 @@ function Login() {
         );
 
         console.log(res);
-        // If login is successful, move to OTP submission
 
         if (res.data.message === "Logged in successfully") {
           navigate("/app/home");
@@ -55,7 +54,9 @@ function Login() {
             id: res.data.userId,
             name: res.data.name,
             email: res.data.email,
+            userType : res.data.userType
           };
+
           dispatch(addUser(newUser));
           setAuth(newUser);
         }

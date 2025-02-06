@@ -63,65 +63,36 @@ function Timer() {
 
   return (
     <div>
-      <CircularProgressbar
-        value={percentage}
-        text={minutes + ':' + seconds}
-        styles={buildStyles({
-          textColor: '#fff',
-          pathColor: red,
-          tailColor: 'rgba(255,255,255,.2)',
-        })}
-      />
-      <div style={{ marginTop: '20px' }}>
+      <div className="meditation-container">
+        <CircularProgressbar
+          value={percentage}
+          text={minutes + ':' + seconds}
+          styles={buildStyles({
+            textColor: '#fff',
+            pathColor: `url(#gradient)`, // Reference the gradient
+            trailColor: 'rgba(255,255,255,.2)',
+          })}
+          strokeWidth={10}
+        />
+        <svg width={0} height={0}>
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f54e4e" />
+              <stop offset="100%" stopColor="#ffcc00" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div>
         {isPaused
           ? <PlayButton onClick={() => { setIsPaused(false); isPausedRef.current = false; }} />
           : <PauseButton onClick={() => { setIsPaused(true); isPausedRef.current = true; }} />}
+        </div>
       </div>
-      <div style={{ marginTop: '20px' }}>
-        <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
-      </div>
-      {/* Music Player Component */}
-      <div style={{ marginTop: '20px' }}>
-        <MusicPlayer />
+      <div>
+        <SettingsButton className="setting-btn" onClick={() => settingsInfo.setShowSettings(true)} />
       </div>
     </div>
   );
 }
-
-function MusicPlayer() {
-  const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const togglePlay = () => {
-    if (!isPlaying) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  return (
-    <div>
-      {/* The audio file should be placed in your public folder.
-          For example, if you have a file named 'music.mp3', the src is set to '/music.mp3' */}
-      <audio ref={audioRef} src="/a1.mp3" loop />
-      <button onClick={togglePlay} style={buttonStyle}>
-        {isPlaying ? "Pause Music" : "Play Music"}
-      </button>
-    </div>
-  );
-}
-
-const buttonStyle = {
-  padding: '10px 20px',
-  fontSize: '16px',
-  cursor: 'pointer',
-  borderRadius: '5px',
-  border: 'none',
-  backgroundColor: red,
-  color: '#fff',
-  marginTop: '10px'
-};
 
 export default Timer;

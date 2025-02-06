@@ -28,7 +28,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   try {
     connectDB();
     console.log(`Server is running on port ${PORT}`);
@@ -49,11 +49,13 @@ app.use(
 
 const musicDir = path.join(__dirname, "public/music");
 const imagesDir = path.join(__dirname, "public/images");
+const articleImages = path.join(__dirname, "public/article_images");
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/message", MessageRoutes);
 app.use("/music", express.static(musicDir));
 app.use("/images", express.static(imagesDir));
+app.use("/public/article_images", express.static(articleImages));
 app.use("/api/message", MessageRoutes);
 app.use("/api/articles", ArticleRoutes);
 app.use("/api/friends", FriendshipRoutes);

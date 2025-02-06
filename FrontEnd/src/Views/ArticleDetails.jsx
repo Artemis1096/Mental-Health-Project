@@ -48,10 +48,7 @@ const ArticleDetails = () => {
       <div className="max-w-4xl mx-auto my-8 px-8 py-12 bg-white rounded-lg shadow-lg">
         <div className="h-svh overflow-y-auto">
           <img
-            src={
-              article.image ||
-              "https://images.pexels.com/photos/1001435/pexels-photo-1001435.jpeg"
-            }
+            src={`http://localhost:8000/public/article_images/${article.image}`}
             alt={article.title}
             className="w-full h-96 object-cover rounded-lg mb-6"
           />

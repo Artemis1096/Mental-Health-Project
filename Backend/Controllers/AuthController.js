@@ -6,10 +6,13 @@ import { generateOTP, sendMail } from "../Utils/verification.js";
 // for register
 export const register = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, dob, userType } = req.body;
+    const { name, email, password, confirmPassword, dob, userType, username} = req.body;
 
     const user = await User.findOne({ email });
     if (user) return res.status(400).json("Email already registered!");
+
+    user = await User.findOne({username});
+    if(user) return res.status(400).json("username already exists");
 
     if (password !== confirmPassword)
       return res.status(400).json({ error: "Passwords don't match" });
@@ -23,12 +26,12 @@ export const register = async (req, res) => {
     const newUser = new User({
       name,
       dob,
+      username,
       email,
       password: hashedPassword,
       otp: OTP,
       otpExpiry: otpExpiry,
       userType,
-
     });
 
     if (newUser) {
@@ -42,6 +45,8 @@ export const register = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         dob: newUser.dob,
+        userType: newUser.userType,
+        username : newUser.username
       });
     } else {
       res.status(400).json({ error: "Invalid user data" });
@@ -55,14 +60,20 @@ export const register = async (req, res) => {
 // for login
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const { username, email, password } = req.body;
+    const user = null;
+    if(!username)
+      user = await User.findOne({ email });
+    else
+      user = await User.findOne({username});
+    if(!user)
+      return res.status(404).json({message : "user not found"});
     const passwordMatched = await bcryptjs.compare(
       password,
       user?.password || ""
     );
-    if (!user || !passwordMatched)
-      return res.status(400).json({ error: "Invalid email or password" });
+    if (!passwordMatched)
+      return res.status(400).json({ error: "Invalid password" });
 
     if (!user.isVerified)
       return res.status(400).json({
@@ -73,8 +84,10 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       name: user.name,
+      username : user.name,
       email: user.email,
       userId: user._id,
+      userType : user.userType,
       message: "Logged in successfully"
     });
 

@@ -12,19 +12,20 @@ import useGoogleAuth from "../Hooks/useGoogleAuthentication";
 import { UseAuthContext } from "../Context/AuthContext";
 
 function Login() {
+  const [username, setUsername] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {setAuth} = UseAuthContext();
+  const { setAuth } = UseAuthContext();
 
   const authenticate = useGoogleAuth();
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!password) {
       alert("Please fill in all fields");
       return;
     }
@@ -42,7 +43,7 @@ function Login() {
       try {
         const res = await axios.post(
           "http://localhost:8000/api/auth/login",
-          { email, password },
+          { username, email, password },
           { withCredentials: true }
         );
 
@@ -54,7 +55,7 @@ function Login() {
             id: res.data.userId,
             name: res.data.name,
             email: res.data.email,
-            userType : res.data.userType
+            userType: res.data.userType,
           };
 
           dispatch(addUser(newUser));
@@ -88,6 +89,18 @@ function Login() {
         <form className="space-y-4" onSubmit={handleSubmitLogin}>
           <div>
             <label className="block text-black font-medium mb-1 rounded-md">
+              Enter your Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+              className="w-full px-4 py-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-black font-medium mb-1 rounded-md">
               Enter your Email
             </label>
             <input
@@ -96,7 +109,6 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="w-full px-4 py-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
             />
           </div>
 

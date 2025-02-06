@@ -9,6 +9,7 @@ import OtpVerification from "./OtpVerification";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const [fullName, setFullName] = useState("");
   const [dob, setDob] = useState("");
@@ -48,6 +49,7 @@ function Register() {
         const res = await axios.post(
           "http://localhost:8000/api/auth/register",
           {
+            username: username,
             name: fullName,
             email: email,
             password: password,
@@ -75,6 +77,17 @@ function Register() {
           className="space-y-3 p-4 w-full bg-white shadow rounded-md  "
           onSubmit={handleSubmitRegister}
         >
+          <div>
+            <label className="block text-black font-medium">Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Create an username"
+              className="w-full mt-1 px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
           <div>
             <label className="block text-black font-medium">Full Name</label>
             <input

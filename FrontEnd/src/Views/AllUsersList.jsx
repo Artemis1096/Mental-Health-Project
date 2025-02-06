@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../Styles/FriendsList.css";
+
 function AllUsersList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [friendRequests, setFriendRequests] = useState([]); // Store friend requests
+  const [friendRequests, setFriendRequests] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const userData = JSON.parse(localStorage.getItem("user"));
-  const userId = userData.id;
+  const userId = userData?.id;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -30,11 +31,8 @@ function AllUsersList() {
       try {
         const res = await axios.get(
           `http://localhost:8000/api/friends/pending/${userId}`,
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
-        console.log(res);
         setFriendRequests(res.data.pendingRequests || []);
       } catch (err) {
         console.error("Error fetching friend requests:", err);
@@ -51,15 +49,11 @@ function AllUsersList() {
     try {
       const res = await axios.post(
         "http://localhost:8000/api/friends/sendrequest",
-        {
-          sender: userId,
-          receiver: receiverId,
-        },
+        { sender: userId, receiver: receiverId },
         { withCredentials: true }
       );
       alert(res.data.message);
     } catch (err) {
-      console.error("Error sending friend request:", err);
       alert("Friend request already sent.");
     }
   };
@@ -68,27 +62,13 @@ function AllUsersList() {
     try {
       const res = await axios.patch(
         `http://localhost:8000/api/friends/acceptrequest/${requestId}`,
-        {}, // Add request body if needed
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
+        {},
+        { withCredentials: true }
       );
-
       alert(res.data.message);
-
-      // Ensure state updates correctly
-      setFriendRequests((prevRequests) =>
-        prevRequests.filter((req) => req._id !== requestId)
-      );
+      setFriendRequests((prev) => prev.filter((req) => req._id !== requestId));
     } catch (err) {
-      console.error(
-        "Error accepting friend request:",
-        err.response ? err.response.data : err.message
-      );
-      alert(
-        err.response?.data?.message || "Failed to accept the friend request."
-      );
+      alert("Failed to accept the friend request.");
     }
   };
 
@@ -96,106 +76,104 @@ function AllUsersList() {
     try {
       const res = await axios.delete(
         `http://localhost:8000/api/friends/rejectrequest/${requestId}`,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
-
       alert(res.data.message);
-
-      // Update state to remove the declined request
-      setFriendRequests((prevRequests) =>
-        prevRequests.filter((req) => req._id !== requestId)
-      );
+      setFriendRequests((prev) => prev.filter((req) => req._id !== requestId));
     } catch (err) {
-      console.error(
-        "Error declining friend request:",
-        err.response ? err.response.data : err.message
-      );
-      alert(
-        err.response?.data?.message || "Failed to decline the friend request."
-      );
+      alert("Failed to decline the friend request.");
     }
   };
 
-  //handle search query
-  const filteredUsers = users.filter((user) => {
-    const searchedUsers = user.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-    return searchedUsers;
-  });
-
-  if (loading) return <p>Loading users...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading)
+    return <p className="text-center text-gray-600">Loading users...</p>;
+  if (error) return <p className="text-center text-red-600">{error}</p>;
 
   return (
-    <div>
-      <div className="w-full flex justify-center p-3">
+    <div className="p-4">
+      {/* Search Bar */}
+      <div className="w-full flex justify-center mb-4">
         <input
           type="search"
-          className="w-auto m-2 border-1 p-2 rounded-md"
-          placeholder="search friends"
+          className="w-96 p-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="Search users..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className=" flex bg-purple-900 rounded-xl border-1   border-purple-400 shadow-md  ml-2 mr-2">
-        <div className="AllUsersList">
-          <h2 className="text-center text-4xl m-3">All Users List</h2>
-          <div className=" h-screen shadow-4xl  ml-5 overflow-y-auto">
+
+      {/* Main Container */}
+      <div className="flex gap-6 h-vh bg-purple-900 rounded-xl p-6 shadow-lg">
+        {/* Users List */}
+        <div className="w-1/2 bg-white p-5 rounded-lg shadow-md">
+          <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">
+            All Users
+          </h2>
+          <div className="h-80 overflow-y-auto">
             {filteredUsers.length > 0 ? (
               <ul>
                 {filteredUsers.map((user) => (
-                  <li key={user._id}>
-                    <div className="addFriend flex justify-between shadow-sm shadow-purple-400 bg-blue-400 mb-2 rounded-md">
-                      <label className="user-name">{user.name}</label>
-                      <button
-                        className="f-btn  "
-                        onClick={() => sendFriendRequest(user._id)}
-                      >
-                        Add
-                      </button>
-                    </div>
+                  <li
+                    key={user._id}
+                    className="flex justify-between items-center bg-gray-100 p-3 mb-2 rounded-lg shadow-sm"
+                  >
+                    <span className="text-gray-700 font-medium">
+                      {user.name}
+                    </span>
+                    <button
+                      className="px-3 py-1 !bg-purple-600 text-white rounded-md !hover:bg-purple-700 transition"
+                      onClick={() => sendFriendRequest(user._id)}
+                    >
+                      Add
+                    </button>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p>No users found.</p>
+              <p className="text-gray-600 text-center">No users found.</p>
             )}
           </div>
         </div>
-        <div className="requestList">
-          <h2 className="text-center text-4xl m-3">Friend Requests</h2>
-          <div className="friend-container ml-10">
+
+        {/* Friend Requests List */}
+        <div className="w-1/2 bg-white p-5 rounded-lg shadow-md">
+          <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">
+            Friend Requests
+          </h2>
+          <div className="h-80 overflow-y-auto">
             {friendRequests.length > 0 ? (
               <ul>
                 {friendRequests.map((request) => (
-                  <li key={request._id}>
-                    <div className="acceptFriend flex justify-between">
-                      <label className="user-name">
-                        {request.user1.name} sent you a friend request
-                      </label>
+                  <li
+                    key={request._id}
+                    className="flex justify-between items-center bg-gray-100 p-3 mb-2 rounded-lg shadow-sm"
+                  >
+                    <span className="text-gray-700">
+                      {request.user1.name} sent a request
+                    </span>
+                    <div className="flex gap-2">
                       <button
-                        className="f-btn"
+                        className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
                         onClick={() => acceptFriendRequest(request._id)}
                       >
                         Accept
                       </button>
                       <button
-                        className="f-btn"
+                        className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
                         onClick={() => declineFriendRequest(request._id)}
                       >
                         Decline
                       </button>
                     </div>
-                    <hr />
                   </li>
                 ))}
               </ul>
             ) : (
-              <label className="user-name">No pending friend requests.</label>
+              <p className="text-gray-600 text-center">No pending requests.</p>
             )}
           </div>
         </div>

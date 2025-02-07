@@ -7,8 +7,7 @@ const moodSchema = new mongoose.Schema({
         required : true
     },
     mood: {
-        type: String,
-        enum : ["Feeling Down", "Not Great", "Neutral", "Feeling Good", "Super Happy"],
+        type: Number,
         required : true
     },
     date: {

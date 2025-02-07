@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../Features/User/UserSlice";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { Chart as ChartJS } from "chart.js/auto";
-import { Bar } from "react-chartjs-2";
+import MoodVisualization from "../Components/MoodVisualization";
+
 import { UseAuthContext } from "../Context/AuthContext";
 
 const Profile = () => {
@@ -169,26 +169,7 @@ const Profile = () => {
         </div>
 
         {/* Data Visualization */}
-        <div className="w-full h-xl mt-5 text-black p-2 bg-white rounded-lg">
-          <h1 className="text-center">Data Visualization</h1>
-          <Bar
-            data={{
-              labels: ["A", "B", "C"],
-              datasets: [
-                {
-                  label: "Good",
-                  data: [200, 300, 400],
-                  backgroundColor: "rgba(75, 192, 192, 0.6)",
-                },
-                {
-                  label: "Bad",
-                  data: [100, 150, 300],
-                  backgroundColor: "rgba(255, 99, 132, 0.6)",
-                },
-              ],
-            }}
-          />
-        </div>
+        <MoodVisualization/>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UseAuthContext } from "../context/AuthContext";
+import { UseAuthContext } from "../Context/AuthContext";
 
 const FriendsList = () => {
   const [users, setUsers] = useState([]);

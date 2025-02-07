@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 import User from "../Models/User.js";
 import Friendship from "../Models/friendship.js";
+import Article from "../Models/article.js";
+import Mood from "../Models/mood.js";
+import Conversation from "../Models/conversation.js";
+import Message from '../Models/message.js';
+import Task from "../Models/task.js";
+import Journal from "../Models/journal.js";
 
 // returns the list of all users except the current user
 export const getUsers = async (req, res) => {
@@ -88,6 +94,25 @@ export const deleteProfile = async (req, res) => {
     await Friendship.deleteMany({
       $or: [{ user1: userId }, { user2: userId }]
     }).session(session);
+
+    await Article.updateMany(
+      {likes : userId},
+      { $pull: { likes: userId } }
+    ).session(session);
+
+    await Mood.deleteMany({user : userId}).session(session);
+
+    await Message.deleteMany({
+      $or: [{ senderid: userId }, { receiverid: userId }]
+    }).session(session);
+
+    await Conversation.deleteMany({
+      participants : userId
+    }).session(session);
+
+    await Task.deleteMany({user : userId}).session(session);
+
+    await Journal.deleteMany({user : userId}).session(session);
 
     await User.findByIdAndDelete(userId).session(session);
 

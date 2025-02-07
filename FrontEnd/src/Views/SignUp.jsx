@@ -1,14 +1,14 @@
 import Register from "../Components/Register";
 import { Link } from "react-router-dom"; // Fixed import
 import { FaGoogle } from "react-icons/fa";
-import bg from "../Assets/bg-register.jpg";
+import bg from "../Assets/signUpbg.jpg";
 import useGoogleAuth from "../Hooks/useGoogleAuthentication";
 
 function SignUp() {
   const authenticate = useGoogleAuth();
 
   return (
-    <div className="relative h-screen overflow-y-auto flex items-center justify-start min-h-screen pl-16 ">
+    <div className="relative h-screen  overflow-y-auto flex items-center justify-center min-h-screen pl-16 ">
       {/* Background Image */}
       <img
         src={bg}
@@ -17,13 +17,13 @@ function SignUp() {
       />
 
       {/* SignUp Card (Shifted Left, Smaller) */}
-      <div className=" w-full max-w-sm m-10 p-6 mb-5 bg-white shadow-lg rounded-xl z-10 ">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
-          Sign Up
+      <div className=" w-full max-w-sm m-10 p-6 mb-5 bg-purple-300 shadow-lg rounded-xl z-10 opacity-70">
+        <h2 className="text-2xl bg-purple-800 rounded-3xl font-bold text-center text-white mb-4 py-1 ">
+          ✨ Sign Up ✨
         </h2>
         <Register />
 
-        <p className="mt-4 text-center text-gray-600">
+        <p className="mt-4 text-center text-black">
           Already have an account?{" "}
           <Link
             to="/login"
@@ -33,7 +33,7 @@ function SignUp() {
           </Link>
         </p>
 
-        <h2 className="text-black text-center p-1">OR</h2>
+        <h2 className="text-black  text-center p-1">OR</h2>
 
         <button
           onClick={authenticate}

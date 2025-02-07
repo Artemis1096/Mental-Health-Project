@@ -1,9 +1,8 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import LandingPage from "../Views/LandingPage";
 import Profile from "../Views/Profile";
 import Login from "../Views/Login";
 import AboutUs from "../Views/AboutUs";
-import Register from "../Components/Register";
 import SignUp from "../Views/SignUp";
 import MainContainer from "../Views/MainContainer";
 import ArticlesPage from "../Views/ArticlesPage";
@@ -15,23 +14,18 @@ import ArticleDetails from "../Views/ArticleDetails";
 import Chat from "../Views/Chat";
 import JournalPage from "../Views/JournalPage";
 import Aichat from "../Views/AIchat";
+import QuoteReel from "../Views/QuotesReel";
 import { UseAuthContext } from "../Context/AuthContext";
 
 function HomeRoutes() {
   const { auth } = UseAuthContext();
+
   return (
     <Routes>
+      {/* Root routes */}
       <Route
         path="/"
         element={auth ? <Navigate to="/app" /> : <LandingPage />}
-      />
-      <Route
-        path="/app"
-        element={!auth ? <Navigate to="/login" /> : <MainContainer />}
-      />
-      <Route
-        path="/profile"
-        element={!auth ? <Navigate to="/login" /> : <Profile />}
       />
       <Route
         path="/login"
@@ -42,55 +36,26 @@ function HomeRoutes() {
         element={auth ? <Navigate to="/app" /> : <SignUp />}
       />
 
-      {/* Main container and its nested routes */}
+      {/* Protected Routes */}
       <Route
         path="/app"
-        element={!auth ? <Navigate to="/login" /> : <MainContainer />}
+        element={auth ? <MainContainer /> : <Navigate to="/login" />}
       >
-        <Route
-          path="home"
-          element={!auth ? <Navigate to="/login" /> : <HomePage />}
-        />
-        <Route
-          path="chat"
-          element={!auth ? <Navigate to="/login" /> : <Chat />}
-        />
-        <Route
-          path="allUsers"
-          element={!auth ? <Navigate to="/login" /> : <AllUsersList />}
-        />
-        <Route
-          path="friends"
-          element={!auth ? <Navigate to="/login" /> : <FriendsList />}
-        />
-        <Route
-          path="profile"
-          element={!auth ? <Navigate to="/login" /> : <Profile />}
-        />
-        <Route
-          path="meditate"
-          element={!auth ? <Navigate to="/login" /> : <MeditationTimer />}
-        />
-        <Route
-          path="aichat"
-          element={!auth ? <Navigate to="/login" /> : <Aichat />}
-        />
-        <Route
-          path="articles"
-          element={!auth ? <Navigate to="/login" /> : <ArticlesPage />}
-        />
-        <Route
-          path="articles/:id"
-          element={!auth ? <Navigate to="/login" /> : <ArticleDetails />}
-        />
-        <Route
-          path="aboutus"
-          element={!auth ? <Navigate to="/login" /> : <AboutUs />}
-        />
-        <Route
-          path="journal"
-          element={!auth ? <Navigate to="/login" /> : <JournalPage />}
-        />
+        {/* Redirect /app to /app/home */}
+        <Route index element={<Navigate to="home" />} />
+
+        {/* Nested routes inside MainContainer */}
+        <Route path="home" element={<HomePage />} />
+        <Route path="chat" element={<Chat />} />
+        <Route path="allUsers" element={<AllUsersList />} />
+        <Route path="friends" element={<FriendsList />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="meditate" element={<MeditationTimer />} />
+        <Route path="aichat" element={<Aichat />} />
+        <Route path="articles" element={<ArticlesPage />} />
+        <Route path="articles/:id" element={<ArticleDetails />} />
+        <Route path="aboutus" element={<AboutUs />} />
+        <Route path="journal" element={<JournalPage />} />
       </Route>
     </Routes>
   );

@@ -6,10 +6,26 @@ import { generate } from '../Utils/WebToken.js';
 
 dotenv.config();
 
+// Function to generate a unique username
+const generateUniqueUsername = async (displayName) => {
+  let baseUsername = displayName.split(" ")[0].toLowerCase() + "_vellura";
+  let username = baseUsername;
+  let counter = 1;
+
+  // Check if username already exists, if so, modify it
+  while (await User.findOne({ username })) {
+    username = `${baseUsername}${counter}`;
+    counter++;
+  }
+
+  return username;
+};
+
 export const setupGoogleAuth = (app) => {
   app.use(passport.initialize());
 
-  passport.use(new GoogleStrategy({
+  passport.use(new GoogleStrategy(
+    {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: '/api/auth/google/callback'
@@ -19,11 +35,16 @@ export const setupGoogleAuth = (app) => {
         let user = await User.findOne({ email: profile.emails[0].value });
 
         if (!user) {
+          // Generate a unique username
+          const uniqueUsername = await generateUniqueUsername(profile.displayName);
+
           user = new User({
             name: profile.displayName,
+            username: uniqueUsername,
             email: profile.emails[0].value,
             isVerified: true
           });
+
           await user.save();
         }
 
@@ -69,8 +90,9 @@ export const googleAuthCallback = (req, res, next) => {
           token: "${token}",
           user: { 
             name: "${dbUser.name}", 
+            username: "${dbUser.username}",
             email: "${dbUser.email}", 
-            userId: "${dbUser._id.toString()}",
+            userId: "${dbUser._id.toString()}"
           }
         }, "*");
         window.close();

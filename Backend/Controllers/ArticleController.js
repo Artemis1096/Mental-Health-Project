@@ -3,13 +3,12 @@ import Article from '../Models/article.js';
 
 export const create = async (req, res) => {
     try {
-        const {title, content, image, category, likes} = req.body;
+        const {title, content, image, category} = req.body;
         const newArticle = new Article({
             title,
             content,
             image,
-            category,
-            likes
+            category
         });
         if(newArticle){
             await newArticle.save();
@@ -68,13 +67,19 @@ export const remove = async (req, res) => {
 export const getArticleDetails = async (req, res) => {
     try {
         const id = req.params.id;
+        const userId = req.user._id;
         if (!mongoose.Types.ObjectId.isValid(id))
             return res.status(400).json({ message: "Invalid article ID" });
 
         const article = await Article.findById(id);
         if(!article)
             return res.status(404).json({message : "article not found"});
-        res.status(200).json(article);
+        const updatedArticle = {
+            ...article,
+            isLikedByCurrentUser: article.likes?.includes(userId) || false
+          };
+          
+        res.status(200).json(updatedArticle);
 
     } catch (error) {
         console.log("Error getting article details");
@@ -84,10 +89,15 @@ export const getArticleDetails = async (req, res) => {
 
 export const getArticles = async (req, res) => {
     try {
-        const articles = await Article.find();
+        const userId = req.user._id;
+        const articles = await Article.find().lean();
+        const articlesWithLikeStatus = articles.map((article) => ({
+            ...article,
+            likedByCurrentUser : (article.likes.includes(userId) ? true : false)
+        }));
         res.status(200).json({
             message : "success", 
-            data : articles
+            data : articlesWithLikeStatus
         });
     } catch (error) {
         console.log("Error getting articles", error.message);
@@ -95,23 +105,25 @@ export const getArticles = async (req, res) => {
     }
 }
 
-export const like = async (req, res) => {
+export const toggleLike = async (req, res) => {
     try {
         const id = req.params.id;
+        const userId = req.user._id;
 
-        if (!mongoose.Types.ObjectId.isValid(id))
-            return res.status(400).json({ message: "Invalid article ID" });
+        const article = await Article.findById(id);
+        if(!article)
+            return res.status(404).json({message : "user not found"});
 
-        const updatedArticle = await Article.findByIdAndUpdate(
-            id,
-            { $inc: { likes: 1 } },
-            { new: true }
-        );
+        const likedIndex = article.likes.indexOf(userId);
 
-        if (!updatedArticle)
-            return res.status(404).json({ message: "Article not found" });
+        if(likedIndex === -1)
+            article.likes.push(userId);
+        else
+            article.likes.splice(likedIndex, 1);
 
-        res.status(200).json({ message: "Article liked", updatedArticle });
+        await article.save();
+
+        res.status(200).json({ message: "success" , likesCount : article.likes.length });
 
     } catch (error) {
         console.error("Error liking article:", error.message);
@@ -127,8 +139,11 @@ export const getArticlesCategoryWise = async (req, res) => {
         }
 
         const articles = await Article.find({ category: { $regex: category, $options: "i" } }).sort({ createdAt: -1 });
-
-        res.status(200).json(articles);
+        const articlesWithLikeStatus = articles.map((article) => ({
+            ...article,
+            likedByCurrentUser : article.likes.includes(userId)
+        }));
+        res.status(200).json(articlesWithLikeStatus);
     } catch (error) {
         console.error("Error getting articles with category:", error.message);
         res.status(500).json({ error: "Internal server error" });

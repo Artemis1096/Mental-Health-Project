@@ -9,6 +9,7 @@ import OtpVerification from "./OtpVerification";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const [fullName, setFullName] = useState("");
   const [dob, setDob] = useState("");
@@ -35,8 +36,6 @@ function Register() {
       return;
     }
 
-    // const data = { fullName, email, dob, password, confirmPassword };
-    // console.log(data);
     setIsSubmitted(true);
   };
 
@@ -48,6 +47,7 @@ function Register() {
         const res = await axios.post(
           "http://localhost:8000/api/auth/register",
           {
+            username: username,
             name: fullName,
             email: email,
             password: password,
@@ -56,7 +56,6 @@ function Register() {
           }
         );
 
-        //console.log(res.data);
         setOtpFlag(true); // Set OTP flag to true after successful registration
       } catch (error) {
         console.error("Error:", error.response?.data || error.message);
@@ -72,9 +71,20 @@ function Register() {
     <>
       {!otpFlag ? (
         <form
-          className="space-y-3 p-4 w-full bg-white shadow rounded-md  "
+          className="space-y-3 p-4 w-full bg-orange-200 shadow rounded-xl  h-96 overflow-y-scroll "
           onSubmit={handleSubmitRegister}
         >
+          <div>
+            <label className="block text-black font-medium">Username</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Create an username"
+              className="w-full mt-1 px-3 py-2 text-black border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
           <div>
             <label className="block text-black font-medium">Full Name</label>
             <input
@@ -87,7 +97,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">Email</label>
+            <label className="block text-black font-medium">Email</label>
             <input
               type="email"
               value={email}
@@ -98,7 +108,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-black font-medium">
               Date of Birth
             </label>
             <input
@@ -110,7 +120,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">Password</label>
+            <label className="block text-black font-medium">Password</label>
             <input
               type="password"
               value={password}
@@ -121,7 +131,7 @@ function Register() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">
+            <label className="block text-black font-medium">
               Confirm Password
             </label>
             <input
@@ -137,7 +147,7 @@ function Register() {
           <Button
             label="Register"
             type="submit"
-            className="w-full bg-blue-800"
+            className="w-full bg-blue-900 "
           />
         </form>
       ) : (

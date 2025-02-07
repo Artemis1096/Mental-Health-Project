@@ -6,13 +6,14 @@ import { generateOTP, sendMail } from "../Utils/verification.js";
 // for register
 export const register = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, dob, userType, username} = req.body;
+    const { name, email, password, confirmPassword, dob, userType, username } =
+      req.body;
 
     let user = await User.findOne({ email });
     if (user) return res.status(400).json("Email already registered!");
 
-    user = await User.findOne({username});
-    if(user) return res.status(400).json("username already exists");
+    user = await User.findOne({ username });
+    if (user) return res.status(400).json("username already exists");
 
     if (password !== confirmPassword)
       return res.status(400).json({ error: "Passwords don't match" });
@@ -46,7 +47,7 @@ export const register = async (req, res) => {
         email: newUser.email,
         dob: newUser.dob,
         userType: newUser.userType,
-        username : newUser.username
+        username: newUser.username,
       });
     } else {
       res.status(400).json({ error: "Invalid user data" });
@@ -60,14 +61,12 @@ export const register = async (req, res) => {
 // for login
 export const login = async (req, res) => {
   try {
+    // console.log("inside login");
     const { username, email, password } = req.body;
     let user = null;
-    if(!username)
-      user = await User.findOne({ email });
-    else
-      user = await User.findOne({username});
-    if(!user)
-      return res.status(404).json({message : "user not found"});
+    if (!username) user = await User.findOne({ email });
+    else user = await User.findOne({ username });
+    if (!user) return res.status(404).json({ message: "user not found" });
     const passwordMatched = await bcryptjs.compare(
       password,
       user?.password || ""
@@ -84,22 +83,18 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       name: user.name,
-      username : user.name,
+      username: user.name,
       email: user.email,
       userId: user._id,
       userType : user.userType,
       message: "Logged in successfully",
       exp:user.exp
-
     });
-
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: "Internal server error" });
   }
-
 };
-
 
 // for logout
 export const logout = async (req, res) => {
@@ -108,7 +103,7 @@ export const logout = async (req, res) => {
       .clearCookie("jwt", {
         httpOnly: true, // Add this for security
         sameSite: "None", // Make sure cross-origin is supported
-        secure: process.env.NODE_ENV === 'production', // Set to true in production, false in development
+        secure: process.env.NODE_ENV === "production", // Set to true in production, false in development
       })
       .status(200)
       .json({ message: "Logged out successfully" });
@@ -117,4 +112,3 @@ export const logout = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-

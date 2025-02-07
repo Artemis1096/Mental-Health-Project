@@ -5,8 +5,8 @@ import LikeButton from "../ArticlesPage/LikeButton";
 import axios from "axios";
 
 const ArticleCard = ({ article }) => {
-  console.log(`http://localhost:8000/public/article_images/${article.image}`);
-  const [likes, setLikes] = useState(article.likes);
+  // console.log(`http://localhost:8000/public/article_images/${article.image}`);
+  const [likes, setLikes] = useState(article.likes.length);
   const [isLiked, setIsLiked] = useState(false); // Track the state of like (whether it's liked or not)
 
   const handleLike = async () => {
@@ -16,7 +16,7 @@ const ArticleCard = ({ article }) => {
       setIsLiked((prevIsLiked) => !prevIsLiked); // Toggle the liked state
 
       // Send the like/unlike request to the backend
-      await axios.put(`http://localhost:8000/api/articles/like/${article._id}`);
+      await axios.put(`http://localhost:8000/api/articles/like/${article._id}`,{}, {withCredentials : true});
     } catch (error) {
       console.log(error);
       // If the API call fails, revert the UI update
@@ -28,8 +28,12 @@ const ArticleCard = ({ article }) => {
   return (
     <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4">
       <img
-        className="w-full"
-        src={article.image ? `http://localhost:8000/public/article_images/${article.image}` : Sunset}
+        className="w-full h-40"
+        src={
+          article.image
+            ? `http://localhost:8000/public/article_images/${article.image}`
+            : Sunset
+        }
         alt="Sunset in the mountains"
       />
       <div className="px-6 py-4">

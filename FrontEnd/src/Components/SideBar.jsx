@@ -13,16 +13,17 @@ import { CiHome } from "react-icons/ci";
 import { FaUserFriends } from "react-icons/fa";
 import { GiThreeFriends } from "react-icons/gi";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
+import { GiArtificialHive } from "react-icons/gi";
 
 import axios from "axios";
 import JournalPage from "../Views/JournalPage";
-import {UseAuthContext} from '../Context/AuthContext.jsx';
+import { UseAuthContext } from "../Context/AuthContext.jsx";
 
 function SideBar({ open, setOpen }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {setAuth} = UseAuthContext();
+  const { setAuth } = UseAuthContext();
 
   const handleLogOut = async () => {
     try {
@@ -46,7 +47,7 @@ function SideBar({ open, setOpen }) {
       link: "aboutus",
     },
     { id: 3, title: "Profile", symbol: <CgProfile />, link: "profile" },
-    { id: 4, title: "Ai Chat", symbol: <CgProfile />, link: "aichat" },
+    { id: 4, title: "Ai Chat", symbol: <GiArtificialHive />, link: "aichat" },
     { id: 5, title: "Meditate", symbol: <GiHeatHaze />, link: "meditate" },
 
     {
@@ -69,7 +70,7 @@ function SideBar({ open, setOpen }) {
     <div
       className={`${
         open ? "w-72" : "w-20"
-      } duration-300 h-screen p-5 pt-8 bg-purple-600 text-white absolute`}
+      } duration-300 h-screen p-5 pt-8 bg-purple-800 text-white absolute`}
     >
       {/* Toggle Sidebar Button */}
       <div

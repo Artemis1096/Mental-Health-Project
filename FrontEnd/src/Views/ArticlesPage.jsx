@@ -47,7 +47,7 @@ function ArticlesPage() {
     if (auth && auth.userType === "admin") {
       setIsAdmin(true);
     }
-  }, []);
+  }, [showModal]);
 
   const handleLike = async (articleId) => {
     try {

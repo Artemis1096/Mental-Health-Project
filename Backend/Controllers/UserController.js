@@ -40,6 +40,8 @@ export const editProfile = async (req, res) => {
     try {
       const userId = req.user._id; // Logged-in user ID
       const { name, DOB, username } = req.body;
+
+       
   
       // Convert DOB from "DD-MM-YYYY" to a valid Date object
       let formattedDOB;

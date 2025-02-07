@@ -2,14 +2,14 @@ import express from 'express';
 import { 
     create, 
     getArticleDetails, 
-    like, 
+    toggleLike, 
     remove, 
     update , 
     getArticlesCategoryWise,
     getArticles
 } from '../Controllers/ArticleController.js';
-import { verify } from 'crypto';
-import { isAdmin } from '../Utils/WebToken.js';
+import { verify } from '../Utils/WebToken.js';
+// import { isAdmin } from '../Utils/WebToken.js';
 
 const router = express.Router();
 
@@ -17,10 +17,10 @@ router.post("/create",verify, create);
 router.put("/update/:id", verify, update);
 router.delete("/delete/:id",verify, remove);
 
-router.get("/", getArticles);
-router.get("/search", getArticlesCategoryWise);
-router.get("/:id", getArticleDetails);
-router.put("/like/:id",verify, like);
+router.get("/", verify, getArticles);
+router.get("/search",verify, getArticlesCategoryWise);
+router.get("/:id",verify, getArticleDetails);
+router.put("/like/:id",verify, toggleLike);
 
 
 export default router;

@@ -6,6 +6,7 @@ import {
     removeFriend,
     getFriendsList,
     pendingRequests,
+    // deleteAll
 } from '../Controllers/FriendshipController.js';
 import {verify} from '../Utils/WebToken.js';
 
@@ -17,5 +18,6 @@ router.post("/sendrequest", verify, sendFriendRequest);
 router.patch("/acceptrequest/:id", verify, acceptFriendRequest);
 router.delete("/rejectrequest/:id", verify, rejectFriendRequest);
 router.post("/remove", verify, removeFriend);
+// router.delete("/deleteall", verify, deleteAll);
 
 export default router;

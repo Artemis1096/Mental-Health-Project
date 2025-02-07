@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import User from "../Models/User.js";
+import Friendship from "../Models/friendship.js";
 
 // returns the list of all users except the current user
 export const getUsers = async (req, res) => {
@@ -78,21 +80,28 @@ export const editProfile = async (req, res) => {
 };
 
 export const deleteProfile = async (req, res) => {
+  const session = await mongoose.startSession();
   try {
     const userId = req.user._id; // Logged-in user ID
-    console.log(userId);
+    session.startTransaction();
 
-    // Delete user profile
-    await User.findByIdAndDelete(userId);
+    await Friendship.deleteMany({
+      $or: [{ user1: userId }, { user2: userId }]
+    }).session(session);
 
-    res.status(200).json({
-      success: true,
-      message: "Profile deleted successfully",
-    });
+    await User.findByIdAndDelete(userId).session(session);
+
+    await session.commitTransaction();
+
+    res.status(200).json({message : "user deleted successfully"});
+
   } catch (error) {
+    await session.abortTransaction();
     console.error("Error deleting profile:", error);
     res.status(500).json({
       error: "Internal server error",
     });
+  }finally{
+    session.endSession();
   }
 };

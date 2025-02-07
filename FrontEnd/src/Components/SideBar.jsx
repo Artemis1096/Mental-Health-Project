@@ -69,7 +69,7 @@ function SideBar({ open, setOpen }) {
   return (
     <div
       className={`${
-        open ? "w-72" : "w-20"
+        open ? "w-72 z-30" : "w-20 z-30"
       } duration-300 h-screen p-5 pt-8 bg-purple-800 text-white absolute`}
     >
       {/* Toggle Sidebar Button */}

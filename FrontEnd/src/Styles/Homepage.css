@@ -1,9 +1,9 @@
 .main {
-  background: url("../Assets/tree.png") no-repeat center center;
-  background-size: cover; /* Ensures full coverage */
-  height: 100vh; /* 100% of the viewport height */
-  width: 100%; /* Ensures full width */
-  overflow: auto; /* Scroll only if needed */
+  /* background: url("../Assets/bgx.jpeg") no-repeat; */
+  /* object-fit: contain; */
+  /* height: 450rem; */
+  margin: 1rem;
+  width: 97%;
 }
 
 .Heading {

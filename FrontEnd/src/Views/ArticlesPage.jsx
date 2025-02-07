@@ -6,11 +6,10 @@ import { UseAuthContext } from "../Context/AuthContext";
 import bg from "../Assets/articlebg.jpg";
 
 function ArticlesPage() {
-   
   // const user = useSelector((state)=>state.user);
   // console.log(user);
-  
-  const {auth} = UseAuthContext();
+
+  const { auth } = UseAuthContext();
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
@@ -21,7 +20,7 @@ function ArticlesPage() {
     title: "",
     content: "",
     category: "",
-    image: ""
+    image: "",
   });
   const [image, setImage] = useState(null);
 
@@ -30,7 +29,9 @@ function ArticlesPage() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/articles", {withCredentials : true});
+        const response = await axios.get("http://localhost:8000/api/articles", {
+          withCredentials: true,
+        });
         setArticles(response.data.data);
 
         const uniqueCategories = [
@@ -43,7 +44,7 @@ function ArticlesPage() {
     };
     fetchArticles();
 
-    if (auth && auth.userType==="admin") {
+    if (auth && auth.userType === "admin") {
       setIsAdmin(true);
     }
   }, [showModal]);
@@ -51,12 +52,12 @@ function ArticlesPage() {
   const handleAddArticle = async () => {
     setShowModal(true);
 
-    if(image){
+    if (image) {
       const data = new FormData();
       const fileName = Date.now() + image.name;
       data.append("img", fileName);
       data.append("file", image);
-      newArticle.image =  fileName;
+      newArticle.image = fileName;
       try {
         await axios.post("http://localhost:8000/api/upload", data);
       } catch (error) {
@@ -65,14 +66,18 @@ function ArticlesPage() {
     }
 
     try {
-      const res = await axios.post("http://localhost:8000/api/articles/create", newArticle, {withCredentials : true});
+      const res = await axios.post(
+        "http://localhost:8000/api/articles/create",
+        newArticle,
+        { withCredentials: true }
+      );
     } catch (error) {
       console.log("error creating article : client", error.message);
     }
 
     setShowModal(false);
-  }
-  
+  };
+
   const filteredArticles = articles.filter((article) => {
     const matchesSearch = article.title
       .toLowerCase()
@@ -125,8 +130,8 @@ function ArticlesPage() {
       </div>
 
       {/* Articles List */}
-      <div className="max-h-[80vh] overflow-y-scroll">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3 py-7">
+      <div className="max-h-[80vh] w-full overflow-y-scroll grid ">
+        <div className="  grid grid-cols-1   sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3 py-7  place-content-center">
           {filteredArticles.length > 0 ? (
             filteredArticles.map((article) => (
               <ArticleCard key={article._id} article={article} />

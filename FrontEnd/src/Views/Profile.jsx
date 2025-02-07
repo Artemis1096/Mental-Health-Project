@@ -6,13 +6,14 @@ import { addUser } from "../Features/User/UserSlice";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import MoodVisualization from "../Components/MoodVisualization";
+import DeleteConfirmation from "../Components/DeleteConfirmation";
 
 import { UseAuthContext } from "../Context/AuthContext";
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const userData = user?.User || {};
-  // console.log(userData);
+  const [isWantDelete, setIsWantDelete] = useState(false);
   const { auth, setAuth } = UseAuthContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Profile = () => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedDob, setUpdatedDob] = useState("");
+  const [showBox, setShowBox] = useState(false);
 
   useEffect(() => {
     if (!userData?.id) return;
@@ -72,7 +74,15 @@ const Profile = () => {
     }
   };
 
+  useEffect(() => {
+    handleDeleteProfile();
+  }, [isWantDelete]);
+
   const handleDeleteProfile = async () => {
+    if (!isWantDelete) {
+      return;
+    }
+
     try {
       const res = await axios.delete(`http://localhost:8000/api/users/delete`, {
         withCredentials: true,
@@ -93,6 +103,13 @@ const Profile = () => {
 
   return (
     <>
+      {showBox && (
+        <DeleteConfirmation
+          setIsWantDelete={setIsWantDelete}
+          setShowBox={setShowBox}
+        />
+      )}
+
       {isUpdated && (
         <div className="w-full h-full text-black flex justify-center items-center">
           <div className="bg-white p-6 rounded-xl shadow-lg w-96">
@@ -161,7 +178,7 @@ const Profile = () => {
             </button>
             <button
               className="flex items-center gap-2 !bg-gray-300 !text-gray-800 px-4 py-2 rounded-full shadow !hover:bg-gray-400 transition"
-              onClick={handleDeleteProfile}
+              onClick={() => setShowBox(true)}
             >
               <FaCog /> Delete Profile
             </button>
@@ -169,7 +186,7 @@ const Profile = () => {
         </div>
 
         {/* Data Visualization */}
-        <MoodVisualization/>
+        <MoodVisualization />
       </div>
     </>
   );

@@ -65,7 +65,7 @@ function Login() {
           setAuth(newUser);
         }, 3000);
       } catch (error) {
-        notifyError(error.message);
+        notifyError(error.response.data.error || error.response.data.message);
         console.error("Login error:", error.response?.data || error.message);
       } finally {
         setIsSubmitted(false);

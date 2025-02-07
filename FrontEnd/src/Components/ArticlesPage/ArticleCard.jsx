@@ -16,7 +16,11 @@ const ArticleCard = ({ article }) => {
       setIsLiked((prevIsLiked) => !prevIsLiked); // Toggle the liked state
 
       // Send the like/unlike request to the backend
-      await axios.put(`http://localhost:8000/api/articles/like/${article._id}`,{}, {withCredentials : true});
+      await axios.put(
+        `http://localhost:8000/api/articles/like/${article._id}`,
+        {},
+        { withCredentials: true }
+      );
     } catch (error) {
       console.log(error);
       // If the API call fails, revert the UI update
@@ -28,7 +32,7 @@ const ArticleCard = ({ article }) => {
   return (
     <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4">
       <img
-        className="w-full h-40"
+        className="w-full border-1 rounded-md border-purple-300 h-40"
         src={
           article.image
             ? `http://localhost:8000/public/article_images/${article.image}`
@@ -37,8 +41,12 @@ const ArticleCard = ({ article }) => {
         alt="Sunset in the mountains"
       />
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 text-white">{article.title}</div>
-        <p className="text-white text-base">{article.content}</p>
+        <div className="font-bold text-xl mb-2 text-purple-600">
+          {article.title.slice(0, 50)}
+        </div>
+        <p className="text-white break-words text-base">
+          {article.content.slice(0, 50)}...
+        </p>
       </div>
 
       <div className="flex justify-center m-5">

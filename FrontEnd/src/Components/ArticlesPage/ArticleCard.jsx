@@ -23,11 +23,11 @@ const ArticleCard = ({ article, handleLike }) => {
       setLikes(response.data.likesCount);
       setIsLiked(response.data.likedByCurrentUser);
       // Send the like/unlike request to the backend
-      await axios.put(
-        `http://localhost:8000/api/articles/like/${article._id}`,
-        {},
-        { withCredentials: true }
-      );
+      // await axios.put(
+      //   `http://localhost:8000/api/articles/like/${article._id}`,
+      //   {},
+      //   { withCredentials: true }
+      // );
     } catch (error) {
       console.error("Error toggling like:", error.message);
     }

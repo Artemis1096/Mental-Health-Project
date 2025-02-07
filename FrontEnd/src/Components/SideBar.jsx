@@ -23,8 +23,13 @@ import { UseAuthContext } from "../Context/AuthContext.jsx";
 function SideBar({ open, setOpen }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isShow, setIsShow] = useState(false);
 
   const { setAuth } = UseAuthContext();
+
+  const handleShow = () => {
+    setIsShow(true);
+  };
 
   const handleLogOut = async () => {
     try {
@@ -89,66 +94,89 @@ function SideBar({ open, setOpen }) {
       id: 9,
       title: "Log Out",
       symbol: <IoMdLogOut />,
-      action: handleLogOut,
+      action: handleShow,
       link: "",
     },
   ];
 
   return (
-    <div className={`${open ? "w-72" : "w-20"} gradient-bg`}>
-      {/* Toggle Sidebar Button */}
-      <div
-        onClick={() => setOpen(!open)}
-        className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
+    <>
+      {isShow && (
+        <div className="overlay ">
+          <div className="flex flex-col  rounded-2xl gap-4 w-72 h-32 bg-orange-300 justify-center items-center p-4 shadow-lg">
+            <h1 className="text-black font-bold">Are you sure?</h1>
+            <div className="flex p-4">
+              <button
+                className="!bg-red-500 text-black px-4 py-2 rounded-lg hover:!bg-red-600 transition duration-200"
+                onClick={handleLogOut}
+              >
+                Log Out
+              </button>
+              <button
+                className="bg-gray-300 !text-black px-4 py-2 rounded-lg hover:bg-gray-400 transition duration-200"
+                onClick={() => setIsShow(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className={`${open ? "w-72 z-30" : "w-20 z-30"} gradient-bg`}>
+        {/* Toggle Sidebar Button */}
+        <div
+          onClick={() => setOpen(!open)}
+          className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
 
          border-2 border-white bg-white text-purple-600 rounded-full ease-
 
          cursor-pointer shadow-md ${!open && "rotate-180"} `}
-      >
-        <HiArrowNarrowLeft />
-      </div>
-
-      {/* Logo Section */}
-      <div className="flex gap-x-4 items-center">
-        <div className={`cursor-pointer text-4xl duration-500`}>
-          <FaStudiovinari />
-        </div>
-        <h1
-          className={`text-white origin-left font-medium text-3xl duration-300 ${
-            !open && "scale-0"
-          }`}
         >
-          Vellura
-        </h1>
-      </div>
+          <HiArrowNarrowLeft />
+        </div>
 
-      {/* Menu List */}
-      <ul className="pt-6">
-        {Menu.map((menu) => (
-          <li
-            key={menu.id}
-            className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 mb-2 hover:bg-white hover:text-black rounded-md"
-            onClick={menu.action} // ✅ Attach click handler at <li> level for logout
+        {/* Logo Section */}
+        <div className="flex gap-x-4 items-center">
+          <div className={`cursor-pointer text-4xl duration-500`}>
+            <FaStudiovinari />
+          </div>
+          <h1
+            className={`text-white origin-left font-medium text-3xl duration-300 ${
+              !open && "scale-0"
+            }`}
           >
-            {menu.link ? (
-              <Link to={menu.link} className="flex items-center gap-x-4">
-                <div className="cursor-pointer text-2xl duration-500">
-                  {menu.symbol}
+            Vellura
+          </h1>
+        </div>
+
+        {/* Menu List */}
+        <ul className="pt-6">
+          {Menu.map((menu) => (
+            <li
+              key={menu.id}
+              className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 mb-2 hover:bg-white hover:text-black rounded-md"
+              onClick={menu.action} // ✅ Attach click handler at <li> level for logout
+            >
+              {menu.link ? (
+                <Link to={menu.link} className="flex items-center gap-x-4">
+                  <div className="cursor-pointer text-2xl duration-500">
+                    {menu.symbol}
+                  </div>
+                  {open && <span>{menu.title}</span>}
+                </Link>
+              ) : (
+                <div className="flex items-center gap-x-4">
+                  <div className="cursor-pointer text-2xl duration-500">
+                    {menu.symbol}
+                  </div>
+                  {open && <span>{menu.title}</span>}
                 </div>
-                {open && <span>{menu.title}</span>}
-              </Link>
-            ) : (
-              <div className="flex items-center gap-x-4">
-                <div className="cursor-pointer text-2xl duration-500">
-                  {menu.symbol}
-                </div>
-                {open && <span>{menu.title}</span>}
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
 

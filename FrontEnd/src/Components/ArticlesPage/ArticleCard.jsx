@@ -22,6 +22,12 @@ const ArticleCard = ({ article, handleLike }) => {
 
       setLikes(response.data.likesCount);
       setIsLiked(response.data.likedByCurrentUser);
+      // Send the like/unlike request to the backend
+      await axios.put(
+        `http://localhost:8000/api/articles/like/${article._id}`,
+        {},
+        { withCredentials: true }
+      );
     } catch (error) {
       console.error("Error toggling like:", error.message);
     }
@@ -30,7 +36,7 @@ const ArticleCard = ({ article, handleLike }) => {
   return (
     <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4">
       <img
-        className="w-full h-40"
+        className="w-full border-1 rounded-md border-purple-300 h-40"
         src={
           article.image
             ? `http://localhost:8000/public/article_images/${article.image}`
@@ -39,8 +45,12 @@ const ArticleCard = ({ article, handleLike }) => {
         alt="Article Cover"
       />
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 text-white">{article.title}</div>
-        <p className="text-white text-base">{article.content}</p>
+        <div className="font-bold text-xl mb-2 text-purple-600">
+          {article.title.slice(0, 50)}
+        </div>
+        <p className="text-white break-words text-base">
+          {article.content.slice(0, 50)}...
+        </p>
       </div>
 
       <div className="flex justify-center m-5">

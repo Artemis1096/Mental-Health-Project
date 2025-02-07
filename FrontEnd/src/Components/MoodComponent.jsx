@@ -1,43 +1,56 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import { useState } from "react";
+import axios from "axios";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
 
 const moods = [
-  { value: 1, label: 'Very Unhappy', emoji: '😢' },
-  { value: 2, label: 'Unhappy', emoji: '☹️' },
-  { value: 3, label: 'Neutral', emoji: '😐' },
-  { value: 4, label: 'Happy', emoji: '🙂' },
-  { value: 5, label: 'Very Happy', emoji: '😁' }
+  { value: 1, label: "Very Unhappy", emoji: "😢" },
+  { value: 2, label: "Unhappy", emoji: "☹️" },
+  { value: 3, label: "Neutral", emoji: "😐" },
+  { value: 4, label: "Happy", emoji: "🙂" },
+  { value: 5, label: "Very Happy", emoji: "😁" },
 ];
 
 const MoodComponent = () => {
   const [open, setOpen] = useState(true);
   const [selectedMood, setSelectedMood] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleConfirm = async () => {
     if (!selectedMood) {
-      setError('Please select a mood.');
+      setError("Please select a mood.");
       return;
     }
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/api/mood/set',
+        "http://localhost:8000/api/mood/set",
         { mood: selectedMood },
+
         { withCredentials: true }
       );
 
       console.log(response.data.message);
       setOpen(false);
     } catch (error) {
-      console.error('Error saving mood:', error.response?.data?.message || error.message);
-      setError(error.response?.data?.message || 'Something went wrong');
+      console.error(
+        "Error saving mood:",
+        error.response?.data?.message || error.message
+      );
+      setError(error.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      className="relative z-10"
+    >
       <DialogBackdrop className="fixed inset-0 bg-gray-500/75" />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -51,8 +64,8 @@ const MoodComponent = () => {
                 <button
                   key={mood.value}
                   onClick={() => setSelectedMood(mood.value)}
-                  className={`p-3 text-2xl rounded-full transition-all border-2 border-transparent hover:border-gray-300 ${
-                    selectedMood === mood.value ? 'border-blue-500' : ''
+                  className={`p-3 text-3xl rounded-full transition-all border-2  border-transparent hover:!bg-blue-300 ${
+                    selectedMood === mood.value ? "!bg-blue-500" : ""
                   }`}
                 >
                   {mood.emoji}

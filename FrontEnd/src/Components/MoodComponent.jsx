@@ -25,19 +25,28 @@ const MoodComponent = ({ onMoodSubmit }) => {
       await axios.post(
         "http://localhost:8000/api/mood/set",
         { mood: selectedMood },
+
         { withCredentials: true }
       );
 
       setOpen(false);
       onMoodSubmit(); // Hide the component after successful submission
     } catch (error) {
+      console.error(
+        "Error saving mood:",
+        error.response?.data?.message || error.message
+      );
       console.error("Error saving mood:", error.response?.data?.message || error.message);
       setError(error.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      className="relative z-10"
+    >
       <DialogBackdrop className="fixed inset-0 bg-gray-500/75" />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4 text-center">

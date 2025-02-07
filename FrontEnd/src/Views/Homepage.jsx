@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../Styles/HomePage.css";
 import Quotes from "../../Data/quotes.json";
 import MoodComponent from "../Components/MoodComponent";
 import Loader from "../Components/Loader";
@@ -7,17 +9,33 @@ import bg from "../Assets/bgx.jpeg";
 const Homepage = () => {
   const [todayQuote, setTodayQuote] = useState({ Quote: "", Author: "" });
   const [isLoading, setIsLoading] = useState(true);
+  const [showMoodComponent, setShowMoodComponent] = useState(false);
+
   const userData = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    const today = new Date();
-    const index = today.getDate() % Quotes.length; // Get a different quote every day
+    if (!userData) return;
 
+    const fetchMoodStatus = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/mood/check", {
+          withCredentials: true,
+        });
+
+        setShowMoodComponent(!response.data.hasSubmitted);
+      } catch (error) {
+        console.error("Error checking mood status:", error);
+      }
+    };
+
+    fetchMoodStatus();
+
+    const index = new Date().getDate() % Quotes.length;
     setTimeout(() => {
       setTodayQuote(Quotes[index]);
       setIsLoading(false);
     }, 1000);
-  }, []);
+  }, [userData]);
 
   if (isLoading) {
     return <Loader />;
@@ -38,8 +56,8 @@ const Homepage = () => {
 
       {/* Content container placed above the background image with a semi-transparent background */}
       <div className="relative z-10  bg-opacity-80 min-h-screen">
-        <MoodComponent />
-
+        {/* Show MoodComponent only if user has NOT submitted */}
+      {showMoodComponent && <MoodComponent onMoodSubmit={() => setShowMoodComponent(false)} />}
         {/* Example Welcome Sections */}
         <div className="text-center mb-7  rounded-2xl w-full">
           <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">

@@ -30,7 +30,7 @@ function ArticlesPage() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/articles");
+        const response = await axios.get("http://localhost:8000/api/articles", {withCredentials : true});
         setArticles(response.data.data);
 
         const uniqueCategories = [

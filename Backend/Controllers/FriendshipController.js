@@ -140,6 +140,19 @@ export const removeFriend = async (req, res) => {
     }
 };
 
+// export const deleteAll = async(req, res) => {
+//     try {
+//         const userId = req.user._id;
+//         const deletedFriendships = await Friendship.deleteMany({
+//             $or: [{user1 : userId}, {user2 : userId}]
+//         });
+//         res.status(200).json({ message: "All assocaited friendships deleted successfully" });
+//     } catch (error) {
+//         console.log("error deleting associated friendships", error.message);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// }
+
 /**
  * Retrieves the list of friends for a given user.
  */

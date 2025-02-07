@@ -1,4 +1,5 @@
 import Task from "../Models/task.js";
+import User from "../Models/User.js";
 
 
 export const createTask = async (req, res) => {
@@ -38,15 +39,39 @@ export const getTaskById = async (req, res) => {
 
 export const updateTask = async (req, res) => {
     try {
-        const task = await Task.findOneAndUpdate(
+      
+        const existingTask = await Task.findOne({ _id: req.params.id, user: req.user._id });
+
+        if (!existingTask) return res.status(404).json({ message: "Task not found" });
+
+       
+        const isNewlyCompleted = req.body.status === "completed" && existingTask.status !== "completed";
+
+        const updatedTask = await Task.findOneAndUpdate(
             { _id: req.params.id, user: req.user._id },
             req.body,
             { new: true }
         );
-        if (!task) return res.status(404).json({ message: "Task not found" });
-        res.status(200).json(task);
+
+        let updatedUser = null;
+
+        if (isNewlyCompleted) {
+            updatedUser = await User.findByIdAndUpdate(
+                req.user._id,
+                { $inc: { exp: 10 } }, 
+                { new: true }
+            );
+        }
+
+        res.status(200).json({
+            task: updatedTask,
+            exp: updatedUser ? updatedUser.exp : undefined, 
+            message: "Task updated successfully",
+        });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: error.message,
+            success:false
+         });
     }
 };
 

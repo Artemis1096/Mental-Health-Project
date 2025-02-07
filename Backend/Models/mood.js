@@ -13,6 +13,7 @@ const moodSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: () => new Date().setHours(0, 0, 0, 0),
+    // unique : true
   },
 });
 

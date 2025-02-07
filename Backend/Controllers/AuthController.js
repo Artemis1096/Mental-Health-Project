@@ -86,8 +86,9 @@ export const login = async (req, res) => {
       username: user.name,
       email: user.email,
       userId: user._id,
-      userType: user.userType,
+      userType : user.userType,
       message: "Logged in successfully",
+      exp:user.exp
     });
   } catch (error) {
     console.log(error.message);

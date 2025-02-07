@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
     userType : {
         type : String,
         default : "user"
+    },
+    exp:{
+        type:Number,
+        default:0
     }
 });
 

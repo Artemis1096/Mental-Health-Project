@@ -18,10 +18,10 @@ const articleSchema = new mongoose.Schema({
         type : Array,
         required : false
     },
-    likes : {
-        type : Number,
-        default : 0
-    }
+    likes : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'User'
+    }]
 }, {timestamps : true});
 
 const Article = mongoose.model("Article", articleSchema);

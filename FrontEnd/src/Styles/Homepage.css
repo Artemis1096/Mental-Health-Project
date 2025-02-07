@@ -1,9 +1,11 @@
 .main {
-  background: url("../Assets/bg4.jpg");
-  height: 100%;
-  background-size: cover;
-  overflow: scroll;
+  background: url("../Assets/tree.png") no-repeat center center;
+  background-size: cover; /* Ensures full coverage */
+  height: 100vh; /* 100% of the viewport height */
+  width: 100%; /* Ensures full width */
+  overflow: auto; /* Scroll only if needed */
 }
+
 .Heading {
   display: flex;
   flex-direction: column;
@@ -46,4 +48,20 @@
 
 .Heading p {
   text-align: center;
+}
+
+.rubik-moonrocks-regular {
+  font-family: "Rubik Moonrocks", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.permanent-marker-regular {
+  font-family: "Permanent Marker", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.yoyo {
+  background-color: rgba(0, 0, 0, 0.7); /* Black background with 70% opacity */
 }

@@ -6,7 +6,7 @@ const taskSchema = new mongoose.Schema({
     status: { type: String, enum: ["pending", "completed"], default: "pending" },
     date: {
         type: Date,
-        required: true,
+        // required: true,
         set: (val) => new Date(val).setHours(0, 0, 0, 0), // Store only the date
         get: (val) => new Date(val).toISOString().split("T")[0], // Retrieve only date part
       },

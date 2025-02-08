@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 import Register from "../Components/Register";
-import { Link } from "react-router-dom"; // Fixed import
-import { FaGoogle } from "react-icons/fa";
 import bg from "../Assets/signUpbg.jpg";
 import useGoogleAuth from "../Hooks/useGoogleAuthentication";
+
+//Please add comment when adding or fixing anything in the code.
 
 function SignUp() {
   const authenticate = useGoogleAuth();
@@ -16,7 +18,7 @@ function SignUp() {
         className="absolute inset-0 w-full h-full object-cover -z-10"
       />
 
-      {/* SignUp Card (Shifted Left, Smaller) */}
+      {/* SignUp Card */}
       <div className=" w-full max-w-sm m-10 p-6 mb-5 bg-purple-300 shadow-lg rounded-xl z-10 opacity-70">
         <h2 className="text-2xl bg-purple-800 rounded-3xl font-bold text-center text-white mb-4 py-1 ">
           ✨ Sign Up ✨

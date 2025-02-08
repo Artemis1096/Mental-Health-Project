@@ -24,9 +24,9 @@ export default function MusicPlayer() {
       audioRef.current.load();
       // Attempt to play if already in playing state.
       if (isPlaying) {
-        audioRef.current.play().catch((err) =>
-          console.error("Error playing audio:", err)
-        );
+        audioRef.current
+          .play()
+          .catch((err) => console.error("Error playing audio:", err));
       }
     }
   }, [currentIndex, songs, isPlaying]);
@@ -36,9 +36,9 @@ export default function MusicPlayer() {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch((err) =>
-        console.error("Error playing audio:", err)
-      );
+      audioRef.current
+        .play()
+        .catch((err) => console.error("Error playing audio:", err));
     }
     setIsPlaying(!isPlaying);
   };
@@ -51,8 +51,10 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div className="music-player p-4 text-center shadow-lg rounded-2xl bg-black">
-      <h2 className="text-lg font-semibold mb-2 text-white">Music Player</h2>
+    <div className=" p-4 mx-10 text-center  h-96 pt-10 shadow-lg rounded-2xl bg-purple-950">
+      <h2 className="text-xl  font-semibold my-2 text-white bg-purple-400 rounded-2xl ">
+        Music Player
+      </h2>
       <audio
         key={songs[currentIndex]} // Force remount when the song changes.
         ref={audioRef}
@@ -61,31 +63,36 @@ export default function MusicPlayer() {
         onPause={() => setIsPlaying(false)}
         onCanPlay={() => {
           if (isPlaying) {
-            audioRef.current.play().catch((err) =>
-              console.error("Error playing audio on canplay:", err)
-            );
+            audioRef.current
+              .play()
+              .catch((err) =>
+                console.error("Error playing audio on canplay:", err)
+              );
           }
         }}
       >
         <source src={songs[currentIndex]} type="audio/mpeg" />
       </audio>
-      <div className="flex gap-2 justify-center mt-4">
+      <div className="flex gap-2 p-3 bg-purple-300 justify-center rounded-3xl shadow-2xl my-10">
         <button
           onClick={playPause}
-          className="p-2 border rounded bg-blue-500 text-white hover:bg-blue-600"
+          className="p-2 border rounded !bg-purple-500 text-white hover:!bg-blue-700"
         >
           {isPlaying ? <Pause size={20} /> : <Play size={20} />}
         </button>
         <button
           onClick={nextTrack}
-          className="p-2 border rounded bg-gray-200 hover:bg-gray-300"
+          className="p-2 border rounded !bg-purple-500 text-white hover:!bg-blue-700"
         >
           <SkipForward size={20} />
         </button>
       </div>
-      <p className="text-sm mt-2 text-white">
+      <p className="text-md mt-2 text-white">
         Now Playing: {songs[currentIndex].split("/").pop()}
       </p>
+      <div className="mt-7 bg-purple-400 py-3 rounded-2xl ">
+        <h1 className="text-7xl ">🎵</h1>
+      </div>
     </div>
   );
 }

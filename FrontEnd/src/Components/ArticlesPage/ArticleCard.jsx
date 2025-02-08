@@ -32,11 +32,7 @@ const ArticleCard = ({ article, handleLike }) => {
     <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4 flex flex-col space-y-4">
       <img
         className="w-full border border-purple-300 rounded-md h-40 object-cover"
-        src={
-          article.image
-            ? article.image
-            : Sunset
-        }
+        src={article.image ? article.image : Sunset}
         alt="Article Cover"
       />
       <div className="flex flex-col flex-grow">
@@ -60,7 +56,7 @@ const ArticleCard = ({ article, handleLike }) => {
 
       <div className="flex items-center justify-between px-6 py-4 bg-gray-900 rounded-lg shadow-lg">
         <div className="flex flex-wrap space-x-2">
-          {article.category.map((category) => (
+          {article.category.slice(0, 2).map((category) => (
             <span
               key={category}
               className="category-color text-white px-2 py-1 rounded-full text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300"

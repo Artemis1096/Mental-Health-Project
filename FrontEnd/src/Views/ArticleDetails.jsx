@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 import axios from "axios";
 import Loader from "../Components/Loader";
-import "../Styles/Articles.css"
- 
+import "../Styles/Articles.css";
+
 const ArticleDetails = () => {
   const user = useSelector((state) => state.user);
   const isAdmin = user?.User.userType === "admin";
-  // console.log(user.User.userType);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const ArticleDetails = () => {
           `http://localhost:8000/api/articles/${id}`,
           { withCredentials: true }
         );
-        console.log(response);
+
         setArticle(response.data._doc);
         setUpdatedTitle(response.data.title);
         setUpdatedContent(response.data.content);
@@ -124,7 +124,7 @@ const ArticleDetails = () => {
           className="text-5xl bg-white p-2 rounded-md fixed top-3 ml-5 shadow z-50"
           onClick={() => navigate(-1)}
         >
-           <p className="back-navigate-btn">&larr;</p>
+          <p className="back-navigate-btn">&larr;</p>
         </button>
 
         {isAdmin && (

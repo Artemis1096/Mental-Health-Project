@@ -15,6 +15,7 @@ import Chat from "../Views/Chat";
 import JournalPage from "../Views/JournalPage";
 import Aichat from "../Views/AIchat";
 import { UseAuthContext } from "../Context/AuthContext";
+import OtpVerification from "../Components/OtpVerification";
 
 function HomeRoutes() {
   const { auth } = UseAuthContext();
@@ -26,6 +27,7 @@ function HomeRoutes() {
         path="/"
         element={auth ? <Navigate to="/app" /> : <LandingPage />}
       />
+
       <Route
         path="/login"
         element={auth ? <Navigate to="/app" /> : <Login />}

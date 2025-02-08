@@ -3,6 +3,8 @@ import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import axios from "axios";
 import { UseAuthContext } from "../Context/AuthContext";
 import "../Styles/Articles.css"
+import bg from "../Assets/articlebg.jpg";
+import Loader from "../Components/Loader";
 
 function ArticlesPage() {
   const { auth } = UseAuthContext();
@@ -11,6 +13,8 @@ function ArticlesPage() {
   const [category, setCategory] = useState("All");
   const [categories, setCategories] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [newArticle, setNewArticle] = useState({
@@ -72,39 +76,51 @@ function ArticlesPage() {
   };
   
   const handleAddArticle = async () => {
-    setShowModal(true);
-
+    // setShowModal(true);
+    setLoading(true);
+    let uploadedImageUrl = "";
     if (image) {
       const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("img", fileName);
-      data.append("file", image);
-      newArticle.image = fileName;
+      data.append("image", image);
       try {
-        await axios.post("http://localhost:8000/api/upload", data);
+        const uploadRes = await axios.post("http://localhost:8000/api/upload", data, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        uploadedImageUrl = uploadRes.data.imageUrl;
       } catch (error) {
-        console.log("error uploading image\n", error.message);
+        console.log("Error uploading image:", error.message);
       }
     }
-
+  
     try {
-      const res = await axios.post(
+      const newArticleData = {
+        ...newArticle,
+        image: uploadedImageUrl,
+      };
+  
+      await axios.post(
         "http://localhost:8000/api/articles/create",
-        newArticle,
+        newArticleData,
         { withCredentials: true }
       );
     } catch (error) {
-      console.log("error creating article : client", error.message);
+      console.log("Error creating article:", error.message);
+    }finally{
+      setShowModal(false);
+      setLoading(false);
     }
-
-    setShowModal(false);
   };
+  
   
   const filteredArticles = articles.filter((article) => {
     const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = category === "All" || article.category === category;
     return matchesSearch && matchesCategory;
   });
+
+  if(loading){
+    return <Loader/>
+  }
 
   return (
     <div className="main-container">

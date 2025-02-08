@@ -34,7 +34,7 @@ const ArticleCard = ({ article, handleLike }) => {
         className="w-full border border-purple-300 rounded-md h-40 object-cover"
         src={
           article.image
-            ? `http://localhost:8000/public/article_images/${article.image}`
+            ? article.image
             : Sunset
         }
         alt="Article Cover"

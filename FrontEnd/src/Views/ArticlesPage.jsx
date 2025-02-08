@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { UseAuthContext } from "../Context/AuthContext";
 
 import axios from "axios";
-
+import "../Styles/Articles.css"
 import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import bg from "../Assets/articlebg.jpg";
 import ParallaxShowcase from "./ParallaxShowcase";
@@ -142,12 +142,12 @@ function ArticlesPage() {
   return (
     <>
       <ParallaxShowcase />
-      <img
+      {/* <img
         src={bg}
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover -z-10"
-      />
-      <h1 className="text-5xl font-bold text-center py-4 permanent-marker-regular">
+      /> */}
+      <h1 className="text-5xl font-bold text-center py-4 mt-5">
         Articles
       </h1>
 
@@ -249,7 +249,7 @@ function ArticlesPage() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

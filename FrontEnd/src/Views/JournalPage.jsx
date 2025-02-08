@@ -102,7 +102,7 @@ const JournalPage = () => {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="bg-white dark:bg-purple-950 rounded-2xl shadow-xl mb-8 overflow-hidden"
+          className="bg-b rounded-2xl shadow-xl mb-8 overflow-hidden"
         >
           <div className="p-8">
             <h2 className="text-2xl font-semibold text-white mb-6 text-center">

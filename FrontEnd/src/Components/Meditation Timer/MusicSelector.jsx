@@ -51,8 +51,8 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div className=" p-4 mx-10 text-center  h-96 pt-10 shadow-lg rounded-2xl bg-purple-950">
-      <h2 className="text-xl  font-semibold my-2 text-white bg-purple-400 rounded-2xl ">
+    <div className=" p-4 mx-10 text-center bg-color h-96 pt-10 shadow-lg rounded-2xl bg-purple-950">
+      <h2 className="text-xl  font-semibold my-2 text-white rounded-2xl ">
         Music Player
       </h2>
       <audio
@@ -73,24 +73,24 @@ export default function MusicPlayer() {
       >
         <source src={songs[currentIndex]} type="audio/mpeg" />
       </audio>
-      <div className="flex gap-2 p-3 bg-purple-300 justify-center rounded-3xl shadow-2xl my-10">
+      <div className="flex gap-2 p-3 justify-center rounded-3xl shadow-2xl my-10">
         <button
           onClick={playPause}
-          className="p-2 border rounded !bg-purple-500 text-white hover:!bg-blue-700"
+          className="p-2 border rounded text-white hover:!bg-black"
         >
           {isPlaying ? <Pause size={20} /> : <Play size={20} />}
         </button>
         <button
           onClick={nextTrack}
-          className="p-2 border rounded !bg-purple-500 text-white hover:!bg-blue-700"
+          className="p-2 border rounded text-white hover:!bg-black"
         >
           <SkipForward size={20} />
         </button>
       </div>
-      <p className="text-md mt-2 text-white">
+      {/* <p className="text-md mt-2 text-white">
         Now Playing: {songs[currentIndex].split("/").pop()}
-      </p>
-      <div className="mt-7 bg-purple-400 py-3 rounded-2xl ">
+      </p> */}
+      <div className="mt-7 bg-color py-3 rounded-2xl ">
         <h1 className="text-7xl ">🎵</h1>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../Styles/Articles.css"
 
 function CategoryDropdown({ category, setCategory, categories }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,14 +9,14 @@ function CategoryDropdown({ category, setCategory, categories }) {
       {/* Button to open dropdown */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 w-full text-left border !bg-purple-900 !text-white !border-gray-300 rounded-xl focus:ring-2 focus:!ring-purple-500"
+        className="p-2 w-full px-6 text-left border bg-color !text-white !border-gray-300 rounded-xl focus:ring-2"
       >
-        {"Select Category ⬇️"}
+        {"Select Category"}
       </button>
 
       {/* Dropdown List */}
       {isOpen && (
-        <ul className="absolute left-0 mt-1 w-full bg-purple-800 border border-gray-300 rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
+        <ul className="absolute left-0 mt-1 w-full bg-color border border-gray-300 rounded-md shadow-lg z-10 max-h-48 overflow-y-auto">
           <li
             className="p-2 hover:bg-purple-200 text-center cursor-pointer"
             onClick={() => {
@@ -24,6 +25,7 @@ function CategoryDropdown({ category, setCategory, categories }) {
             }}
           >
             All Categories
+            <hr/>
           </li>
           {categories.map((cat, index) => (
             <li
@@ -35,6 +37,7 @@ function CategoryDropdown({ category, setCategory, categories }) {
               }}
             >
               {cat}
+              <hr />
             </li>
           ))}
         </ul>

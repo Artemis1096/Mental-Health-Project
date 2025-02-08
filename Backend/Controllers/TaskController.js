@@ -91,18 +91,33 @@ export const deleteTask = async (req, res) => {
 export const assignDailyTask = async () => {
     try {
         const users = await User.find(); // Fetch all users
-        const dailyTaskDescription = "Medidate for 5 mins   "; // Change this as needed
-        const title='Daily Task'
-        const tasks = users.map(user => ({
-            title,
-            description: dailyTaskDescription,
-            user: user._id,
-            status: "pending"
-        }));
+        const today = new Date().setHours(0, 0, 0, 0); // Get today's date without time
+        const dailyTaskDescription = "Meditate for 5 mins"; 
+        const title = "Daily Task";
 
-        await Task.insertMany(tasks);
-        console.log("Daily task assigned to all users");
-    } catch (error) {
+        for (const user of users) {
+            // Check if today's task already exists for this user
+            const existingTask = await Task.findOne({ user: user._id, title, date: today });
+           
+            if (existingTask) {
+                // If task exists, reset status to "pending"
+                existingTask.status = "pending";
+                await existingTask.save();
+               
+            } else {
+                // Assign new task if it doesn't exist
+                await Task.create({
+                    title: "Daily Task",
+                    description: "Meditate for 5 mins",
+                    user: user._id,
+                    status: "pending",
+                    date: today, // Store only date
+                });
+                console.log(`Task assigned to user ${user._id}`);
+            }
+        }
+        console.log("Daily tasks assigned (if not already present)");
+    } catch (error) {    
         console.error("Error assigning daily task:", error.message);
     }
 };

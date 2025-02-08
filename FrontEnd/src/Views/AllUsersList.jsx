@@ -19,6 +19,7 @@ function AllUsersList() {
           withCredentials: true,
         });
         setUsers(res.data.data || []);
+        console.log(res.data.data);
       } catch (err) {
         setError("Failed to fetch users.");
         console.error("Error fetching users:", err);
@@ -86,7 +87,7 @@ function AllUsersList() {
   };
 
   const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+    user.username.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading)
@@ -122,7 +123,7 @@ function AllUsersList() {
                     className="flex justify-between items-center bg-gray-100 p-3 mb-2 rounded-lg shadow-sm"
                   >
                     <span className="text-gray-700 font-medium">
-                      {user.name}
+                      {user.username}
                     </span>
                     <button
                       className="px-3 py-1 !bg-purple-600 text-white rounded-md !hover:bg-purple-700 transition"
@@ -153,7 +154,7 @@ function AllUsersList() {
                     className="flex justify-between items-center bg-gray-100 p-3 mb-2 rounded-lg shadow-sm"
                   >
                     <span className="text-gray-700">
-                      {request.user1.name} sent a request
+                      {request.user1.username} sent a request
                     </span>
                     <div className="flex gap-2">
                       <button

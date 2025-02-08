@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const LikeButton = ({ likes, handleLike, isLiked }) => {
+const LikeButton = ({ articleId, initialLikes, initiallyLiked, handleLike }) => {
+  const [likes, setLikes] = useState(initialLikes);
+  const [isLiked, setIsLiked] = useState(initiallyLiked);
+
+  useEffect(() => {
+    setIsLiked(initiallyLiked);
+    setLikes(initialLikes);
+  }, [initialLikes, initiallyLiked]);
+
+  const handleLikeClick = async () => {
+    try {
+      const updatedStatus = !isLiked;
+      setIsLiked(updatedStatus);
+      setLikes((prevLikes) => (updatedStatus ? prevLikes + 1 : prevLikes - 1));
+      await handleLike();
+    } catch (error) {
+      console.error("Error updating like status:", error.message);
+    }
+  };
+
   return (
-    <div className="comment-react">
-      <button onClick={handleLike}>
-        <svg
+    <div className="comment-react flex items-center gap-1">
+      <button onClick={handleLikeClick} aria-label="Like Button" className="cursor-pointer">
+      <svg
           xmlns="http://www.w3.org/2000/svg"
           width="22"
           height="22"
@@ -19,7 +38,7 @@ const LikeButton = ({ likes, handleLike, isLiked }) => {
           ></path>
         </svg>
       </button>
-      <span>{likes}</span>
+      <span className="text-sm">{likes}</span>
     </div>
   );
 };

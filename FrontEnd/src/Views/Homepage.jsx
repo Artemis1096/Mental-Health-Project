@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import axios from "axios";
 import "../Styles/HomePage.css";
 import Quotes from "../../Data/quotes.json";
@@ -19,9 +20,12 @@ const Homepage = () => {
 
     const fetchMoodStatus = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/mood/check", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          "http://localhost:8000/api/mood/check",
+          {
+            withCredentials: true,
+          }
+        );
 
         setShowMoodComponent(!response.data.hasSubmitted);
       } catch (error) {
@@ -45,14 +49,15 @@ const Homepage = () => {
   return (
     // The parent container is set to relative so that the absolutely positioned image
     // will be relative to this container. The container expands as your content grows.
-    <div className="relative min-h-screen pr-10 bg-cyan-700">
+    <div className="relative flex flex-col min-h-screen pr-10 bg-cyan-700  -z-50">
       {/* Background image rendered with an img tag */}
-      <div className="p-2  w-full  " >
-      <img
-        src={bg}
-        alt="Background"
-        className="absolute rounded-2xl mr-10 w-full h-full "
-      />
+      <div className=" w-full h-full ">
+        <img
+          src={bg}
+          alt="Background"
+          className="absolute  w-full h-full  rounded-2xl"
+          loading="lazy"
+        />
       </div>
 
       {/* Content container placed above the background image with a semi-transparent background */}
@@ -71,7 +76,7 @@ const Homepage = () => {
         {/* <TaskList/> */}
 
         {/* Quote Box */}
-        <div className="bg-blue-100 text-black p-8 md:p-10 rounded-2xl shadow-2xl max-w-2xl w-full text-center mx-auto">
+        <div className="bg-blue-100 mt-40 text-black p-8 md:p-10 rounded-2xl shadow-2xl max-w-2xl mb-20 w-full text-center mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             Today&apos;s Quote
           </h1>
@@ -82,6 +87,13 @@ const Homepage = () => {
             ~ {todayQuote.Author}
           </span>
         </div>
+
+        <div className="h-96 w-full"></div>
+        <div className="h-96 w-full"></div>
+        <div className="h-96 w-full"></div>
+        <div className="h-96 w-full"></div>
+        <div className="h-96 w-full"></div>
+        <div className="h-96 w-full"></div>
       </div>
     </div>
   );

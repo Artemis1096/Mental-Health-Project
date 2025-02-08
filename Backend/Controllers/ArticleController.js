@@ -89,21 +89,24 @@ export const getArticleDetails = async (req, res) => {
 
 export const getArticles = async (req, res) => {
     try {
-        const userId = req.user._id;
+        const userId = new mongoose.Types.ObjectId(req.user._id);
         const articles = await Article.find().lean();
+        
         const articlesWithLikeStatus = articles.map((article) => ({
             ...article,
-            likedByCurrentUser : (article.likes.includes(userId) ? true : false)
+            likedByCurrentUser: article.likes.some((like) => like.equals(userId))
         }));
+
+        // console.log(articlesWithLikeStatus);
         res.status(200).json({
-            message : "success", 
-            data : articlesWithLikeStatus
+            message: "success", 
+            data: articlesWithLikeStatus
         });
     } catch (error) {
         console.log("Error getting articles", error.message);
-        res.status(500).json({error : "Internal server error"});
+        res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
 export const toggleLike = async (req, res) => {
     try {
@@ -123,7 +126,7 @@ export const toggleLike = async (req, res) => {
 
         await article.save();
 
-        res.status(200).json({ message: "success" , likesCount : article.likes.length });
+        res.status(200).json({ message: "success" , likesCount : article.likes.length, likedByCurrentUser : article.likes.includes(userId)});
 
     } catch (error) {
         console.error("Error liking article:", error.message);

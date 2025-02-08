@@ -1,21 +1,25 @@
-import React from "react";
 import "../Styles/MeditationTimer.css";
+
+import { useState } from "react";
+
 import Timer from "../Components/Meditation Timer/Timer";
 import Settings from "../Components/Meditation Timer/Settings";
-import { useState } from "react";
 import SettingsContext from "../Context/SettingsContext";
 import MusicSelector from "../Components/Meditation Timer/MusicSelector";
-import "../Styles/MeditationTimer.css"
+
+//Please add comment when adding or fixing anything in the code.
 
 function MeditationTimer() {
   const [showSettings, setShowSettings] = useState(false);
   const [workMinutes, setWorkMinutes] = useState(10);
 
   return (
-    <main className="p-8 w-full">
-      <h1 className="m-6 text-4xl">Meditate</h1>
-      <div className="med-main flex flex-col ">
-        <div className="timer">
+    <main className="w-full h-screen">
+      <h1 className="p-3 my-10 text-5xl  bg-purple-300 text-purple-950 shadow-xl rounded-2xl ">
+        🎴Meditate🎴
+      </h1>
+      <div className=" mx-10 grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div className="timer ml-10  w-full">
           <SettingsContext.Provider
             value={{
               showSettings,
@@ -27,7 +31,7 @@ function MeditationTimer() {
             {showSettings ? <Settings /> : <Timer />}
           </SettingsContext.Provider>
         </div>
-        <div className="music-player">
+        <div className="">
           <MusicSelector />
         </div>
       </div>

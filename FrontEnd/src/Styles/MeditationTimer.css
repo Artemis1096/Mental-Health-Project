@@ -5,7 +5,7 @@ body {
 
 main {
   /* padding-top: 50px; */
-  max-width: 340px;
+
   margin: 0 auto;
   text-align: center;
 }
@@ -39,9 +39,7 @@ label {
   margin-top: 20px;
   text-transform: capitalize;
 }
-.music-player{
-  /* width: 50%; */
-}
-.timer{
+
+.timer {
   width: 50%;
 }

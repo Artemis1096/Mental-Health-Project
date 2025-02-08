@@ -5,8 +5,10 @@
     color: black;
 }
 .Receiver-Name{
-    border: 1px solid black;
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);
+    border: 1px solid purple;
     padding: 1rem;
+    color: white;
     padding-left: 4rem;
     font-size: 1.5rem;
     font-weight: 500;
@@ -15,7 +17,7 @@
 .chat-area{
     border: 1px solid black;
     padding: 1rem;
-    /* width: 100%; */
+    width: 100%;
 }
 .send-message{
     border: 1px solid black;
@@ -23,7 +25,12 @@
     width: 100%;
 }
 .send-button{
-    color: black;
+    color: white;
+    padding: 0.6rem;
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);
+    border-radius: 10px;
+    width: 5rem;
+    border: 1px solid white;
 }
 .chat-area {
     display: flex;
@@ -41,7 +48,7 @@
 
 .received {
     align-self: flex-start;
-    background-color: #007bff;
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);
     color: white;
     border-bottom-right-radius: 5px;
 }

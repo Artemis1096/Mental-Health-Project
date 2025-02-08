@@ -65,3 +65,11 @@
 .yoyo {
   background-color: rgba(0, 0, 0, 0.7); /* Black background with 70% opacity */
 }
+
+.bg-color{
+  background: linear-gradient(to bottom right, #7d3c98, #2980b9);
+}
+
+.welcome-text{
+  
+}

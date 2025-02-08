@@ -20,6 +20,7 @@ import { verify } from "./Utils/WebToken.js";
 // import upload from "./Middlewares/upload.js";
 import {upload} from './Config/cloudinaryConfig.js';
 import {app, server} from './socket/socket.js';
+import { assignDailyTask } from "./Controllers/TaskController.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,7 +30,7 @@ setupGoogleAuth(app);
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
-
+assignDailyTask()
 server.listen(PORT, "0.0.0.0", () => {
   try {
     connectDB();

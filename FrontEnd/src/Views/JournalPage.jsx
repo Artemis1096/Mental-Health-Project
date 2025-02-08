@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import Note from "../Components/Journal/Note";
 import axios from "axios";
+import "../Styles/Journal.css"
 
 const JournalPage = () => {
   const [isExpandedId, setIsExpandedId] = useState(null);
@@ -11,7 +12,6 @@ const JournalPage = () => {
   const [sortOrder, setSortOrder] = useState("desc");
 
   const user = useSelector((state) => state.user);
-  // console.log(user.User.id);
 
   const userId = user.User.id;
 
@@ -86,13 +86,13 @@ const JournalPage = () => {
   };
 
   return (
-    <div className="h-screen overflow-y-auto bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200 dark:from-black dark:via-purple-950 dark:to-black">
+    <div className="h-screen overflow-y-auto bg-color">
       <div className="container mx-auto px-4 py-12 max-w-5xl">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-purple-800 dark:text-purple-300 mb-4 permanent-marker-regular">
+          <h1 className="text-5xl font-bold text-white mb-4">
             Personal Journal
           </h1>
-          <p className="text-purple-600 dark:text-purple-400">
+          <p className="text-white">
             Capture your thoughts and memories
           </p>
         </div>
@@ -102,10 +102,10 @@ const JournalPage = () => {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="bg-white dark:bg-black rounded-2xl shadow-xl mb-8 overflow-hidden"
+          className="bg-white dark:bg-purple-950 rounded-2xl shadow-xl mb-8 overflow-hidden"
         >
           <div className="p-8">
-            <h2 className="text-2xl font-semibold text-purple-800 dark:text-purple-300 mb-6 text-center">
+            <h2 className="text-2xl font-semibold text-white mb-6 text-center">
               New Entry
             </h2>
             <form onSubmit={handleAddNote} className="space-y-4">
@@ -116,7 +116,7 @@ const JournalPage = () => {
                   placeholder="Entry Title"
                   value={newNote.title}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 rounded-xl bg-purple-50 dark:bg-purple-950 border border-purple-200 dark:border-purple-800 text-purple-800 dark:text-purple-200 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl bg-color-r transition-all duration-300"
                   required
                 />
               </div>
@@ -126,13 +126,13 @@ const JournalPage = () => {
                   placeholder="Write your thoughts..."
                   value={newNote.content}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 rounded-xl bg-purple-50 dark:bg-purple-950 border border-purple-200 dark:border-purple-800 text-purple-800 dark:text-purple-200 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300 min-h-[150px]"
+                  className="w-full px-4 py-3 rounded-xl text-white bg-color-r transition-all duration-300 min-h-[150px]"
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition-all duration-300  active:scale-[0.98] shadow-lg hover:shadow-xl"
+                className="w-full py-3 bg-color text-white font-semibold rounded-xl transition-all duration-300  active:scale-[0.98] shadow-lg hover:shadow-xl"
               >
                 Save Entry
               </button>
@@ -142,18 +142,18 @@ const JournalPage = () => {
 
         {/* Entries Section */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold text-purple-800 dark:text-purple-300">
+          <h2 className="text-2xl font-semibold text-white">
             Your Entries
           </h2>
           <button
             onClick={toggleSortOrder}
             className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-black rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
           >
-            <span className="text-sm font-medium text-purple-800 dark:text-purple-300">
+            <span className="text-sm font-medium text-white">
               {sortOrder === "desc" ? "Newest First" : "Oldest First"}
             </span>
             <svg
-              className="w-4 h-4 text-purple-600 dark:text-purple-400"
+              className="w-4 h-4 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -190,7 +190,7 @@ const JournalPage = () => {
             ))}
           </AnimatePresence>
           {journals.length === 0 && (
-            <div className="text-center py-12 text-purple-600 dark:text-purple-400">
+            <div className="text-center py-12 text-white">
               No journal entries yet. Start writing your first entry above!
             </div>
           )}

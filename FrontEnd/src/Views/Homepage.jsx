@@ -15,7 +15,7 @@ const Homepage = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    if (!userData) return;
+    if (!userData) return; 
 
     const fetchMoodStatus = async () => {
       try {
@@ -66,13 +66,13 @@ const Homepage = () => {
           <MoodComponent onMoodSubmit={() => setShowMoodComponent(false)} />
         )}
 
-        <div className=" w-full mt-50 rubik-moonrocks-regular">
-          <h1 className="text-center drop-shadow-2xl text-purple-950 text-8xl">
+        <div className=" w-full mt-25">
+          <h1 className="text-center drop-shadow-2xl text-white welcome-text text-8xl">
             Welcome
           </h1>
         </div>
 
-        <div className="h-84 w-full mt-20 shadow-lg rounded-2xl  ml-5 permanent-marker-regular">
+        <div className="h-84 w-full mt-20 rounded-2xl  ml-5 permanent-marker-regular">
           <h1 className="text-center text-cyan-900 text-9xl drop-shadow-2xl">
             {userData.name || "Guest"}
           </h1>

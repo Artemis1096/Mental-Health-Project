@@ -105,7 +105,7 @@ function AllUsersList() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-      </div>
+      </div> 
 
       {/* Main Container */}
       <div className="flex gap-6 h-vh friend-main-container shadow-2xl border-1 rounded-xl p-6">
@@ -126,7 +126,7 @@ function AllUsersList() {
                       {user.username}
                     </span>
                     <button
-                      className="px-3 py-1 !bg-purple-600 text-white rounded-md !hover:bg-purple-700 transition"
+                      className="px-3 py-1 btn-color text-white rounded-md !hover:bg-purple-700 transition"
                       onClick={() => sendFriendRequest(user._id)}
                     >
                       Add

@@ -29,3 +29,9 @@
 .requestList {
   width: 50%;
 }
+.btn-color{
+  background: linear-gradient(to bottom right,#2980b9, #7d3c98);
+}
+.btn-color-r{
+  background: linear-gradient(to bottom right,#7d3c98, #2980b9);
+}

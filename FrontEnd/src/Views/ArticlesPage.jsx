@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import axios from "axios";
 import { UseAuthContext } from "../Context/AuthContext";
+import "../Styles/Articles.css"
 import bg from "../Assets/articlebg.jpg";
 import Loader from "../Components/Loader";
 
@@ -23,8 +24,6 @@ function ArticlesPage() {
     image: "",
   });
   const [image, setImage] = useState(null);
-
-  // const ad = user.userType === "admin";
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -124,13 +123,8 @@ function ArticlesPage() {
   }
 
   return (
-    <>
-      <img
-        src={bg}
-        alt="Background"
-        className="absolute inset-0 w-full h-full object-cover -z-10"
-      />
-      <h1 className="text-5xl font-bold text-center py-4 permanent-marker-regular">
+    <div className="main-container">
+      <h1 className="text-5xl font-bold text-center text-white py-4">
         Articles
       </h1>
 
@@ -149,12 +143,12 @@ function ArticlesPage() {
           placeholder="Search articles..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+          className="w-1/2 p-2 border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="p-2 border bg-purple-900 border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
+          className="p-2 border btn-color border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
         >
           <option value="All">All Categories</option>
           {categories.map((cat, index) => (
@@ -234,7 +228,7 @@ function ArticlesPage() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

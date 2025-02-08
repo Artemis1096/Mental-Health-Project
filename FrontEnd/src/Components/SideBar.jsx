@@ -18,7 +18,7 @@ import { GiArtificialHive } from "react-icons/gi";
 
 import axios from "axios";
 import JournalPage from "../Views/JournalPage";
-import { UseAuthContext } from "../Context/AuthContext.jsx";
+import { UseAuthContext } from "../context/AuthContext";
 
 function SideBar({ open, setOpen }) {
   const dispatch = useDispatch();

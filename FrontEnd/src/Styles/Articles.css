@@ -1,0 +1,22 @@
+.main-container{
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);
+}
+.btn-color{
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);   
+    border: 1px solid white;
+}
+.article-content{
+    display: flex;
+    flex-direction: column;
+}
+.category-color{
+    /* background: linear-gradient(to bottom right, #7d3c98, #2980b9);    */
+    background: linear-gradient(to bottom right, #2980b9, #7d3c98);   
+    border: 1px solid white;
+}
+.like-btn{
+    margin-left: 1rem;
+    width: 4rem;
+    background-color: #a345cb68;
+    border: 1px solid white;
+}

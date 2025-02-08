@@ -6,7 +6,6 @@ import Quotes from "../../Data/quotes.json";
 import MoodComponent from "../Components/MoodComponent";
 import Loader from "../Components/Loader";
 import bg from "../Assets/bgx.jpeg";
-import TaskList from "../Components/TaskList";
 
 const Homepage = () => {
   const [todayQuote, setTodayQuote] = useState({ Quote: "", Author: "" });
@@ -63,17 +62,21 @@ const Homepage = () => {
       {/* Content container placed above the background image with a semi-transparent background */}
       <div className="relative z-10  bg-opacity-80 min-h-screen">
         {/* Show MoodComponent only if user has NOT submitted */}
-      {showMoodComponent && <MoodComponent onMoodSubmit={() => setShowMoodComponent(false)} />}
-        {/* Example Welcome Sections */}
-        <div className="text-center mb-7  rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
+        {showMoodComponent && (
+          <MoodComponent onMoodSubmit={() => setShowMoodComponent(false)} />
+        )}
+
+        <div className=" w-full mt-50 rubik-moonrocks-regular">
+          <h1 className="text-center drop-shadow-2xl text-purple-950 text-8xl">
             Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
+          </h1>
         </div>
-        {/* <TaskList/> */}
+
+        <div className="h-84 w-full mt-20 shadow-lg rounded-2xl  ml-5 permanent-marker-regular">
+          <h1 className="text-center text-cyan-900 text-9xl drop-shadow-2xl">
+            {userData.name || "Guest"}
+          </h1>
+        </div>
 
         {/* Quote Box */}
         <div className="bg-blue-100 mt-40 text-black p-8 md:p-10 rounded-2xl shadow-2xl max-w-2xl mb-20 w-full text-center mx-auto">

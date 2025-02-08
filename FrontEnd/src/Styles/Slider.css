@@ -86,4 +86,12 @@
   .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
     stroke: transparent;
   }
-  
+  .progress-bar{
+    
+  }
+  .meditation-container{
+    width: 30vw;
+  }
+  .play-btn{
+    
+  }

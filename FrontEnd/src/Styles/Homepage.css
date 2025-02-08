@@ -1,9 +1,11 @@
 .main {
-  background: url("../Assets/bg4.jpg");
-  height: 100%;
-  background-size: cover;
-  overflow: scroll;
+  /* background: url("../Assets/bgx.jpeg") no-repeat; */
+  /* object-fit: contain; */
+  /* height: 450rem; */
+  margin: 1rem;
+  width: 97%;
 }
+
 .Heading {
   display: flex;
   flex-direction: column;
@@ -46,4 +48,20 @@
 
 .Heading p {
   text-align: center;
+}
+
+.rubik-moonrocks-regular {
+  font-family: "Rubik Moonrocks", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.permanent-marker-regular {
+  font-family: "Permanent Marker", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.yoyo {
+  background-color: rgba(0, 0, 0, 0.7); /* Black background with 70% opacity */
 }

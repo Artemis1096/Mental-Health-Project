@@ -1,5 +1,5 @@
 body {
-  background-color: #30384b;
+  background: linear-gradient(to bottom right, #7d3c98, #2980b9);
   color: #eee;
 }
 
@@ -20,7 +20,7 @@ button {
 
 button.with-text {
   width: auto;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(to bottom right, #2980b9, #7d3c98);
   border-radius: 10px;
   padding: 10px 20px;
   font-size: 1.4rem;
@@ -38,4 +38,10 @@ label {
   margin-bottom: 10px;
   margin-top: 20px;
   text-transform: capitalize;
+}
+.music-player{
+  /* width: 50%; */
+}
+.timer{
+  width: 50%;
 }

@@ -23,3 +23,12 @@
     background-color: black;
     border-radius: 16px;
 }
+.wrapper{
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);
+}
+.profile-card{
+    background-color: #7b187b6d;
+}
+.chart-bg{
+    background-color: #9d609dba;
+}

@@ -12,11 +12,13 @@ import ArticleRoutes from "./Routes/ArticleRoutes.js";
 import FriendshipRoutes from "./Routes/FriendshipRoutes.js";
 import UserRoutes from "./Routes/UserRoutes.js";
 import TaskRoutes from "./Routes/TaskRoutes.js"
+import MoodRoutes from "./Routes/MoodRoutes.js";
 //middlewares and utils
 import { setupGoogleAuth } from "./Config/googleAuthConfig.js";
 import connectDB from "./Config/DBConfig.js";
 import { verify } from "./Utils/WebToken.js";
-import upload from "./Middlewares/upload.js";
+// import upload from "./Middlewares/upload.js";
+import {upload} from './Config/cloudinaryConfig.js';
 import {app, server} from './socket/socket.js';
 import { assignDailyTask } from "./Controllers/TaskController.js";
 
@@ -39,6 +41,7 @@ server.listen(PORT, "0.0.0.0", () => {
 });
 
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -50,28 +53,21 @@ app.use(
 
 const musicDir = path.join(__dirname, "public/music");
 const imagesDir = path.join(__dirname, "public/images");
-const articleImages = path.join(__dirname, "public/article_images");
+// const articleImages = path.join(__dirname, "public/article_images");
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/message", MessageRoutes);
 app.use("/music", express.static(musicDir));
 app.use("/images", express.static(imagesDir));
-app.use("/public/article_images", express.static(articleImages));
+// app.use("/public/article_images", express.static(articleImages));
 app.use("/api/message", MessageRoutes);
 app.use("/api/articles", ArticleRoutes);
 app.use("/api/friends", FriendshipRoutes);
 app.use("/api/users", UserRoutes);
 app.use("/api/tasks", TaskRoutes);
+app.use("/api/mood", MoodRoutes);
 
 // ------------------------------------------------------------------------------------------------------------------------------
-app.get("/dashboard", (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.send("dashboard");
-  }
-  verify(req, res, () => {
-    res.send("dashboard");
-  });
-});
 
 app.get("/songs", (req, res) => {
   fs.readdir(musicDir, (err, files) => {
@@ -96,11 +92,9 @@ app.get("/", (req, res) => {
 });
 
 // File upload route, will be used when a article is posted or updated
-app.post("/api/upload", upload.single("file"), (req, res) => {
-  if (req.file) {
-    // console.log('File uploaded:', req.file);
-    res.status(200).json({ message: "Image uploaded successfully" });
-  } else {
-    res.status(400).json({ message: "No file uploaded" });
+app.post("/api/upload", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
   }
+  res.json({ imageUrl: req.file.path });
 });

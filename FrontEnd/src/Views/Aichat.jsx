@@ -8,26 +8,27 @@ function Aichat() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
-
+  const [userSubmitted, setUserSubmitted] = useState(false);
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    if (chatContainerRef.current) {
+    if (chatContainerRef.current && userSubmitted) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      setUserSubmitted(false); // Reset after scrolling once
     }
-  }, [chatHistory, generatingAnswer]);
-
+  }, [chatHistory]);
+  
   async function generateAnswer(e) {
     e.preventDefault();
     if (!question.trim()) return;
-    
+  
     setGeneratingAnswer(true);
+    setUserSubmitted(true); // Enable scrolling only when the user submits
     const currentQuestion = question;
-    setQuestion(""); // Clear input immediately after sending
-    
-    // Add user question to chat history
-    setChatHistory(prev => [...prev, { type: 'question', content: currentQuestion }]);
-    
+    setQuestion("");
+  
+    setChatHistory(prev => [...prev, { type: "question", content: currentQuestion }]);
+  
     try {
       const response = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
@@ -38,51 +39,52 @@ function Aichat() {
           contents: [{ parts: [{ text: question }] }],
         },
       });
-
-      const aiResponse = response["data"]["candidates"][0]["content"]["parts"][0]["text"];
-      setChatHistory(prev => [...prev, { type: 'answer', content: aiResponse }]);
+  
+      const aiResponse = response.data.candidates[0].content.parts[0].text;
+      setChatHistory(prev => [...prev, { type: "answer", content: aiResponse }]);
       setAnswer(aiResponse);
     } catch (error) {
       console.log(error);
       setAnswer("Sorry - Something went wrong. Please try again!");
     }
+  
     setGeneratingAnswer(false);
   }
 
   return (
-    <div className="inset-0 bg-black">
+    <div className="inset-0 bg-color">
       <div className="max-w-4xl mx-auto flex flex-col p-3">
         {/* Fixed Header */}
         <header className="text-center py-4">
             <h1 className="text-4xl font-bold text-white transition-colors">
-              Chat Bot
+              Sera - Your Own AI Bot
             </h1>
         </header>
 
         {/* Scrollable Chat Container - Updated className */}
         <div 
   ref={chatContainerRef}
-  className="h-full chat-container flex-1 mb-4 rounded-lg bg-white shadow-lg p-4 hide-scrollbar"
+  className="h-full chat-container flex-1 mb-7 rounded-lg bg-white shadow-lg p-4 hide-scrollbar"
 >
           {chatHistory.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center p-6">
               <div className="bg-blue-50 rounded-xl p-8 max-w-2xl">
-                <h2 className="text-2xl font-bold text-blue-600 mb-4">Welcome to Chat AI! 👋</h2>
+                <h2 className="text-2xl font-bold text-black mb-4">Chat with Sera!</h2>
                 <p className="text-gray-600 mb-4">
                   I'm here to help you with anything you'd like to know. You can ask me about:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                  <div className="bg-black p-4 rounded-lg shadow-sm">
-                    <span className="text-blue-500">💡</span> General knowledge
+                  <div className="bg-color p-4 rounded-lg shadow-sm">
+                    <span className="text-blue-500">💡</span> Emotional Support 
                   </div>
-                  <div className="bg-black p-4 rounded-lg shadow-sm">
-                    <span className="text-blue-500">🔧</span> Technical questions
+                  <div className="bg-color p-4 rounded-lg shadow-sm">
+                    <span className="text-blue-500">🤔</span> Active Listening
                   </div>
-                  <div className="bg-black p-4 rounded-lg shadow-sm">
-                    <span className="text-blue-500">📝</span> Writing assistance
+                  <div className="bg-color p-4 rounded-lg shadow-sm">
+                    <span className="text-blue-500">📝</span> Mindfulness Strategies
                   </div>
-                  <div className="bg-black p-4 rounded-lg shadow-sm">
-                    <span className="text-blue-500">🤔</span> Problem solving
+                  <div className="bg-color p-4 rounded-lg shadow-sm">
+                    <span className="text-blue-500">🔧</span> 24/7 Availability
                   </div>
                 </div>
                 <p className="text-gray-500 mt-6 text-sm">
@@ -96,8 +98,8 @@ function Aichat() {
                 <div key={index} className={`mb-4 ${chat.type === 'question' ? 'text-right' : 'text-left'}`}>
                   <div className={`inline-block max-w-[80%] p-3 rounded-lg hide-scrollbar ${
                     chat.type === 'question' 
-                      ? 'bg-blue-500 text-white rounded-br-none'
-                      : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                      ? 'bg-purple-400 text-white rounded-br-none'
+                      : 'bg-gray-400 text-white rounded-bl-none'
                   }`}>
                     <ReactMarkdown className="hide-scrollbar">{chat.content}</ReactMarkdown>
                   </div>
@@ -107,7 +109,7 @@ function Aichat() {
           )}
           {generatingAnswer && (
             <div className="text-left">
-              <div className="inline-block bg-gray-100 p-3 rounded-lg animate-pulse">
+              <div className="inline-block bg-black p-3 rounded-lg animate-pulse">
                 Thinking...
               </div>
             </div>
@@ -115,7 +117,7 @@ function Aichat() {
         </div>
 
         {/* Fixed Input Form */}
-        <form onSubmit={generateAnswer} className="bg-gray-700 rounded-lg shadow-lg p-4">
+        <form onSubmit={generateAnswer} className="bg-color rounded-lg shadow-lg p-4">
           <div className="flex gap-2">
             <input
               required

@@ -1,27 +1,26 @@
 import { useState, useEffect } from "react";
 import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import axios from "axios";
-// import {useSelector} from "react-redux"
 import { UseAuthContext } from "../Context/AuthContext";
 import bg from "../Assets/articlebg.jpg";
+import Loader from "../Components/Loader";
 
 function ArticlesPage() {
-   
-  // const user = useSelector((state)=>state.user);
-  // console.log(user);
-  
-  const {auth} = UseAuthContext();
+  const { auth } = UseAuthContext();
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
   const [categories, setCategories] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [newArticle, setNewArticle] = useState({
     title: "",
     content: "",
     category: "",
-    image: ""
+    image: "",
   });
   const [image, setImage] = useState(null);
 
@@ -30,57 +29,99 @@ function ArticlesPage() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/articles");
-        setArticles(response.data.data);
+        const response = await axios.get("http://localhost:8000/api/articles", {
+          withCredentials: true,
+        });
+        const fetchedArticles = response.data.data.map((article) => ({
+          ...article,
+          likedByCurrentUser: article.likedByCurrentUser || false,
+        }));
+        setArticles(fetchedArticles);
 
-        const uniqueCategories = [
-          ...new Set(response.data.data.flatMap((article) => article.category)),
-        ];
+        const uniqueCategories = [...new Set(response.data.data.map((article) => article.category))];
         setCategories(uniqueCategories);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchArticles();
 
-    if (auth && auth.userType==="admin") {
+    if (auth && auth.userType === "admin") {
       setIsAdmin(true);
     }
   }, [showModal]);
 
-  const handleAddArticle = async () => {
-    setShowModal(true);
+  const handleLike = async (articleId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/articles/like/${articleId}`,
+        {},
+        { withCredentials: true }
+      );
 
-    if(image){
+      setArticles((prevArticles) =>
+        prevArticles.map((article) =>
+          article._id === articleId
+            ? {
+                ...article,
+                likedByCurrentUser: response.data.likedByCurrentUser,
+                likes: response.data.likesCount,
+              }
+            : article
+        )
+      );
+    } catch (error) {
+      console.error("Error toggling like:", error.message);
+    }
+  };
+  
+  const handleAddArticle = async () => {
+    // setShowModal(true);
+    setLoading(true);
+    let uploadedImageUrl = "";
+    if (image) {
       const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("img", fileName);
-      data.append("file", image);
-      newArticle.image =  fileName;
+      data.append("image", image);
       try {
-        await axios.post("http://localhost:8000/api/upload", data);
+        const uploadRes = await axios.post("http://localhost:8000/api/upload", data, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        uploadedImageUrl = uploadRes.data.imageUrl;
       } catch (error) {
-        console.log("error uploading image\n", error.message);
+        console.log("Error uploading image:", error.message);
       }
     }
-
+  
     try {
-      const res = await axios.post("http://localhost:8000/api/articles/create", newArticle, {withCredentials : true});
+      const newArticleData = {
+        ...newArticle,
+        image: uploadedImageUrl,
+      };
+  
+      await axios.post(
+        "http://localhost:8000/api/articles/create",
+        newArticleData,
+        { withCredentials: true }
+      );
     } catch (error) {
-      console.log("error creating article : client", error.message);
+      console.log("Error creating article:", error.message);
+    }finally{
+      setShowModal(false);
+      setLoading(false);
     }
-
-    setShowModal(false);
-  }
+  };
+  
   
   const filteredArticles = articles.filter((article) => {
-    const matchesSearch = article.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      category === "All" || article.category.includes(category);
+    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = category === "All" || article.category === category;
     return matchesSearch && matchesCategory;
   });
+
+  if(loading){
+    return <Loader/>
+  }
 
   return (
     <>
@@ -125,11 +166,11 @@ function ArticlesPage() {
       </div>
 
       {/* Articles List */}
-      <div className="max-h-[80vh] overflow-y-scroll">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3 py-7">
+      <div className="max-h-[80vh] w-full overflow-y-scroll grid ">
+        <div className="  grid grid-cols-1   sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3 py-7  place-content-center">
           {filteredArticles.length > 0 ? (
             filteredArticles.map((article) => (
-              <ArticleCard key={article._id} article={article} />
+              <ArticleCard key={article._id} article={article} handleLike={handleLike}/>
             ))
           ) : (
             <p className="text-center text-gray-500 text-lg">

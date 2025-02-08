@@ -18,6 +18,8 @@ function ArticlesPage() {
   const [categories, setCategories] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [newArticle, setNewArticle] = useState({
     title: "",
@@ -80,29 +82,38 @@ function ArticlesPage() {
   };
 
   const handleAddArticle = async () => {
-    setShowModal(true);
-
+    // setShowModal(true);
+    setLoading(true);
+    let uploadedImageUrl = "";
     if (image) {
       const data = new FormData();
-      const fileName = Date.now() + image.name;
-      data.append("img", fileName);
-      data.append("file", image);
-      newArticle.image = fileName;
+      data.append("image", image);
       try {
-        await axios.post("http://localhost:8000/api/upload", data);
+        const uploadRes = await axios.post("http://localhost:8000/api/upload", data, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        uploadedImageUrl = uploadRes.data.imageUrl;
       } catch (error) {
-        console.log("error uploading image\n", error.message);
+        console.log("Error uploading image:", error.message);
       }
     }
-
+  
     try {
-      const res = await axios.post(
+      const newArticleData = {
+        ...newArticle,
+        image: uploadedImageUrl,
+      };
+  
+      await axios.post(
         "http://localhost:8000/api/articles/create",
-        newArticle,
+        newArticleData,
         { withCredentials: true }
       );
     } catch (error) {
-      console.log("error creating article : client", error.message);
+      console.log("Error creating article:", error.message);
+    }finally{
+      setShowModal(false);
+      setLoading(false);
     }
 
     setShowModal(false);
@@ -123,6 +134,10 @@ function ArticlesPage() {
     const matchesCategory = category === "All" || article.category === category;
     return matchesSearch && matchesCategory;
   });
+
+  if(loading){
+    return <Loader/>
+  }
 
   return (
     <>
@@ -151,7 +166,7 @@ function ArticlesPage() {
           placeholder="Search articles..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+          className="w-1/2 p-2 border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
         />
 
         <CategoryDropdown
@@ -234,7 +249,7 @@ function ArticlesPage() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

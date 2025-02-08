@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../../Styles/Articles.css"
 
 const LikeButton = ({ articleId, initialLikes, initiallyLiked, handleLike }) => {
   const [likes, setLikes] = useState(initialLikes);
@@ -21,7 +22,7 @@ const LikeButton = ({ articleId, initialLikes, initiallyLiked, handleLike }) => 
   };
 
   return (
-    <div className="comment-react flex items-center gap-1">
+    <div className="comment-react flex items-center like-btn gap-1">
       <button onClick={handleLikeClick} aria-label="Like Button" className="cursor-pointer">
       <svg
           xmlns="http://www.w3.org/2000/svg"

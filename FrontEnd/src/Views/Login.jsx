@@ -95,8 +95,12 @@ function Login() {
             Login
           </h1>
 
-          <form className="space-y-4" onSubmit={handleSubmitLogin}>
-            <div className=" shadow-lg bg-purple-400 opacity-100  p-2 rounded-2xl">
+          <form
+            className="space-y-4"
+            onSubmit={handleSubmitLogin}
+            autoComplete="off"
+          >
+            <div className=" shadow-lg bg-amber-400 opacity-100  p-2 rounded-2xl">
               <div>
                 <label className="block text-black font-medium mb-1 rounded-md">
                   Enter your Username
@@ -139,6 +143,7 @@ function Login() {
                 placeholder="Enter your password"
                 className="w-full px-4 py-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
+                autoComplete="new-password"
               />
             </div>
 

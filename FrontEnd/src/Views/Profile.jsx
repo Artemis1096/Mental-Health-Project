@@ -6,6 +6,7 @@ import { addUser } from "../Features/User/UserSlice";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import MoodVisualization from "../Components/MoodVisualization";
+import "../Styles/Profile.css"
 import DeleteConfirmation from "../Components/DeleteConfirmation";
 
 import { UseAuthContext } from "../Context/AuthContext";
@@ -103,16 +104,16 @@ const Profile = () => {
 
   return (
     <>
+      <div className="wrapper">
       {showBox && (
         <DeleteConfirmation
           setIsWantDelete={setIsWantDelete}
           setShowBox={setShowBox}
         />
       )}
-
       {isUpdated && (
         <div className="w-full h-full text-black flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-96">
+          <div className="bg-white p-6 rounded-xl mt-6 shadow-lg w-96">
             <h1 className="text-xl font-bold text-center mb-4 text-gray-800">
               Update Profile Details
             </h1>
@@ -155,38 +156,42 @@ const Profile = () => {
         </div>
       )}
 
-      <div className="h-screen bg-gradient-to-br from-purple-500 to-indigo-600 flex flex-col items-center p-6 overflow-y-auto">
+      <div className="h-screen wrapper flex flex-col items-center p-6 overflow-y-auto">
         {/* Profile Card */}
-        <div className="bg-purple-200 shadow-2xl rounded-2xl p-6 w-full max-w-md text-center">
+        <div className="profile-card shadow-2xl rounded-2xl p-6 w-full max-w-md text-center">
           <img
             src={profile}
             alt="Profile"
             className="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500 shadow-lg"
           />
-          <h2 className="text-2xl font-bold text-gray-800 mt-4">
+          <h2 className="text-2xl font-bold text-white mt-4">
             {userData.name || "User"}
           </h2>
-          <p className="text-gray-500">User hai bhai user hai</p>
+          {/* <p className="text-white">User hai bhai user hai</p> */}
 
           {/* Buttons */}
           <div className="mt-6 flex justify-center gap-4">
             <button
-              className="flex items-center gap-2 !bg-indigo-500 text-white px-4 py-2 rounded-full shadow !hover:bg-indigo-600 transition"
+              className="flex w-44 items-center gap-2 !bg-indigo-500 text-white px-4 py-2 rounded-full shadow !hover:bg-indigo-600 transition"
               onClick={() => setIsUpdated(!isUpdated)}
             >
-              <FaUserEdit /> Edit Profile
+              <p>Edit Profile</p>
             </button>
             <button
+              className="flex w-44 items-center gap-2 !bg-gray-300 !text-gray-800 px-4 py-2 rounded-full shadow !hover:bg-gray-400 transition"
+              onClick={handleDeleteProfile}
               className="flex items-center gap-2 !bg-gray-300 !text-gray-800 px-4 py-2 rounded-full shadow !hover:bg-gray-400 transition"
               onClick={() => setShowBox(true)}
             >
-              <FaCog /> Delete Profile
+              <p>Delete Profile</p>
             </button>
           </div>
         </div>
 
         {/* Data Visualization */}
-        <MoodVisualization />
+        <h1 className="text-5xl font-bold text-white mt-8 mb-4">Past Mood Analysis</h1>
+        <MoodVisualization/>
+      </div>
       </div>
     </>
   );

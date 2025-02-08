@@ -2,6 +2,7 @@ import User from "../Models/User.js";
 import bcryptjs from "bcryptjs";
 import { generate } from "../Utils/WebToken.js";
 import { generateOTP, sendMail } from "../Utils/verification.js";
+import Task from "../Models/task.js";
 
 // for register
 export const register = async (req, res) => {
@@ -37,7 +38,13 @@ export const register = async (req, res) => {
     if (newUser) {
       await newUser.save();
 
+
+
       await sendMail(email, OTP);
+
+      const dailyTaskDescription = "Medidate for 5 mins";
+      const title='Daily Task'
+     await Task.create({ title,description: dailyTaskDescription, user: newUser._id, status: "pending" });
 
       res.status(200).json({
         message: "User created successfully",

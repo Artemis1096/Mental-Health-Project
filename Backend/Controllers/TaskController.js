@@ -1,6 +1,6 @@
 import Task from "../Models/task.js";
 import User from "../Models/User.js";
-
+import cron from "node-cron";
 
 export const createTask = async (req, res) => {
     try {
@@ -85,3 +85,30 @@ export const deleteTask = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
+
+export const assignDailyTask = async () => {
+    try {
+        const users = await User.find(); // Fetch all users
+        const dailyTaskDescription = "Medidate for 5 mins   "; // Change this as needed
+        const title='Daily Task'
+        const tasks = users.map(user => ({
+            title,
+            description: dailyTaskDescription,
+            user: user._id,
+            status: "pending"
+        }));
+
+        await Task.insertMany(tasks);
+        console.log("Daily task assigned to all users");
+    } catch (error) {
+        console.error("Error assigning daily task:", error.message);
+    }
+};
+
+// Schedule the task to run every day at midnight (00:00)
+cron.schedule("0 0 * * *", assignDailyTask, {
+    scheduled: true,
+    timezone: "UTC"
+});

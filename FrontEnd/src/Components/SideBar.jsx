@@ -127,7 +127,6 @@ function SideBar({ open, setOpen }) {
         <div
           onClick={() => setOpen(!open)}
           className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
-
          border-2 border-white bg-white text-purple-600 rounded-full ease-
 
          cursor-pointer shadow-md ${!open && "rotate-180"} `}

@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import axios from "axios";
+import "../Styles/Profile.css";
 
 // Register required components for Line Chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -23,7 +24,7 @@ const MoodVisualization = () => {
   useEffect(() => {
     const fetchMoodData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/mood/get",{withCredentials:true});
+        const response = await axios.get("http://localhost:8000/api/mood/get", { withCredentials: true });
         console.log("API Response:", response.data);
 
         if (!response.data || !response.data.moodData) {
@@ -49,10 +50,10 @@ const MoodVisualization = () => {
             {
               label: "Mood Level (1-5)",
               data: moodValues,
-              borderColor: "rgba(75, 192, 192, 1)", // Line color
-              backgroundColor: "rgba(75, 192, 192, 0.2)", // Fill under line
-              pointBackgroundColor: "rgba(75, 192, 192, 1)", // Dots on data points
-              pointBorderColor: "#fff",
+              borderColor: "#7d3c98", // Line color
+              backgroundColor: "#7b187b6d", // Fill under line
+              pointBackgroundColor: "#7b187b6d", // Dots on data points
+              pointBorderColor: "#9d609dba",
               pointRadius: 5,
               fill: true,
               tension: 0.3, // Smoother curve
@@ -70,12 +71,42 @@ const MoodVisualization = () => {
     fetchMoodData();
   }, []);
 
+  const options = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        color: 'white', // Set title text color to white
+      },
+      tooltip: {
+        bodyColor: 'white', // Set tooltip text color to white
+      },
+      legend: {
+        labels: {
+          color: 'white', // Set legend labels color to white
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: 'white', // Set x-axis labels color to white
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white', // Set y-axis labels color to white
+        },
+      },
+    },
+  };
+
   return (
-    <div className="w-full h-xl mt-5 text-black p-2 bg-white rounded-lg">
-      <h1 className="text-center">Mood Trends Over Time</h1>
+    <div className="w-full h-xl mt-5 text-white p-2 chart-bg rounded-lg">
+      <h1 className="text-center text-white">Mood Trends Over Time</h1>
       {loading && <p>Loading...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-      {chartData && <Line data={chartData} />}
+      {error && <p className="text-white">{error}</p>}
+      {chartData && <Line className="text-white" data={chartData} options={options} />}
     </div>
   );
 };

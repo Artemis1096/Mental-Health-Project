@@ -13,7 +13,15 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 
 // Register required components for Line Chart
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const MoodVisualization = () => {
   const [chartData, setChartData] = useState(null);
@@ -23,7 +31,9 @@ const MoodVisualization = () => {
   useEffect(() => {
     const fetchMoodData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/mood/get",{withCredentials:true});
+        const response = await axios.get("http://localhost:8000/api/mood/get", {
+          withCredentials: true,
+        });
         console.log("API Response:", response.data);
 
         if (!response.data || !response.data.moodData) {
@@ -31,6 +41,7 @@ const MoodVisualization = () => {
         }
 
         const moodData = response.data.moodData;
+
         if (moodData.length === 0) {
           throw new Error("No mood entries found");
         }
@@ -39,8 +50,10 @@ const MoodVisualization = () => {
         moodData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         // Extract dates and mood values
-        const labels = moodData.map(item => new Date(item.date).toLocaleDateString());
-        const moodValues = moodData.map(item => item.mood);
+        const labels = moodData.map((item) =>
+          new Date(item.date).toLocaleDateString()
+        );
+        const moodValues = moodData.map((item) => item.mood);
 
         // Set chart data
         setChartData({

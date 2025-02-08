@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { Link, animateScroll as scroll } from "react-scroll";
 import axios from "axios";
 import "../Styles/HomePage.css";
 import Quotes from "../../Data/quotes.json";
 import MoodComponent from "../Components/MoodComponent";
 import Loader from "../Components/Loader";
 import bg from "../Assets/bgx.jpeg";
+import QuoteReel from "../Views/QuotesReel";
 
 const Homepage = () => {
   const [todayQuote, setTodayQuote] = useState({ Quote: "", Author: "" });
@@ -48,7 +50,7 @@ const Homepage = () => {
   return (
     // The parent container is set to relative so that the absolutely positioned image
     // will be relative to this container. The container expands as your content grows.
-    <div className="relative flex flex-col min-h-screen pr-10 bg-cyan-700  -z-50">
+    <div className="relative flex flex-col min-h-screen overflow-auto bg-cyan-700">
       {/* Background image rendered with an img tag */}
       <div className=" w-full h-full ">
         <img
@@ -91,7 +93,8 @@ const Homepage = () => {
           </span>
         </div>
 
-        <div className="h-96 w-full"></div>
+        <QuoteReel />
+
         <div className="h-96 w-full"></div>
         <div className="h-96 w-full"></div>
         <div className="h-96 w-full"></div>

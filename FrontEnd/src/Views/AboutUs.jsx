@@ -1,17 +1,12 @@
 import React from "react";
+
 import about from "../Assets/about.png";
-import bg from "../Assets/aboutusbg.png";
 
 const AboutUs = () => {
   return (
     <>
-      <img
-        src={bg}
-        alt="Background"
-        className="absolute inset-0 w-full h-full object-cover -z-10"
-      />
-      <div className="h-screen font-bold  overflow-y-auto  text-gray-900">
-        <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="h-screen overflow-y-auto bg-white p-6" id="aboutus">
+        <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-extrabold text-center text-blue-600 mb-6">
             About Us
           </h1>

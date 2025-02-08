@@ -55,6 +55,12 @@ const Profile = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
+
+    if (updatedName === "" && updatedDob === "") {
+      alert("Enter details");
+      return;
+    }
+
     try {
       const updatedInfo = {
         name: updatedName,
@@ -111,7 +117,7 @@ const Profile = () => {
       )}
 
       {isUpdated && (
-        <div className="w-full h-full text-black flex justify-center items-center">
+        <div className=" absolute w-full h-full text-black flex justify-center items-center">
           <div className="bg-white p-6 rounded-xl shadow-lg w-96">
             <h1 className="text-xl font-bold text-center mb-4 text-gray-800">
               Update Profile Details
@@ -149,6 +155,12 @@ const Profile = () => {
                 className="!bg-purple-600 text-white py-2 rounded-lg font-semibold hover:!bg-purple-700 transition"
               >
                 Update
+              </button>
+              <button
+                onClick={() => setIsUpdated(false)}
+                className="!bg-purple-600 text-white py-2 rounded-lg font-semibold hover:!bg-purple-700 transition"
+              >
+                Cancel
               </button>
             </form>
           </div>

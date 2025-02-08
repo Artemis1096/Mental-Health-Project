@@ -95,7 +95,7 @@ function AllUsersList() {
   if (error) return <p className="text-center text-red-600">{error}</p>;
 
   return (
-    <div className="p-4">
+    <div className="p-4 bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200 dark:from-black dark:via-purple-950 h-full dark:to-black  ">
       {/* Search Bar */}
       <div className="w-full flex justify-center mb-4">
         <input
@@ -158,7 +158,7 @@ function AllUsersList() {
                     </span>
                     <div className="flex gap-2">
                       <button
-                        className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+                        className="px-3 py-1 !bg-green-600 text-white rounded-md hover:!bg-green-700 transition"
                         onClick={() => acceptFriendRequest(request._id)}
                       >
                         Accept

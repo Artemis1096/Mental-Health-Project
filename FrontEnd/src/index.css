@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@tailwind utilities;
+
 .dark-purple {
   background-color: "#081A51";
 }
@@ -687,4 +689,70 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: none; /* Prevents unwanted bounce effects */
+}
+
+.animation,
+.animation_layer {
+  height: 1000px;
+}
+
+.animation {
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+
+.animation_layer {
+  background-position: bottom center;
+  background-size: auto 1038px;
+  background-repeat: repeat-x;
+  width: 100%;
+  position: absolute;
+}
+
+.animation_layer.parallax {
+  position: absolute;
+}
+
+#finalbackground {
+  background-image: url(./Assets/finalbackground.jpg);
+  background-size: cover; /* Ensures the image covers the entire element */
+  background-position: center; /* Centers the background */
+  background-repeat: no-repeat; /* Prevents tiling */
+  width: 100vw; /* Makes it span the full viewport width */
+  height: 100vh; /* Makes it span the full viewport height */
+  overflow: hidden; /* Prevents content from overflowing */
+}
+
+#train {
+  background-image: url(./Assets/boy.png);
+  background-size: cover; /* Ensures the image covers the entire element */
+  background-position: center; /* Centers the background */
+  background-repeat: no-repeat; /* Prevents tiling */
+
+  width: 100vw; /* Makes it span the full viewport width */
+  height: 100vh; /* Makes it span the full viewport height */
+  overflow: hidden; /* Prevents content from overflowing */
+}
+
+.animated-element {
+  animation: moveRight 10s linear infinite; /* Adjust duration and timing as needed */
+  position: absolute; /* Ensure proper movement */
+  left: 0; /* Start position */
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(-100%); /* Start off-screen to the left */
+  }
+  100% {
+    transform: translateX(100vw); /* Move completely off-screen to the right */
+  }
 }

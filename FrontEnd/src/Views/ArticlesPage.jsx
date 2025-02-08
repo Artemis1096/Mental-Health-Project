@@ -4,6 +4,7 @@ import axios from "axios";
 // import {useSelector} from "react-redux"
 import { UseAuthContext } from "../Context/AuthContext";
 import bg from "../Assets/articlebg.jpg";
+import ParallaxShowcase from "./ParallaxShowcase";
 
 function ArticlesPage() {
   // const user = useSelector((state)=>state.user);
@@ -89,6 +90,7 @@ function ArticlesPage() {
 
   return (
     <>
+      <ParallaxShowcase />
       <img
         src={bg}
         alt="Background"

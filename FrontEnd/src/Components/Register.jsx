@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 import Button from "./Button";
@@ -17,6 +17,8 @@ function Register() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [otpFlag, setOtpFlag] = useState(false); // Handling OTP flag internally
   const [isOtpSubmitted, setIsOtpSubmitted] = useState(false);
+
+  const notifyError = (label) => toast.error(label);
 
   const navigate = useNavigate();
 
@@ -55,10 +57,11 @@ function Register() {
             dob: dob,
           }
         );
-
-        setOtpFlag(true); // Set OTP flag to true after successful registration
+        // console.log(res.data.message);
+        if (res.data.message === "User created successfully" || res.data.message==="Lead to verify otp") setOtpFlag(true); // Set OTP flag to true after successful registration
       } catch (error) {
-        console.error("Error:", error.response?.data || error.message);
+        notifyError(error.response?.data.message);
+        console.error("Error:", error.response?.data.message || error.message);
       } finally {
         setIsSubmitted(false);
       }
@@ -69,6 +72,7 @@ function Register() {
 
   return (
     <>
+      <Toaster />
       {!otpFlag ? (
         <form
           className="space-y-3 p-4 w-full bg-orange-200 shadow rounded-xl  h-96 overflow-y-scroll "

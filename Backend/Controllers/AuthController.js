@@ -10,10 +10,13 @@ export const register = async (req, res) => {
       req.body;
 
     let user = await User.findOne({ email });
-    if (user) return res.status(400).json("Email already registered!");
+    if (user && user.isVerified) return res.status(400).json({message : "Email already registered!"});
 
     user = await User.findOne({ username });
-    if (user) return res.status(400).json("username already exists");
+    if (user && user.isVerified) return res.status(400).json({message : "username already exists"});
+
+    if(user)
+      return res.status(200).json({message : "Lead to verify otp"});
 
     if (password !== confirmPassword)
       return res.status(400).json({ error: "Passwords don't match" });
@@ -64,9 +67,15 @@ export const login = async (req, res) => {
     // console.log("inside login");
     const { username, email, password } = req.body;
     let user = null;
+
     if (!username) user = await User.findOne({ email });
     else user = await User.findOne({ username });
+
     if (!user) return res.status(404).json({ message: "user not found" });
+
+    if(user && !user.isVerified)
+      return res.status(200).json({message : "Lead to verify otp"});
+
     const passwordMatched = await bcryptjs.compare(
       password,
       user?.password || ""

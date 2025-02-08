@@ -1,6 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
 
 const moods = [
   { value: 1, label: "Very Unhappy", emoji: "😢" },
@@ -25,19 +30,32 @@ const MoodComponent = ({ onMoodSubmit }) => {
       await axios.post(
         "http://localhost:8000/api/mood/set",
         { mood: selectedMood },
+
         { withCredentials: true }
       );
 
       setOpen(false);
       onMoodSubmit(); // Hide the component after successful submission
     } catch (error) {
-      console.error("Error saving mood:", error.response?.data?.message || error.message);
+      console.error(
+        "Error saving mood:",
+        error.response?.data?.message || error.message
+      );
+      setError(error.response?.data?.message || "Something went wrong");
+      console.error(
+        "Error saving mood:",
+        error.response?.data?.message || error.message
+      );
       setError(error.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      className="relative z-10"
+    >
       <DialogBackdrop className="fixed inset-0 bg-gray-500/75" />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -51,8 +69,8 @@ const MoodComponent = ({ onMoodSubmit }) => {
                 <button
                   key={mood.value}
                   onClick={() => setSelectedMood(mood.value)}
-                  className={`p-3 text-2xl rounded-full transition-all border-2 border-transparent hover:border-gray-300 ${
-                    selectedMood === mood.value ? "border-blue-500" : ""
+                  className={`p-3 text-3xl rounded-full transition-all border-2  border-transparent hover:!bg-blue-300 ${
+                    selectedMood === mood.value ? "!bg-blue-500" : ""
                   }`}
                 >
                   {mood.emoji}
@@ -60,10 +78,16 @@ const MoodComponent = ({ onMoodSubmit }) => {
               ))}
             </div>
             <div className="mt-6 flex justify-end space-x-3">
-              <button onClick={() => setOpen(false)} className="px-4 py-2 text-white bg-black rounded-md">
+              <button
+                onClick={() => setOpen(false)}
+                className="px-4 py-2 text-white bg-black rounded-md"
+              >
                 Cancel
               </button>
-              <button onClick={handleConfirm} className="px-4 py-2 text-white bg-black rounded-md">
+              <button
+                onClick={handleConfirm}
+                className="px-4 py-2 text-white bg-black rounded-md"
+              >
                 Confirm
               </button>
             </div>

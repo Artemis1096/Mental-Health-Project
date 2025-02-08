@@ -1,6 +1,10 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import "../Styles/FriendsList.css";
+
+import { useState, useEffect } from "react";
+
+import axios from "axios";
+
+//Please add comment when adding or fixing anything in the code.
 
 function AllUsersList() {
   const [users, setUsers] = useState([]);
@@ -35,6 +39,7 @@ function AllUsersList() {
           { withCredentials: true }
         );
         setFriendRequests(res.data.pendingRequests || []);
+        console.log(res.data.pendingRequests);
       } catch (err) {
         console.error("Error fetching friend requests:", err);
       }
@@ -96,21 +101,22 @@ function AllUsersList() {
 
   return (
     <div className="p-4 bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200 dark:from-black dark:via-purple-950 h-full dark:to-black  ">
-      {/* Search Bar */}
-      <div className="w-full flex justify-center mb-4">
-        <input
-          type="search"
-          className="w-96 p-3 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-          placeholder="Search users..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
+      <h1 className="text-center text-5xl py-5 ">Soulmates</h1>
 
       {/* Main Container */}
       <div className="flex gap-6 h-vh friend-main-container shadow-2xl border-1 rounded-xl p-6">
         {/* Users List */}
-        <div className="w-1/2 bg-white p-5 rounded-lg shadow-md">
+        <div className="w-1/2 bg-white p-5  rounded-lg shadow-md">
+          {/* Search Bar */}
+          <div className="w-full flex border-1 rounded-lg text-black !border-purple-500 justify-center mb-4">
+            <input
+              type="search"
+              className="w-96 p-3 border rounded-md  shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Search users..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
           <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">
             All Users
           </h2>
@@ -164,7 +170,7 @@ function AllUsersList() {
                         Accept
                       </button>
                       <button
-                        className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+                        className="px-3 py-1 !bg-red-600 text-white rounded-md hover:!bg-red-700 transition"
                         onClick={() => declineFriendRequest(request._id)}
                       >
                         Decline

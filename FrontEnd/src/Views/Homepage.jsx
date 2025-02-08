@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import axios from "axios";
 import "../Styles/HomePage.css";
+
+import { useEffect, useState } from "react";
+
+import axios from "axios";
+
 import Quotes from "../../Data/quotes.json";
 import MoodComponent from "../Components/MoodComponent";
 import Loader from "../Components/Loader";
 import bg from "../Assets/bgx.jpeg";
-import bgx from "../Assets/bg3.jpg";
 import QuoteReel from "./QuotesReel";
+
+//Please add comment when adding or fixing anything in the code.
 
 const Homepage = () => {
   const [todayQuote, setTodayQuote] = useState({ Quote: "", Author: "" });
@@ -74,8 +77,6 @@ const Homepage = () => {
   }
 
   return (
-    // The parent container is set to relative so that the absolutely positioned image
-    // will be relative to this container. The container expands as your content grows.
     <div className="relative flex flex-col min-h-screen pr-10 bg-cyan-700  -z-50">
       {/* Background image rendered with an img tag */}
       <div className=" w-full h-full ">
@@ -87,7 +88,6 @@ const Homepage = () => {
         />
       </div>
 
-      {/* Content container placed above the background image with a semi-transparent background */}
       <div className="relative z-10  bg-opacity-80 min-h-screen">
         {/* Show MoodComponent only if user has NOT submitted */}
         {showMoodComponent && (

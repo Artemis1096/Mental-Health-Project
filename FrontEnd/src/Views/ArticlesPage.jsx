@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-import ArticleCard from "../Components/ArticlesPage/ArticleCard";
-import axios from "axios";
 import { UseAuthContext } from "../Context/AuthContext";
+
+import axios from "axios";
+
+import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import bg from "../Assets/articlebg.jpg";
 import ParallaxShowcase from "./ParallaxShowcase";
+import CategoryDropdown from "../Components/ArticlesPage/CategoryDropdown";
+
+//Please add comment when adding or fixing anything in the code.
 
 function ArticlesPage() {
   const { auth } = UseAuthContext();
@@ -22,8 +27,6 @@ function ArticlesPage() {
   });
   const [image, setImage] = useState(null);
 
-  // const ad = user.userType === "admin";
-
   useEffect(() => {
     const fetchArticles = async () => {
       try {
@@ -36,7 +39,9 @@ function ArticlesPage() {
         }));
         setArticles(fetchedArticles);
 
-        const uniqueCategories = [...new Set(response.data.data.map((article) => article.category))];
+        const uniqueCategories = [
+          ...new Set(response.data.data.map((article) => article.category)),
+        ];
         setCategories(uniqueCategories);
       } catch (error) {
         console.log(error);
@@ -73,7 +78,7 @@ function ArticlesPage() {
       console.error("Error toggling like:", error.message);
     }
   };
-  
+
   const handleAddArticle = async () => {
     setShowModal(true);
 
@@ -101,10 +106,20 @@ function ArticlesPage() {
     }
 
     setShowModal(false);
+    const initials = {
+      title: "",
+      content: "",
+      category: "",
+      image: "",
+    };
+
+    setNewArticle(initials);
   };
-  
+
   const filteredArticles = articles.filter((article) => {
-    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = article.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const matchesCategory = category === "All" || article.category === category;
     return matchesSearch && matchesCategory;
   });
@@ -138,18 +153,12 @@ function ArticlesPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
         />
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="p-2 border bg-purple-900 border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
-        >
-          <option value="All">All Categories</option>
-          {categories.map((cat, index) => (
-            <option key={index} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+
+        <CategoryDropdown
+          category={category}
+          setCategory={setCategory}
+          categories={categories}
+        />
       </div>
 
       {/* Articles List */}
@@ -157,7 +166,11 @@ function ArticlesPage() {
         <div className="  grid grid-cols-1   sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3 py-7  place-content-center">
           {filteredArticles.length > 0 ? (
             filteredArticles.map((article) => (
-              <ArticleCard key={article._id} article={article} handleLike={handleLike}/>
+              <ArticleCard
+                key={article._id}
+                article={article}
+                handleLike={handleLike}
+              />
             ))
           ) : (
             <p className="text-center text-gray-500 text-lg">

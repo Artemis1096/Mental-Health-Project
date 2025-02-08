@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { FaUserEdit, FaCog } from "react-icons/fa";
-import profile from "../Assets/ProfileVideo.gif";
+import "../Styles/Profile.css";
+
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../Features/User/UserSlice";
 import { useNavigate } from "react-router";
+import { UseAuthContext } from "../Context/AuthContext";
+
+import profile from "../Assets/ProfileVideo.gif";
 import axios from "axios";
 import MoodVisualization from "../Components/MoodVisualization";
-import "../Styles/Profile.css";
 import DeleteConfirmation from "../Components/DeleteConfirmation";
 
-import { UseAuthContext } from "../Context/AuthContext";
+//Please add comment when adding or fixing anything in the code.
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const userData = user?.User || {};
   const [isWantDelete, setIsWantDelete] = useState(false);
-  const { auth, setAuth } = UseAuthContext();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const [isUpdated, setIsUpdated] = useState(false);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedDob, setUpdatedDob] = useState("");
   const [showBox, setShowBox] = useState(false);
+
+  const { setAuth } = UseAuthContext();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!userData?.id) return;
@@ -35,7 +38,6 @@ const Profile = () => {
             withCredentials: true,
           }
         );
-        // console.log(res.data.data._id);
 
         const newUser = {
           id: res.data.data._id,
@@ -43,7 +45,6 @@ const Profile = () => {
           email: res.data.data.email,
           userType: res.data.data.userType,
         };
-        // console.log(newUser);
 
         dispatch(addUser(newUser));
       } catch (error) {
@@ -179,7 +180,6 @@ const Profile = () => {
             <h2 className="text-2xl font-bold text-white mt-4">
               {userData.name || "User"}
             </h2>
-            {/* <p className="text-white">User hai bhai user hai</p> */}
 
             {/* Buttons */}
             <div className="mt-6 flex justify-center gap-4">

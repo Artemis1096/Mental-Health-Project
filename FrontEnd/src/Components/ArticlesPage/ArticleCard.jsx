@@ -59,7 +59,7 @@ const ArticleCard = ({ article, handleLike }) => {
 
       <div className="flex items-center justify-between px-6 py-4 bg-gray-900 rounded-lg shadow-lg">
         <div className="flex flex-wrap space-x-2">
-          {article.category.map((category) => (
+          {article.category.slice(0, 2).map((category) => (
             <span
               key={category}
               className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300"

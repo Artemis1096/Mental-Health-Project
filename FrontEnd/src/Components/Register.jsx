@@ -1,31 +1,28 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import toast, { Toaster } from "react-hot-toast";
+
 import axios from "axios";
 
 import Button from "./Button";
 import OtpVerification from "./OtpVerification";
 
+//Please add comment when adding or fixing anything in the code.
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-
   const [fullName, setFullName] = useState("");
   const [dob, setDob] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [otpFlag, setOtpFlag] = useState(false); // Handling OTP flag internally
+  const [otpFlag, setOtpFlag] = useState(false);
   const [isOtpSubmitted, setIsOtpSubmitted] = useState(false);
 
   const notifyError = (label) => toast.error(label);
 
-  const navigate = useNavigate();
-
   const handleSubmitRegister = (e) => {
     e.preventDefault();
-
-    // Ensure passwords match before submission
 
     let length = password.length;
     if (length < 6) {
@@ -57,11 +54,10 @@ function Register() {
             dob: dob,
           }
         );
-        // console.log(res.data.message);
-        if (res.data.message === "User created successfully") setOtpFlag(true); // Set OTP flag to true after successful registration
+
+        if (res.data.message === "User created successfully") setOtpFlag(true);
       } catch (error) {
         notifyError(error.response?.data);
-        console.error("Error:", error.response?.data || error.message);
       } finally {
         setIsSubmitted(false);
       }
@@ -159,7 +155,7 @@ function Register() {
           isOtpSubmitted={isOtpSubmitted}
           setIsOtpSubmitted={setIsOtpSubmitted}
           email={email}
-        /> // Only show OTP after registration
+        />
       )}
     </>
   );

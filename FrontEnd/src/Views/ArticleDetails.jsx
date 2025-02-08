@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 import axios from "axios";
+
 import bg from "../Assets/articlebg.jpg";
 import Loader from "../Components/Loader";
+
+//Please add comment when adding or fixing anything in the code.
 
 const ArticleDetails = () => {
   const user = useSelector((state) => state.user);
   const isAdmin = user?.User.userType === "admin";
-  // console.log(user.User.userType);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,7 +30,7 @@ const ArticleDetails = () => {
           `http://localhost:8000/api/articles/${id}`,
           { withCredentials: true }
         );
-        console.log(response);
+
         setArticle(response.data._doc);
         setUpdatedTitle(response.data.title);
         setUpdatedContent(response.data.content);
@@ -151,7 +154,7 @@ const ArticleDetails = () => {
         <div className="h-svh overflow-y-auto">
           {article?.image ? (
             <img
-              src={`http://localhost:8000/public/article_images/${article.image}`}
+              src={article.image}
               alt={article.title}
               className="w-full h-96 rounded-lg mb-6"
             />

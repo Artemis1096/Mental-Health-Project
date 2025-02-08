@@ -58,10 +58,10 @@ function Register() {
           }
         );
         // console.log(res.data.message);
-        if (res.data.message === "User created successfully") setOtpFlag(true); // Set OTP flag to true after successful registration
+        if (res.data.message === "User created successfully" || res.data.message==="Lead to verify otp") setOtpFlag(true); // Set OTP flag to true after successful registration
       } catch (error) {
-        notifyError(error.response?.data);
-        console.error("Error:", error.response?.data || error.message);
+        notifyError(error.response?.data.message);
+        console.error("Error:", error.response?.data.message || error.message);
       } finally {
         setIsSubmitted(false);
       }

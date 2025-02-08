@@ -151,7 +151,7 @@ const ArticleDetails = () => {
         <div className="h-svh overflow-y-auto">
           {article?.image ? (
             <img
-              src={`http://localhost:8000/public/article_images/${article.image}`}
+              src={article.image}
               alt={article.title}
               className="w-full h-96 rounded-lg mb-6"
             />

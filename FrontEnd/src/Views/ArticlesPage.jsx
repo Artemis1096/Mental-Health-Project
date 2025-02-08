@@ -1,21 +1,18 @@
 import { useState, useEffect } from "react";
 import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import axios from "axios";
-// import {useSelector} from "react-redux"
 import { UseAuthContext } from "../Context/AuthContext";
 import bg from "../Assets/articlebg.jpg";
 import ParallaxShowcase from "./ParallaxShowcase";
 
 function ArticlesPage() {
-  // const user = useSelector((state)=>state.user);
-  // console.log(user);
-
   const { auth } = UseAuthContext();
   const [articles, setArticles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
   const [categories, setCategories] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [newArticle, setNewArticle] = useState({
     title: "",
@@ -33,16 +30,19 @@ function ArticlesPage() {
         const response = await axios.get("http://localhost:8000/api/articles", {
           withCredentials: true,
         });
-        setArticles(response.data.data);
+        const fetchedArticles = response.data.data.map((article) => ({
+          ...article,
+          likedByCurrentUser: article.likedByCurrentUser || false,
+        }));
+        setArticles(fetchedArticles);
 
-        const uniqueCategories = [
-          ...new Set(response.data.data.flatMap((article) => article.category)),
-        ];
+        const uniqueCategories = [...new Set(response.data.data.map((article) => article.category))];
         setCategories(uniqueCategories);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchArticles();
 
     if (auth && auth.userType === "admin") {
@@ -50,6 +50,30 @@ function ArticlesPage() {
     }
   }, [showModal]);
 
+  const handleLike = async (articleId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/articles/like/${articleId}`,
+        {},
+        { withCredentials: true }
+      );
+
+      setArticles((prevArticles) =>
+        prevArticles.map((article) =>
+          article._id === articleId
+            ? {
+                ...article,
+                likedByCurrentUser: response.data.likedByCurrentUser,
+                likes: response.data.likesCount,
+              }
+            : article
+        )
+      );
+    } catch (error) {
+      console.error("Error toggling like:", error.message);
+    }
+  };
+  
   const handleAddArticle = async () => {
     setShowModal(true);
 
@@ -78,13 +102,10 @@ function ArticlesPage() {
 
     setShowModal(false);
   };
-
+  
   const filteredArticles = articles.filter((article) => {
-    const matchesSearch = article.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      category === "All" || article.category.includes(category);
+    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = category === "All" || article.category === category;
     return matchesSearch && matchesCategory;
   });
 
@@ -136,7 +157,7 @@ function ArticlesPage() {
         <div className="  grid grid-cols-1   sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3 py-7  place-content-center">
           {filteredArticles.length > 0 ? (
             filteredArticles.map((article) => (
-              <ArticleCard key={article._id} article={article} />
+              <ArticleCard key={article._id} article={article} handleLike={handleLike}/>
             ))
           ) : (
             <p className="text-center text-gray-500 text-lg">

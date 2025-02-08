@@ -6,6 +6,7 @@ import { addUser } from "../Features/User/UserSlice";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import MoodVisualization from "../Components/MoodVisualization";
+import "../Styles/Profile.css";
 import DeleteConfirmation from "../Components/DeleteConfirmation";
 
 import { UseAuthContext } from "../Context/AuthContext";
@@ -109,96 +110,100 @@ const Profile = () => {
 
   return (
     <>
-      {showBox && (
-        <DeleteConfirmation
-          setIsWantDelete={setIsWantDelete}
-          setShowBox={setShowBox}
-        />
-      )}
-
-      {isUpdated && (
-        <div className=" absolute w-full h-full text-black flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-96">
-            <h1 className="text-xl font-bold text-center mb-4 text-gray-800">
-              Update Profile Details
-            </h1>
-            <form
-              className="flex flex-col gap-4"
-              onSubmit={handleUpdateProfile}
-            >
-              <div>
-                <label className="block text-gray-700 font-medium">
-                  Update Name
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
-                  onChange={(e) => setUpdatedName(e.target.value)}
-                  value={updatedName}
-                  placeholder="Enter Name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-700 font-medium">
-                  Update Date of Birth
-                </label>
-                <input
-                  type="date"
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
-                  value={updatedDob}
-                  onChange={(e) => setUpdatedDob(e.target.value)}
-                />
-              </div>
-              <button
-                type="submit"
-                className="!bg-purple-600 text-white py-2 rounded-lg font-semibold hover:!bg-purple-700 transition"
-              >
-                Update
-              </button>
-              <button
-                onClick={() => setIsUpdated(false)}
-                className="!bg-purple-600 text-white py-2 rounded-lg font-semibold hover:!bg-purple-700 transition"
-              >
-                Cancel
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      <div className="h-screen bg-gradient-to-br from-purple-500 to-indigo-600 flex flex-col items-center p-6 overflow-y-auto">
-        {/* Profile Card */}
-        <div className="bg-purple-200 shadow-2xl rounded-2xl p-6 w-full max-w-md text-center">
-          <img
-            src={profile}
-            alt="Profile"
-            className="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500 shadow-lg"
+      <div className="wrapper">
+        {showBox && (
+          <DeleteConfirmation
+            setIsWantDelete={setIsWantDelete}
+            setShowBox={setShowBox}
           />
-          <h2 className="text-2xl font-bold text-gray-800 mt-4">
-            {userData.name || "User"}
-          </h2>
-          <p className="text-gray-500">User hai bhai user hai</p>
+        )}
+        {isUpdated && (
+          <div className="w-full h-full text-black flex justify-center items-center">
+            <div className="bg-white p-6 rounded-xl mt-6 shadow-lg w-96">
+              <h1 className="text-xl font-bold text-center mb-4 text-gray-800">
+                Update Profile Details
+              </h1>
+              <form
+                className="flex flex-col gap-4"
+                onSubmit={handleUpdateProfile}
+              >
+                <div>
+                  <label className="block text-gray-700 font-medium">
+                    Update Name
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
+                    onChange={(e) => setUpdatedName(e.target.value)}
+                    value={updatedName}
+                    placeholder="Enter Name"
+                  />
+                </div>
 
-          {/* Buttons */}
-          <div className="mt-6 flex justify-center gap-4">
-            <button
-              className="flex items-center gap-2 !bg-indigo-500 text-white px-4 py-2 rounded-full shadow !hover:bg-indigo-600 transition"
-              onClick={() => setIsUpdated(!isUpdated)}
-            >
-              <FaUserEdit /> Edit Profile
-            </button>
-            <button
-              className="flex items-center gap-2 !bg-gray-300 !text-gray-800 px-4 py-2 rounded-full shadow !hover:bg-gray-400 transition"
-              onClick={() => setShowBox(true)}
-            >
-              <FaCog /> Delete Profile
-            </button>
+                <div>
+                  <label className="block text-gray-700 font-medium">
+                    Update Date of Birth
+                  </label>
+                  <input
+                    type="date"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500"
+                    value={updatedDob}
+                    onChange={(e) => setUpdatedDob(e.target.value)}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="!bg-purple-600 text-white py-2 rounded-lg font-semibold hover:!bg-purple-700 transition"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() => setIsUpdated(false)}
+                  className="!bg-purple-600 text-white py-2 rounded-lg font-semibold hover:!bg-purple-700 transition"
+                >
+                  Cancel
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Data Visualization */}
-        <MoodVisualization />
+        <div className="h-screen wrapper flex flex-col items-center p-6 overflow-y-auto">
+          {/* Profile Card */}
+          <div className="profile-card shadow-2xl rounded-2xl p-6 w-full max-w-md text-center">
+            <img
+              src={profile}
+              alt="Profile"
+              className="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500 shadow-lg"
+            />
+            <h2 className="text-2xl font-bold text-white mt-4">
+              {userData.name || "User"}
+            </h2>
+            {/* <p className="text-white">User hai bhai user hai</p> */}
+
+            {/* Buttons */}
+            <div className="mt-6 flex justify-center gap-4">
+              <button
+                className="flex w-44 items-center gap-2 !bg-indigo-500 text-white px-4 py-2 rounded-full shadow !hover:bg-indigo-600 transition"
+                onClick={() => setIsUpdated(!isUpdated)}
+              >
+                <p>Edit Profile</p>
+              </button>
+              <button
+                className="flex w-44 items-center gap-2 !bg-gray-300 !text-gray-800 px-4 py-2 rounded-full shadow !hover:bg-gray-400 transition"
+                onClick={() => setShowBox(true)}
+              >
+                <p>Delete Profile</p>
+              </button>
+            </div>
+          </div>
+
+          {/* Data Visualization */}
+          <h1 className="text-5xl font-bold text-white mt-8 mb-4">
+            Past Mood Analysis
+          </h1>
+          <MoodVisualization />
+        </div>
       </div>
     </>
   );

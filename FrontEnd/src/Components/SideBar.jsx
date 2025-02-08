@@ -34,8 +34,8 @@ function SideBar({ open, setOpen }) {
   const handleLogOut = async () => {
     try {
       const res = await axios.post("http://localhost:8000/api/auth/logout");
-      console.log(res);
       dispatch(logout());
+      localStorage.clear();
       setAuth(null);
       navigate("/login");
     } catch (err) {
@@ -127,7 +127,6 @@ function SideBar({ open, setOpen }) {
         <div
           onClick={() => setOpen(!open)}
           className={`absolute top-9 right-[-14px] w-7 h-7 flex items-center justify-center 
-
          border-2 border-white bg-white text-purple-600 rounded-full ease-
 
          cursor-pointer shadow-md ${!open && "rotate-180"} `}

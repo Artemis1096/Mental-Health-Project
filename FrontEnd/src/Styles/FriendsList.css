@@ -19,8 +19,8 @@
   margin: 1rem;
   border-radius: 15px;
 }
-.main-container {
-  /* display: flex; */
+.friend-main-container{
+  background: linear-gradient(to bottom right, #7d3c98, #2980b9);
 }
 .AllUsersList {
   width: 50%;

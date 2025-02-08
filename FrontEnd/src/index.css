@@ -1,6 +1,5 @@
 @import "tailwindcss";
-
-@tailwind utilities;
+@plugin "daisyui";
 
 .dark-purple {
   background-color: "#081A51";

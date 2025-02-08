@@ -37,11 +37,7 @@ const ArticleCard = ({ article, handleLike }) => {
     <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4">
       <img
         className="w-full border-1 rounded-md border-purple-300 h-40"
-        src={
-          article.image
-            ? `http://localhost:8000/public/article_images/${article.image}`
-            : Sunset
-        }
+        src={article.image ? article.image : Sunset}
         alt="Article Cover"
       />
       <div className="px-6 py-4">
@@ -73,7 +69,7 @@ const ArticleCard = ({ article, handleLike }) => {
           ))}
         </div>
 
-        {/* Like Button */} 
+        {/* Like Button */}
         <LikeButton
           articleId={article._id}
           initialLikes={likes}

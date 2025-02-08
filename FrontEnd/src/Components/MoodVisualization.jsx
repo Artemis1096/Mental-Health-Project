@@ -35,9 +35,7 @@ const MoodVisualization = () => {
         const response = await axios.get("http://localhost:8000/api/mood/get", {
           withCredentials: true,
         });
-        const response = await axios.get("http://localhost:8000/api/mood/get", {
-          withCredentials: true,
-        });
+
         console.log("API Response:", response.data);
 
         if (!response.data || !response.data.moodData) {

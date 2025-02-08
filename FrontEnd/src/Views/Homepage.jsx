@@ -5,6 +5,7 @@ import Quotes from "../../Data/quotes.json";
 import MoodComponent from "../Components/MoodComponent";
 import Loader from "../Components/Loader";
 import bg from "../Assets/bgx.jpeg";
+import TaskList from "../Components/TaskList";
 
 const Homepage = () => {
   const [todayQuote, setTodayQuote] = useState({ Quote: "", Author: "" });
@@ -67,75 +68,7 @@ const Homepage = () => {
             {userData?.name || "Guest"}
           </p>
         </div>
-        {/* Example Welcome Sections */}
-        <div className="text-center mb-7  rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
-        {/* Example Welcome Sections */}
-        <div className="text-center mb-7  rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
-        {/* Example Welcome Sections */}
-        <div className="text-center mb-7  rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
-
-        {/* Additional sections can be added similarly */}
-        <div className="text-center mb-7 shadow-xl rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
-        <div className="text-center mb-7 shadow-xl rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
-        <div className="text-center mb-7 shadow-xl rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
-        <div className="text-center mb-7 shadow-xl rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
-        <div className="text-center mb-7 shadow-xl rounded-2xl w-full">
-          <p className="text-8xl font-extrabold ml-5 text-start text-indigo-500 mb-4">
-            Welcome
-          </p>
-          <p className="text-8xl text-purple-600 text-center font-semibold my-3">
-            {userData?.name || "Guest"}
-          </p>
-        </div>
+        {/* <TaskList/> */}
 
         {/* Quote Box */}
         <div className="bg-blue-100 text-black p-8 md:p-10 rounded-2xl shadow-2xl max-w-2xl w-full text-center mx-auto">

@@ -107,7 +107,7 @@ function AllUsersList() {
       </div>
 
       {/* Main Container */}
-      <div className="flex gap-6 h-vh bg-purple-900 rounded-xl p-6 shadow-lg">
+      <div className="flex gap-6 h-vh friend-main-container shadow-2xl border-1 rounded-xl p-6">
         {/* Users List */}
         <div className="w-1/2 bg-white p-5 rounded-lg shadow-md">
           <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">

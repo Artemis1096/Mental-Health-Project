@@ -672,7 +672,7 @@ body {
   height: 100vh;
   padding: 20px;
   padding-top: 32px;
-  background: linear-gradient(to bottom right, #7d3c98, #2980b9, #27ae60);
+  background: linear-gradient(to bottom right, #2980b9, #7d3c98);
   color: white;
   transition: background 0.5s ease-in-out;
 }

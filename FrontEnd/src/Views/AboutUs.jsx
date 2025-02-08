@@ -1,7 +1,6 @@
 import React from "react";
 import about from "../Assets/about.png";
 import bg from "../Assets/aboutusbg.png";
-import Dummy from "./Dummy";
 
 const AboutUs = () => {
   return (

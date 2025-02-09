@@ -1,132 +1,174 @@
-// TaskList.jsx
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../Styles/HomePage.css"
 
 const TaskList = () => {
-  // State variables for tasks, new task input, loading state and error message
+  // State to store tasks, loading, error, new task data, and add-task status.
   const [tasks, setTasks] = useState([]);
-  const [newTaskTitle, setNewTaskTitle] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [newTask, setNewTask] = useState({ title: "", description: "" });
+  const [adding, setAdding] = useState(false);
 
-  // Fetch tasks from the backend on component mount
-  const fetchTasks = async () => {
-    setLoading(true);
-    try {
-      const { data } = await axios.get('http://localhost:8000/api/tasks/getall');
-      setTasks(data);
-    } catch (err) {
-      console.error(err);
-      setError('Error fetching tasks');
-    }
-    setLoading(false);
-  };
-
+  // Fetch all tasks when the component mounts.
   useEffect(() => {
     fetchTasks();
   }, []);
 
-  // Handler to create a new task
-  const handleAddTask = async (e) => {
-    e.preventDefault();
-    if (!newTaskTitle.trim()) return;
+  // Fetch tasks from the backend.
+  const fetchTasks = async () => {
+    setLoading(true);
     try {
-      // Assuming a new task needs at least a title and a default status (e.g., "pending")
-      const { data } = await axios.post('http://localhost:8000/api/tasks/', {
-        title: newTaskTitle,
-        status: 'pending',
+      const response = await axios.get("http://localhost:8000/api/tasks/getall", {
+        withCredentials: true,
       });
-      // Append the new task to the existing tasks array
-      setTasks([...tasks, data]);
-      setNewTaskTitle('');
+      setTasks(response.data);
+      console.log("Fetched tasks:", response.data);
     } catch (err) {
-      console.error(err);
-      setError('Error creating task');
+      setError("Failed to load tasks");
+      console.error("Error fetching tasks:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Handler to mark a task as completed.
-  // This sends an update request; note that if the task status is updated to "completed" and was not already,
-  // the backend will also increment the user's experience.
-  const handleCompleteTask = async (taskId) => {
-    const task = tasks.find((t) => t._id === taskId);
-    if (!task || task.status === 'completed') return;
+  // Mark a task as completed.
+  const completeTask = async (id) => {
+    console.log(`Completing task: ${id}`);
     try {
-      // Update the task status to "completed"
-      const { data } = await axios.put(`/api/tasks/${taskId}`, { status: 'completed' });
-      // The response returns an object with the updated task under "task"
-      const updatedTask = data.task;
-      setTasks(tasks.map((t) => (t._id === taskId ? updatedTask : t)));
+      await axios.put(
+        `http://localhost:8000/api/tasks/${id}`,
+        { status: "completed" },
+        { withCredentials: true }
+      );
+      fetchTasks();
     } catch (err) {
-      console.error(err);
-      setError('Error updating task');
+      console.error("Failed to update task", err);
+      setError("Failed to update task");
     }
   };
 
-  // Handler to delete a task
-  const handleDeleteTask = async (taskId) => {
+  // Delete a task.
+  const deleteTask = async (id) => {
+    console.log(`Deleting task: ${id}`);
     try {
-      await axios.delete(`/api/tasks/${taskId}`);
-      setTasks(tasks.filter((t) => t._id !== taskId));
+      await axios.delete(`http://localhost:8000/api/tasks/${id}`, {
+        withCredentials: true,
+      });
+      fetchTasks();
     } catch (err) {
-      console.error(err);
-      setError('Error deleting task');
+      console.error("Failed to delete task", err);
+      setError("Failed to delete task");
     }
   };
+
+  // Add a new task.
+  const addTask = async (e) => {
+    e.preventDefault();
+    setAdding(true);
+    try {
+      // POST request to add a new task.
+      await axios.post("http://localhost:8000/api/tasks/create", newTask, {
+        withCredentials: true,
+      });
+      // Clear the form fields after successful addition.
+      setNewTask({ title: "", description: "" });
+      fetchTasks();
+    } catch (err) {
+      console.error("Failed to add task", err);
+      setError("Failed to add task");
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  // Show loading or error message.
+  if (loading) return <p className="text-center text-gray-600">Loading tasks...</p>;
+  if (error) return <p className="text-center text-black">{error}</p>;
 
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-      <h1>Task List</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    <div className="max-w-2xl mx-auto p-4 task-list w-full">
+      <h2 className="text-6xl text-center font-bold mb-4">Task List</h2>
 
-      {/* Form to create a new task */}
-      <form onSubmit={handleAddTask} style={{ marginBottom: '1rem' }}>
-        <input
-          type="text"
-          value={newTaskTitle}
-          onChange={(e) => setNewTaskTitle(e.target.value)}
-          placeholder="Enter task title"
-          style={{ padding: '0.5rem', width: '70%' }}
-          required
-        />
-        <button type="submit" style={{ padding: '0.5rem 1rem', marginLeft: '0.5rem' }}>
-          Add Task
+      {/* Form to add a new task */}
+      <form onSubmit={addTask} className="mb-6 p-4 border rounded-lg shadow-md">
+        <h3 className="text-xl font-semibold mb-2">Add New Task</h3>
+        <div className="mb-4">
+          <label htmlFor="title" className="block mb-1">
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={newTask.title}
+            onChange={(e) =>
+              setNewTask((prev) => ({ ...prev, title: e.target.value }))
+            }
+            required
+            className="w-full border px-3 py-2 rounded"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="description" className="block mb-1">
+            Description
+          </label>
+          <textarea
+            id="description"
+            value={newTask.description}
+            onChange={(e) =>
+              setNewTask((prev) => ({ ...prev, description: e.target.value }))
+            }
+            required
+            className="w-full border px-3 py-2 rounded"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          disabled={adding}
+          className="px-4 py-2 task-btn text-white rounded-lg"
+        >
+          {adding ? "Adding..." : "Add Task"}
         </button>
       </form>
 
-      {/* Loading state */}
-      {loading ? (
-        <p>Loading tasks...</p>
+      {/* List of tasks */}
+      {tasks.length === 0 ? (
+        <p className="text-center text-gray-500">No tasks available</p>
       ) : (
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          {tasks.map((task) => (
-            <li
-              key={task._id}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                padding: '0.5rem',
-                marginBottom: '0.5rem',
-              }}
-            >
-              <span style={{ textDecoration: task.status === 'completed' ? 'line-through' : 'none' }}>
-                {task.title} ({task.status})
-              </span>
-              <div>
-                {/* Show the "Complete" button only if the task is not yet completed */}
-                {task.status !== 'completed' && (
-                  <button onClick={() => handleCompleteTask(task._id)} style={{ marginRight: '0.5rem' }}>
-                    Complete
-                  </button>
-                )}
-                <button onClick={() => handleDeleteTask(task._id)}>Delete</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        tasks.map((task) => (
+          <div
+            key={task._id}
+            className="p-4 border rounded-lg shadow-md flex justify-between items-center mb-4"
+          >
+            <div className="flex-grow">
+              <h3 className="text-lg font-bold">{task.title}</h3>
+              <p className="text-white">{task.description}</p>
+              <p
+                className={`text-sm ${
+                  task.status === "completed" ? "text-white" : "text-white"
+                }`}
+              >
+                {task.status}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              {task.status !== "completed" && (
+                <button
+                  onClick={() => completeTask(task._id)}
+                  className="px-3 py-2 text-white task-btn rounded-lg"
+                >
+                  Task Completed
+                </button>
+              )}
+              <button
+                onClick={() => deleteTask(task._id)}
+                className="px-3 py-2 text-white task-btn rounded-lg"
+              >
+                Delete Task
+              </button>
+            </div>
+          </div>
+        ))
       )}
     </div>
   );

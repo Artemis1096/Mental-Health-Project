@@ -1,0 +1,16 @@
+.bg-color{
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);
+}
+.bg-color-r{
+    background: linear-gradient(to bottom right, #7d3c98, #2980b9);
+}
+.bg-journal{
+    color: white;
+    background: linear-gradient(to bottom right,#2980b9, #7d3c98);
+}
+.d-btn{
+    border: 1px solid white;
+}
+.bg-b{
+    background-color: #7d3c98;
+}

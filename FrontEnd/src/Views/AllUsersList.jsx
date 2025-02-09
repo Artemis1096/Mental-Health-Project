@@ -134,7 +134,7 @@ function AllUsersList() {
                       {user.username}
                     </span>
                     <button
-                      className="px-3 py-1 !bg-purple-600 text-white rounded-md !hover:bg-purple-700 transition"
+                      className="px-3 py-1 btn-color text-white rounded-md !hover:bg-purple-700 transition"
                       onClick={() => sendFriendRequest(user._id)}
                     >
                       Add

@@ -1,14 +1,13 @@
 import "../Styles/HomePage.css";
-
 import { useEffect, useState } from "react";
-
 import axios from "axios";
-
 import Quotes from "../../Data/quotes.json";
 import MoodComponent from "../Components/MoodComponent";
 import Loader from "../Components/Loader";
 import bg from "../Assets/bgx.jpeg";
 import QuoteReel from "./QuotesReel";
+import TaskList from "../Components/TaskList";
+import profile from "../Assets/ProfileVideo.gif";
 
 //Please add comment when adding or fixing anything in the code.
 
@@ -94,18 +93,33 @@ const Homepage = () => {
           <MoodComponent onMoodSubmit={() => setShowMoodComponent(false)} />
         )}
 
-        <div className=" w-full mt-40 rubik-moonrocks-regular">
-          <h1 className="text-center drop-shadow-2xl text-purple-950 text-8xl">
+        <div className=" w-full mt-25">
+          <h1 className="text-center drop-shadow-2xl text-white welcome-text text-8xl">
             Welcome
           </h1>
         </div>
 
-        <div className="h-84 w-full mt-20 shadow-lg rounded-2xl  ml-5 permanent-marker-regular">
+        <div className="h-84 w-full mt-20 rounded-2xl  ml-5 permanent-marker-regular">
           <h1 className="text-center text-cyan-900 text-9xl drop-shadow-2xl">
             {userData.name || "Guest"}
           </h1>
         </div>
-
+        <div className="mb-10">
+          {/* Profile Card */}
+          <div className="profile-card shadow-2xl rounded-2xl p-6 w-full max-w-md text-center">
+            <img
+              src={profile}
+              alt="Profile"
+              className="w-32 h-32 rounded-full mx-auto border-4 border-indigo-500 shadow-lg"
+            />
+            <h2 className="text-2xl font-bold text-white mt-4">
+              {userData.name || "User"}
+            </h2>
+          </div>
+        </div>
+        <div className="text-white bg-color w-full ml-5 task-list">
+          <TaskList />
+        </div>
         {/* Quote Box */}
         <div className="bg-blue-100 mt-40 text-black p-8 md:p-10 rounded-2xl shadow-2xl max-w-2xl mb-20 w-full text-center mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -118,9 +132,10 @@ const Homepage = () => {
             ~ {todayQuote.Author}
           </span>
         </div>
-
-        <QuoteReel />
-
+        <div className="article-section">
+          <h1 className="text-white text-7xl text-center">Latest Articles</h1>
+          <QuoteReel />
+        </div>
         <div className="h-96 w-full"></div>
         <div className="h-96 w-full"></div>
         <div className="h-96 w-full"></div>

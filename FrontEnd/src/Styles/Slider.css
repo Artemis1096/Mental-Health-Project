@@ -1,11 +1,11 @@
 .slider{
     height: 40px;
-    border: 2px solid #f54e4e;
+    border: 2px solid white;
     border-radius: 20px;
 }
 
 .thumb{
-    background-color: #f54e4e;
+    background-color: white;
     cursor:pointer;
     width:40px;
     height: 40px;
@@ -18,23 +18,8 @@
 .slider.green .thumb{
     background-color: #4aec8c;
 }
-
-/* Module Code */
-/*
- * react-circular-progressbar styles
- * All of the styles in this file are configurable!
- */
-
  .CircularProgressbar {
-    /*
-     * This fixes an issue where the CircularProgressbar svg has
-     * 0 width inside a "display: flex" container, and thus not visible.
-     */
     width: 100%;
-    /*
-     * This fixes a centering issue with CircularProgressbarWithChildren:
-     * https://github.com/kevinsqi/react-circular-progressbar/issues/94
-     */
     vertical-align: middle;
   }
   
@@ -47,7 +32,6 @@
   
   .CircularProgressbar .CircularProgressbar-trail {
     stroke: #d6d6d6;
-    /* Used when trail is not full diameter, i.e. when props.circleRatio is set */
     stroke-linecap: round;
   }
   
@@ -61,16 +45,7 @@
   .CircularProgressbar .CircularProgressbar-background {
     fill: #d6d6d6;
   }
-  
-  /*
-   * Sample background styles. Use these with e.g.:
-   *
-   *   <CircularProgressbar
-   *     className="CircularProgressbar-inverted"
-   *     background
-   *     percentage={50}
-   *   />
-   */
+
   .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {
     fill: #3e98c7;
   }
@@ -86,12 +61,11 @@
   .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
     stroke: transparent;
   }
-  .progress-bar{
-    
-  }
+
   .meditation-container{
     width: 30vw;
   }
-  .play-btn{
-    
+
+  .bg-color{
+    background-color: linear-gradient(to bottom right,#2980b9, #7d3c98);
   }

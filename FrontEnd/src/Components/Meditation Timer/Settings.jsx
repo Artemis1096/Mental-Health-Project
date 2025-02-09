@@ -3,14 +3,13 @@ import "../../Styles/Slider.css";
 import SettingsContext from "../../Context/SettingsContext";
 import { useContext } from "react";
 import BackButton from "./BackButton";
-import { MoveLeft } from "lucide-react";
 
 function Settings() {
   const settingsInfo = useContext(SettingsContext);
   return (
     <div
       style={{ textAlign: "left" }}
-      className="relative p-5 ml-20 rounded-2xl shadow-2xl bg-purple-800 w-full"
+      className="relative p-5 ml-20 rounded-2xl shadow-2xl bg-color w-full"
     >
       <label className="text-xl">Set Time: {settingsInfo.workMinutes}:00</label>
       <ReactSlider

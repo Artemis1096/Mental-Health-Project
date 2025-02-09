@@ -32,7 +32,7 @@ button.with-text svg {
   float: left;
   margin-right: 5px;
 }
-
+ 
 label {
   display: block;
   margin-bottom: 10px;
@@ -42,4 +42,8 @@ label {
 
 .timer {
   width: 50%;
+}
+
+.bg-color{
+  background: linear-gradient(to bottom right,#2980b9, #7d3c98);
 }

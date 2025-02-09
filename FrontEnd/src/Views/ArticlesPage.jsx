@@ -7,6 +7,7 @@ import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import bg from "../Assets/articlebg.jpg";
 import ParallaxShowcase from "./ParallaxShowcase";
 import CategoryDropdown from "../Components/ArticlesPage/CategoryDropdown";
+import Loader from "../Components/Loader";
 
 //Please add comment when adding or fixing anything in the code.
 
@@ -89,21 +90,25 @@ function ArticlesPage() {
       const data = new FormData();
       data.append("image", image);
       try {
-        const uploadRes = await axios.post("http://localhost:8000/api/upload", data, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        const uploadRes = await axios.post(
+          "http://localhost:8000/api/upload",
+          data,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
         uploadedImageUrl = uploadRes.data.imageUrl;
       } catch (error) {
         console.log("Error uploading image:", error.message);
       }
     }
-  
+
     try {
       const newArticleData = {
         ...newArticle,
         image: uploadedImageUrl,
       };
-  
+
       await axios.post(
         "http://localhost:8000/api/articles/create",
         newArticleData,
@@ -111,7 +116,7 @@ function ArticlesPage() {
       );
     } catch (error) {
       console.log("Error creating article:", error.message);
-    }finally{
+    } finally {
       setShowModal(false);
       setLoading(false);
     }
@@ -135,12 +140,12 @@ function ArticlesPage() {
     return matchesSearch && matchesCategory;
   });
 
-  if(loading){
-    return <Loader/>
+  if (loading) {
+    return <Loader />;
   }
 
   return (
-    <>
+    <div>
       <ParallaxShowcase />
       <img
         src={bg}

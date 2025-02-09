@@ -77,7 +77,7 @@ const Homepage = () => {
   }
 
   return (
-    <div className="relative flex flex-col min-h-screen pr-10 bg-cyan-700  -z-50">
+    <div className="relative flex flex-col min-h-screen pr-10 bg-cyan-700  ">
       {/* Background image rendered with an img tag */}
       <div className=" w-full h-full ">
         <img

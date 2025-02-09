@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./MovieRecommendation.css"; // Add CSS for styling
-import ABMRAPI from "./abmrapi"; // Import your API file
+
+import ABMRAPI from "abmrapi"; // Import your API file
 
 const Movie = () => {
   const [movie, setMovie] = useState(null);
@@ -53,4 +53,4 @@ const Movie = () => {
   );
 };
 
-export default MovieRecommendation;
+export default Movie;

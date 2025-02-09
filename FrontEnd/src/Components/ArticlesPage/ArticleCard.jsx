@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Sunset from "../../Assets/sunset.jpg";
 import LikeButton from "../ArticlesPage/LikeButton";
 import axios from "axios";
+import "../../Styles/Articles.css";
 
 const ArticleCard = ({ article, handleLike }) => {
   const [likes, setLikes] = useState(article.likes.length);
@@ -22,58 +23,50 @@ const ArticleCard = ({ article, handleLike }) => {
 
       setLikes(response.data.likesCount);
       setIsLiked(response.data.likedByCurrentUser);
-      // Send the like/unlike request to the backend
-      // await axios.put(
-      //   `http://localhost:8000/api/articles/like/${article._id}`,
-      //   {},
-      //   { withCredentials: true }
-      // );
     } catch (error) {
       console.error("Error toggling like:", error.message);
     }
   };
 
   return (
-    <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4">
+    <div className="max-w-84 rounded-xl shadow-lg bg-gray-900 p-4 flex flex-col space-y-4">
       <img
-        className="w-full border-1 rounded-md border-purple-300 h-40"
-        src={
-          article.image
-            ? article.image
-            : Sunset
-        }
+        className="w-full border border-purple-300 rounded-md h-40 object-cover"
+        src={article.image ? article.image : Sunset}
         alt="Article Cover"
       />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 text-purple-600">
-          {article.title.slice(0, 50)}
+      <div className="flex flex-col flex-grow">
+        <div className="py-4">
+          <div className="font-bold text-xl mb-2 text-white">
+            {article.title.slice(0, 50)}
+          </div>
+          <p className="text-white pt-2 break-words text-base">
+            {article.content.slice(0, 50)}...
+          </p>
         </div>
-        <p className="text-white break-words text-base">
-          {article.content.slice(0, 50)}...
-        </p>
-      </div>
 
-      <div className="flex justify-center m-5">
-        <Link to={`${article._id}`}>
-          <button className="!bg-purple-500 hover:!bg-purple-700 text-white font-semibold rounded-full px-4 py-2 transition duration-300 ease-in-out whitespace-nowrap">
-            Read More
-          </button>
-        </Link>
+        <div className="flex justify-center mt-auto">
+          <Link to={`${article._id}`}>
+            <button className="btn-color text-white font-semibold rounded-full px-4 py-2 transition duration-300 ease-in-out whitespace-nowrap">
+              Read More
+            </button>
+          </Link>
+        </div>
       </div>
 
       <div className="flex items-center justify-between px-6 py-4 bg-gray-900 rounded-lg shadow-lg">
         <div className="flex flex-wrap space-x-2">
-          {article.category.map((category) => (
+          {article.category.slice(0, 2).map((category) => (
             <span
               key={category}
-              className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300"
+              className="category-color text-white px-2 py-1 rounded-full text-sm font-semibold shadow-md hover:shadow-xl transition-all duration-300"
             >
               #{category}
             </span>
           ))}
         </div>
 
-        {/* Like Button */} 
+        {/* Like Button */}
         <LikeButton
           articleId={article._id}
           initialLikes={likes}

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../Styles/Chat.css";
 import axios from "axios";
-
 import useListenMessages from "../Hooks/useListenMessages.js";
 
 const Chat = () => {
@@ -13,10 +12,11 @@ const Chat = () => {
     const [newMessage, setNewMessage] = useState("");
     const chatEndRef = useRef(null); // Ref for auto-scrolling
     const userData = JSON.parse(localStorage.getItem("user"));
-    const userId = userData && Array.isArray(userData) ? userData[0].id : null;
-    useListenMessages({messages, setMessages});
+    const userId = userData.id;     
+
+    useListenMessages({ messages, setMessages });
+
     useEffect(() => {
-        
         if (!friendId) return;
 
         const fetchMessages = async () => {
@@ -71,6 +71,13 @@ const Chat = () => {
         }
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    };
+
     return (
         <div className="h-full">
             <div className="Chat-container flex flex-col">
@@ -92,6 +99,7 @@ const Chat = () => {
                         className="message-input flex-auto"
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
+                        onKeyDown={handleKeyDown} // Handle Enter key
                         placeholder="Type a message..."
                     />
                     <button className="send-button flex-none" onClick={sendMessage}>

@@ -1,14 +1,18 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseAuthContext } from "../Context/AuthContext";
+import "../Styles/FriendsList.css"
+
+import Loader from "../Components/Loader";
+
+//Please add comment when adding or fixing anything in the code.
 
 const FriendsList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { auth } = UseAuthContext();
-  const userData = JSON.parse(localStorage.getItem("user"));
+
   const userId = auth.id;
   let navigate = useNavigate();
 
@@ -55,11 +59,7 @@ const FriendsList = () => {
   };
 
   if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
@@ -74,7 +74,7 @@ const FriendsList = () => {
                 <span className="friend-name">{user.name}</span>
                 <div className="friend-actions">
                   <button
-                    className="action-button chat-button"
+                    className="action-button btn-color"
                     onClick={() =>
                       navigate("/app/chat", {
                         state: { friendId: user._id, friendName: user.name },
@@ -84,7 +84,7 @@ const FriendsList = () => {
                     Chat
                   </button>
                   <button
-                    className="action-button remove-button"
+                    className="action-button btn-color-r"
                     onClick={() => removeFriend(user._id)}
                   >
                     Remove

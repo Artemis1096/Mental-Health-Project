@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom"; // ✅ Corrected import
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../Features/User/UserSlice";
+
+//Icons
 import { HiArrowNarrowLeft } from "react-icons/hi";
-import { GiRamProfile } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 import { FaStudiovinari } from "react-icons/fa";
 import { GrArticle } from "react-icons/gr";
@@ -17,8 +18,10 @@ import { BsFillJournalBookmarkFill } from "react-icons/bs";
 import { GiArtificialHive } from "react-icons/gi";
 
 import axios from "axios";
-import JournalPage from "../Views/JournalPage";
+
 import { UseAuthContext } from "../Context/AuthContext.jsx";
+
+//Please add comment when adding or fixing anything in the code.
 
 function SideBar({ open, setOpen }) {
   const dispatch = useDispatch();
@@ -154,7 +157,7 @@ function SideBar({ open, setOpen }) {
             <li
               key={menu.id}
               className="text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 mb-2 hover:bg-white hover:text-black rounded-md"
-              onClick={menu.action} // ✅ Attach click handler at <li> level for logout
+              onClick={menu.action}
             >
               {menu.link ? (
                 <Link to={menu.link} className="flex items-center gap-x-4">

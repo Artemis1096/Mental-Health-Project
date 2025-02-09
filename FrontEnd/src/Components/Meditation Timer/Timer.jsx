@@ -1,4 +1,4 @@
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
@@ -35,41 +35,87 @@ function Timer() {
   }, [settingsInfo]);
 
   const totalSeconds = settingsInfo.workMinutes * 60;
-  const percentage = Math.round(secondsLeft / totalSeconds * 100);
+  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
 
   const minutes = Math.floor(secondsLeft / 60);
   let seconds = secondsLeft % 60;
-  if (seconds < 10) seconds = '0' + seconds;
+  if (seconds < 10) seconds = "0" + seconds;
 
   return (
-    <div className='flex flex-col justify-center'>
-      <div className="meditation-container">
-        <CircularProgressbar className='progress-bar'
-          value={percentage}
-          text={minutes + ':' + seconds}
-          styles={buildStyles({
-            textColor: '#fff',
-            pathColor: `url(#gradient)`, // Reference the gradient
-            trailColor: 'rgba(255,255,255,.2)',
-          })}
-          strokeWidth={5}
-        />
-        <svg width={0} height={0}>
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#f54e4e" />
-              <stop offset="100%" stopColor="#ffcc00" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-        <div className='play-btn'>
-          {isPaused
-            ? <PlayButton onClick={() => { setIsPaused(false); isPausedRef.current = false; }} />
-            : <PauseButton onClick={() => { setIsPaused(true); isPausedRef.current = true; }} />}
+    <div className="bg-color w-96 ml-5 pb-3 rounded-2xl shadow-2xl">
+      <div className="bg-color p-5 rounded-2xl shadow-4xl">
+        {/* Container to layer the progress bars */}
+        <div style={{ position: "relative" }}>
+          {/* Outer progress bar acting as a white border */}
+          <CircularProgressbar
+            value={100}
+            styles={buildStyles({
+              pathColor: "white",
+              trailColor: "transparent",
+            })}
+            // Adjust the strokeWidth to control the border thickness
+            strokeWidth={7}
+          />
+          {/* Inner progress bar with gradient stroke and timer text */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <CircularProgressbar
+              value={percentage}
+              text={`${minutes}:${seconds}`}
+              styles={buildStyles({
+                textColor: "#fff",
+                pathColor: "url(#gradient)",
+                trailColor: "rgba(255,255,255,.2)",
+              })}
+              // A slightly smaller strokeWidth so the white border shows around it
+              strokeWidth={6}
+            />
+            {/* Define the gradient used by the inner progress bar */}
+            <svg width={0} height={0}>
+              <defs>
+                <linearGradient
+                  id="gradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor="#2980b9" />
+                  <stop offset="100%" stopColor="#7d3c98" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
         </div>
-      <div className='setting-btn'>
-        <SettingsButton className="setting-btn" onClick={() => settingsInfo.setShowSettings(true)} />
+      </div>
+      <div className="play-btn">
+        {isPaused ? (
+          <PlayButton
+            onClick={() => {
+              setIsPaused(false);
+              isPausedRef.current = false;
+            }}
+          />
+        ) : (
+          <PauseButton
+            onClick={() => {
+              setIsPaused(true);
+              isPausedRef.current = true;
+            }}
+          />
+        )}
+      </div>
+      <div className="shadow-2xl bg-color w-full rounded-3xl p-2">
+        <SettingsButton
+          onClick={() => settingsInfo.setShowSettings(true)}
+        />
       </div>
     </div>
   );

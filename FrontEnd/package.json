@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/react": "^5.5.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@headlessui/react": "^2.2.0",
@@ -18,10 +19,13 @@
     "@mui/icons-material": "^6.4.2",
     "@mui/material": "^6.4.2",
     "@mui/styled-engine-sc": "^6.4.2",
+    "@react-spring/parallax": "^9.7.5",
+    "@react-spring/web": "^9.7.5",
     "@react-three/drei": "^9.56.28",
     "@react-three/fiber": "^8.11.5",
     "@react-three/postprocessing": "^2.7.1",
     "@reduxjs/toolkit": "^2.5.1",
+    "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.0.1",
     "@types/three": "^0.172.0",
     "animated-backgrounds": "^1.1.0",
@@ -34,6 +38,7 @@
     "heroicons": "^2.2.0",
     "js-cookie": "^3.0.5",
     "lamina": "^1.1.23",
+    "lenis": "^1.1.20",
     "lucide-react": "^0.474.0",
     "motion": "^12.4.1",
     "react": "^18.2.0",
@@ -45,12 +50,12 @@
     "react-markdown": "^9.0.3",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.3",
+    "react-scroll": "^1.9.2",
     "react-slider": "^1.3.3",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "socket.io-client": "^4.8.1",
     "styled-components": "^6.1.14",
-    "tailwindcss": "^4.0.1",
     "three": "^0.160.1"
   },
   "devDependencies": {
@@ -58,11 +63,15 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^5.0.0-beta.7",
     "eslint": "^9.17.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.4",
     "vite": "^6.0.5"
   }
 }

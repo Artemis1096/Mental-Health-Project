@@ -2,31 +2,30 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Features/User/UserSlice";
+import { UseAuthContext } from "../Context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
+import { FaGoogle } from "react-icons/fa";
 
+import bg from "../Assets/signUpbg.jpg";
 import axios from "axios";
 import useGoogleAuth from "../Hooks/useGoogleAuthentication";
-import { UseAuthContext } from "../Context/AuthContext";
 
-import Button from "../Components/Button";
-import BackgroundVideo from "../Components/LoginPage/BackgroundVideo";
-
-import { FaGoogle } from "react-icons/fa";
+//Please add comment when adding or fixing anything in the code.
 
 function Login() {
   const [username, setUsername] = useState(undefined);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const authenticate = useGoogleAuth();
 
   const notifyError = (label) => toast.error(label);
   const notifySuccess = (label) => toast.success(label);
 
   const { setAuth } = UseAuthContext();
-
-  const authenticate = useGoogleAuth();
 
   const handleSubmitLogin = (e) => {
     e.preventDefault();
@@ -63,10 +62,16 @@ function Login() {
           dispatch(addUser(newUser));
 
           setAuth(newUser);
-        }, 3000);
+        }, 2000);
       } catch (error) {
         notifyError(error.response.data.error || error.response.data.message);
-        console.error("Login error:", error.response?.data || error.message);
+
+        if (
+          error.response?.data.message ===
+          "Account not verified, verify OTP and then try logging in!"
+        ) {
+          navigate("/register");
+        }
       } finally {
         setIsSubmitted(false);
       }
@@ -77,18 +82,24 @@ function Login() {
 
   return (
     <>
-      <div className="relative flex items-center justify-center min-h-screen bg-amber-100">
-        {/* Background Video */}
-        <BackgroundVideo />
-
+      <div className="relative flex items-center justify-center min-h-screen ">
+        <img
+          src={bg}
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+        />
         {/* Login Form */}
-        <div className="absolute bg-amber-200 p-8 rounded-2xl shadow-lg w-96 z-10 opacity-80">
+        <div className="absolute bg-purple-200 p-8 rounded-2xl shadow-lg w-96 z-10 opacity-80">
           <Toaster />
           <h1 className="text-5xl font-bold text-center mb-6 text-black permanent-marker-regular ">
             Login
           </h1>
 
-          <form className="space-y-4" onSubmit={handleSubmitLogin} autoComplete="off">
+          <form
+            className="space-y-4"
+            onSubmit={handleSubmitLogin}
+            autoComplete="off"
+          >
             <div className=" shadow-lg bg-amber-400 opacity-100  p-2 rounded-2xl">
               <div>
                 <label className="block text-black font-medium mb-1 rounded-md">
@@ -103,7 +114,9 @@ function Login() {
                 />
               </div>
               <div>
-                <h1 className="text-black text-center">OR</h1>
+                <h1 className="text-black text-center opacity-55 bg-amber-300 rounded-full mt-3">
+                  OR
+                </h1>
               </div>
               <div>
                 <label className="block text-black font-medium mb-1 rounded-md">

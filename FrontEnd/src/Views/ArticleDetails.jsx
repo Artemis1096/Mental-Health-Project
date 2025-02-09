@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 import axios from "axios";
-import bg from "../Assets/articlebg.jpg";
 import Loader from "../Components/Loader";
+import "../Styles/Articles.css";
 
 const ArticleDetails = () => {
   const user = useSelector((state) => state.user);
   const isAdmin = user?.User.userType === "admin";
-  // console.log(user.User.userType);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const ArticleDetails = () => {
           `http://localhost:8000/api/articles/${id}`,
           { withCredentials: true }
         );
-        console.log(response);
+
         setArticle(response.data._doc);
         setUpdatedTitle(response.data.title);
         setUpdatedContent(response.data.content);
@@ -76,7 +76,7 @@ const ArticleDetails = () => {
   if (loading) {
     return (
       <div>
-        <img src={bg} className="absolute h-full w-full" />
+        {/* <img src={bg} className="absolute h-full w-full" /> */}
         <Loader />
       </div>
     );
@@ -120,13 +120,11 @@ const ArticleDetails = () => {
       )}
 
       <div className="flex justify-between  z-30 ">
-        <img src={bg} className="absolute -z-10 h-full w-full " />
-
         <button
-          className="text-5xl shadow-2xl shadow-purple-200 mt-5 ml-10 bg-white p-2 rounded-md"
+          className="text-5xl bg-white p-2 rounded-md fixed top-3 ml-5 shadow z-50"
           onClick={() => navigate(-1)}
         >
-          🔙
+          <p className="back-navigate-btn">&larr;</p>
         </button>
 
         {isAdmin && (
@@ -165,6 +163,10 @@ const ArticleDetails = () => {
             {article?.title || "Untitled Article"}
           </h1>
 
+          <p className="text-gray-700 text-lg break-words mb-6">
+            {article?.content || "No content available"}
+          </p>
+
           <div className="flex flex-wrap gap-2 mb-4">
             {article?.category?.map((category, index) => (
               <span
@@ -175,10 +177,6 @@ const ArticleDetails = () => {
               </span>
             ))}
           </div>
-
-          <p className="text-gray-700 text-lg break-words mb-6">
-            {article?.content || "No content available"}
-          </p>
         </div>
       </div>
     </>

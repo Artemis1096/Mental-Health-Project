@@ -14,7 +14,15 @@ import axios from "axios";
 import "../Styles/Profile.css";
 
 // Register required components for Line Chart
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const MoodVisualization = () => {
   const [chartData, setChartData] = useState(null);
@@ -24,7 +32,10 @@ const MoodVisualization = () => {
   useEffect(() => {
     const fetchMoodData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/mood/get", { withCredentials: true });
+        const response = await axios.get("http://localhost:8000/api/mood/get", {
+          withCredentials: true,
+        });
+
         console.log("API Response:", response.data);
 
         if (!response.data || !response.data.moodData) {
@@ -32,6 +43,7 @@ const MoodVisualization = () => {
         }
 
         const moodData = response.data.moodData;
+
         if (moodData.length === 0) {
           throw new Error("No mood entries found");
         }
@@ -40,8 +52,10 @@ const MoodVisualization = () => {
         moodData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         // Extract dates and mood values
-        const labels = moodData.map(item => new Date(item.date).toLocaleDateString());
-        const moodValues = moodData.map(item => item.mood);
+        const labels = moodData.map((item) =>
+          new Date(item.date).toLocaleDateString()
+        );
+        const moodValues = moodData.map((item) => item.mood);
 
         // Set chart data
         setChartData({
@@ -76,26 +90,26 @@ const MoodVisualization = () => {
     plugins: {
       title: {
         display: true,
-        color: 'white', // Set title text color to white
+        color: "white", // Set title text color to white
       },
       tooltip: {
-        bodyColor: 'white', // Set tooltip text color to white
+        bodyColor: "white", // Set tooltip text color to white
       },
       legend: {
         labels: {
-          color: 'white', // Set legend labels color to white
+          color: "white", // Set legend labels color to white
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: 'white', // Set x-axis labels color to white
+          color: "white", // Set x-axis labels color to white
         },
       },
       y: {
         ticks: {
-          color: 'white', // Set y-axis labels color to white
+          color: "white", // Set y-axis labels color to white
         },
       },
     },
@@ -106,7 +120,9 @@ const MoodVisualization = () => {
       <h1 className="text-center text-white">Mood Trends Over Time</h1>
       {loading && <p>Loading...</p>}
       {error && <p className="text-white">{error}</p>}
-      {chartData && <Line className="text-white" data={chartData} options={options} />}
+      {chartData && (
+        <Line className="text-white" data={chartData} options={options} />
+      )}
     </div>
   );
 };

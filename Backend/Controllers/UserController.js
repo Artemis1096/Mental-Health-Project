@@ -11,13 +11,25 @@ import Journal from "../Models/journal.js";
 // returns the list of all users except the current user
 export const getUsers = async (req, res) => {
   try {
-    // const { id } = req.params; // Extract the user ID from request parameters
     const id = req.user._id;
+
+    // Fetch all friendships involving the current user
+    const friendships = await Friendship.find({
+      $or: [{ user1: id }, { user2: id }],
+      status: "accepted",
+    });
+
+    // Extract friend IDs
+    const friendIds = friendships.map((friendship) => 
+      friendship.user1.equals(id) ? friendship.user2 : friendship.user1
+    );
+
+    // Fetch users who are not the current user and not friends
     const users = await User.find({
-      _id: { $ne: id },
+      _id: { $nin: [...friendIds, id] }, // Exclude friends and the current user
       userType: { $ne: "admin" },
       isVerified: true,
-    }).select("-password"); // Exclude the given ID & password field
+    }).select("-password");
 
     res.status(200).json({ message: "success", data: users });
   } catch (error) {

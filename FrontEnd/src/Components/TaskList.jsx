@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../Styles/HomePage.css"
+import "../Styles/HomePage.css";
 
 const TaskList = () => {
   // State to store tasks, loading, error, new task data, and add-task status.
@@ -9,7 +9,7 @@ const TaskList = () => {
   const [error, setError] = useState(null);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [adding, setAdding] = useState(false);
-
+  
   // Fetch all tasks when the component mounts.
   useEffect(() => {
     fetchTasks();
@@ -32,7 +32,7 @@ const TaskList = () => {
     }
   };
 
-  // Mark a task as completed.
+  // Mark a task as completed and increase user EXP by 5.
   const completeTask = async (id) => {
     console.log(`Completing task: ${id}`);
     try {
@@ -41,7 +41,20 @@ const TaskList = () => {
         { status: "completed" },
         { withCredentials: true }
       );
-      fetchTasks();
+      // Update the local state to mark the task as completed.
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task._id === id ? { ...task, status: "completed" } : task
+        )
+      );
+
+      // Increase the user's EXP by 5.
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const userData = JSON.parse(storedUser);
+        userData.exp = (userData.exp || 0) + 5;
+        localStorage.setItem("user", JSON.stringify(userData));
+      }
     } catch (err) {
       console.error("Failed to update task", err);
       setError("Failed to update task");
@@ -55,7 +68,8 @@ const TaskList = () => {
       await axios.delete(`http://localhost:8000/api/tasks/${id}`, {
         withCredentials: true,
       });
-      fetchTasks();
+      // Update the tasks state by filtering out the deleted task.
+      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
     } catch (err) {
       console.error("Failed to delete task", err);
       setError("Failed to delete task");
@@ -68,12 +82,15 @@ const TaskList = () => {
     setAdding(true);
     try {
       // POST request to add a new task.
-      await axios.post("http://localhost:8000/api/tasks/create", newTask, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/tasks/create",
+        newTask,
+        { withCredentials: true }
+      );
+      // Append the new task to the local state.
+      setTasks((prevTasks) => [response.data, ...prevTasks]);
       // Clear the form fields after successful addition.
       setNewTask({ title: "", description: "" });
-      fetchTasks();
     } catch (err) {
       console.error("Failed to add task", err);
       setError("Failed to add task");
@@ -143,13 +160,7 @@ const TaskList = () => {
             <div className="flex-grow">
               <h3 className="text-lg font-bold">{task.title}</h3>
               <p className="text-white">{task.description}</p>
-              <p
-                className={`text-sm ${
-                  task.status === "completed" ? "text-white" : "text-white"
-                }`}
-              >
-                {task.status}
-              </p>
+              <p className="text-sm text-white">{task.status}</p>
             </div>
             <div className="flex gap-2">
               {task.status !== "completed" && (

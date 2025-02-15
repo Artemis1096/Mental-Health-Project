@@ -42,8 +42,8 @@ function Timer() {
   if (seconds < 10) seconds = "0" + seconds;
 
   return (
-    <div className="bg-color w-96 ml-5 pb-3 rounded-2xl shadow-2xl">
-      <div className="bg-color p-5 rounded-2xl shadow-4xl">
+    <div className="bg-color pb-3 rounded-2xl shadow-2xl w-56">
+      <div className="bg-color p-5 rounded-2xl shadow-4xl w-56">
         {/* Container to layer the progress bars */}
         <div style={{ position: "relative" }}>
           {/* Outer progress bar acting as a white border */}

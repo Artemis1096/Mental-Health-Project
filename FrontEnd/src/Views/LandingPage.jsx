@@ -6,7 +6,6 @@ import { Experience } from "../Components/HomePage/Experience";
 import { Overlay } from "../Components/HomePage/Overlay";
 import { usePlay } from "../Context/Play";
 import "../Styles/LandingPage.css";
-import MainContainer from "./MainContainer";
 
 function LandingPage() {
   const { play, end } = usePlay();

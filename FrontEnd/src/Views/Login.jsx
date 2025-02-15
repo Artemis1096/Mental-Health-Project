@@ -56,6 +56,7 @@ function Login() {
           name: res.data.name,
           email: res.data.email,
           userType: res.data.userType,
+          exp: res.data.exp
         };
         notifySuccess(res.data.message);
         setTimeout(() => {
@@ -82,16 +83,16 @@ function Login() {
 
   return (
     <>
-      <div className="relative flex items-center justify-center min-h-screen ">
-        <img
+      <div className="relative h-screen  overflow-y-auto flex items-center justify-center min-h-screen pl-16 ">
+        {/* <img
           src={bg}
           alt="Background"
           className="absolute inset-0 w-full h-full object-cover -z-10"
-        />
+        /> */}
         {/* Login Form */}
-        <div className="absolute bg-purple-200 p-8 rounded-2xl shadow-lg w-96 z-10 opacity-80">
+        <div className=" w-full max-w-sm m-10 p-6 mb-5 bg-purple-300 shadow-lg rounded-xl z-10 opacity-70">
           <Toaster />
-          <h1 className="text-5xl font-bold text-center mb-6 text-black permanent-marker-regular ">
+          <h1 className="text-2xl rounded-3xl font-bold text-center text-black mb-4 py-1 ">
             Login
           </h1>
 
@@ -100,7 +101,7 @@ function Login() {
             onSubmit={handleSubmitLogin}
             autoComplete="off"
           >
-            <div className=" shadow-lg bg-amber-400 opacity-100  p-2 rounded-2xl">
+            <div className="opacity-100 rounded-2xl">
               <div>
                 <label className="block text-black font-medium mb-1 rounded-md">
                   Enter your Username
@@ -114,12 +115,12 @@ function Login() {
                 />
               </div>
               <div>
-                <h1 className="text-black text-center opacity-55 bg-amber-300 rounded-full mt-3">
+                <h1 className="text-black text-center rounded-full mt-2">
                   OR
                 </h1>
               </div>
               <div>
-                <label className="block text-black font-medium mb-1 rounded-md">
+                <label className="block text-black font-medium rounded-md">
                   Enter your Email
                 </label>
                 <input
@@ -156,7 +157,7 @@ function Login() {
             </button>
           </form>
 
-          <div className="text-center text-black mt-4">OR</div>
+          <div className="text-center text-black mt-2 mb-2">OR</div>
 
           <button onClick={authenticate} className="w-full yoyo  ">
             <div className="my-3">

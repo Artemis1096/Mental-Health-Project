@@ -91,7 +91,7 @@ function Login() {
         {/* Login Form */}
         <div className="absolute bg-purple-200 p-8 rounded-2xl shadow-lg w-96 z-10 opacity-80">
           <Toaster />
-          <h1 className="text-5xl font-bold text-center mb-6 text-black permanent-marker-regular ">
+          <h1 className="text-5xl font-bold text-center mb-6 text-black  ">
             Login
           </h1>
 
@@ -100,7 +100,7 @@ function Login() {
             onSubmit={handleSubmitLogin}
             autoComplete="off"
           >
-            <div className=" shadow-lg bg-amber-400 opacity-100  p-2 rounded-2xl">
+            <div className=" shadow-lg  opacity-100  p-2 rounded-2xl">
               <div>
                 <label className="block text-black font-medium mb-1 rounded-md">
                   Enter your Username
@@ -114,7 +114,7 @@ function Login() {
                 />
               </div>
               <div>
-                <h1 className="text-black text-center opacity-55 bg-amber-300 rounded-full mt-3">
+                <h1 className="text-black text-center opacity-55  rounded-full mt-3">
                   OR
                 </h1>
               </div>

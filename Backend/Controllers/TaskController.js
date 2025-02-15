@@ -113,10 +113,10 @@ export const assignDailyTask = async () => {
                     status: "pending",
                     date: today, // Store only date
                 });
-                console.log(`Task assigned to user ${user._id}`);
+                // console.log(`Task assigned to user ${user._id}`);
             }
         }
-        console.log("Daily tasks assigned (if not already present)");
+        // console.log("Daily tasks assigned (if not already present)");
     } catch (error) {    
         console.error("Error assigning daily task:", error.message);
     }

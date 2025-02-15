@@ -4,13 +4,14 @@ import Article from '../Models/article.js';
 export const create = async (req, res) => {
     try {
         const {title, content, image, category} = req.body;
+        const categories = category.split(",");
         const newArticle = new Article({
             title,
             content,
-            image,
-            category
+            image
         });
         if(newArticle){
+            newArticle.category = categories;
             await newArticle.save();
             res.status(200).json({message: 'Article created successfully', newArticle});
         }else{

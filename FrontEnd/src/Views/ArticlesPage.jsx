@@ -5,6 +5,7 @@ import axios from "axios";
 import "../Styles/Articles.css"
 import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import bg from "../Assets/articlebg.jpg";
+import Loader from '../Components/Loader.jsx';
 import ParallaxShowcase from "./ParallaxShowcase";
 import CategoryDropdown from "../Components/ArticlesPage/CategoryDropdown";
 

@@ -33,8 +33,8 @@ const QuoteReel = () => {
   }, [articles]); // ✅ Depend on `articles` to avoid errors
 
   return (
-    <div className="w-full h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl p-8 overflow-hidden relative h-96 flex justify-center items-center text-gray-800">
+    <div className="w-full h-screen flex items-center justify-center p-6 mb-5">
+      <div className="w-full max-w-4xl bg-color rounded-2xl shadow-2xl p-8 overflow-hidden relative h-full flex justify-center items-center text-gray-800">
         <AnimatePresence mode="wait">
           {articles.length > 0 && (
             <motion.div
@@ -48,7 +48,7 @@ const QuoteReel = () => {
               <img
                 src={articles[currentIndex].image}
                 alt="Quote visual"
-                className="w-full h-56 object-cover rounded-xl shadow-md mb-6 border-4 border-indigo-300"
+                className="w-full h-fit object-cover rounded-xl shadow-md mb-6 border-4 border-indigo-300 p-2"
               />
               <p className="text-gray-900 text-2xl font-semibold italic mb-4">
                 “{articles[currentIndex].title}”

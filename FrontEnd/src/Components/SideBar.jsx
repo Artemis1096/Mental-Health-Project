@@ -55,13 +55,6 @@ function SideBar({ open, setOpen }) {
       link: "articles",
       action: "",
     },
-    // {
-    //   id: 2,
-    //   title: "About Us",
-    //   symbol: <LuMailQuestion />,
-    //   link: "aboutus",
-    //   action: "",
-    // },
     { id: 2, title: "Profile", symbol: <CgProfile />, link: "profile" },
     { id: 3, title: "Ai Chat", symbol: <GiArtificialHive />, link: "aichat" },
     {

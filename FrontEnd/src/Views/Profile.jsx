@@ -44,6 +44,7 @@ const Profile = () => {
           name: res.data.data.name,
           email: res.data.data.email,
           userType: res.data.data.userType,
+          exp: action.payload.exp
         };
 
         dispatch(addUser(newUser));

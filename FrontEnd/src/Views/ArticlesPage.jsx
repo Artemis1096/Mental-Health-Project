@@ -142,7 +142,7 @@ function ArticlesPage() {
 
   return (
     <>
-      <ParallaxShowcase />
+      {/* <ParallaxShowcase /> */}
       {/* <img
         src={bg}
         alt="Background"

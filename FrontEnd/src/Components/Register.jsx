@@ -152,7 +152,7 @@ function Register() {
           <Button
             label="Register"
             type="submit"
-            className="w-full bg-blue-900 "
+            className="w-full !bg-orange-900 hover:!bg-orange-700 text-white"
           />
         </form>
       ) : (

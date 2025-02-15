@@ -12,11 +12,11 @@ function SignUp() {
   return (
     <div className="relative h-screen  overflow-y-auto flex items-center justify-center min-h-screen pl-16 ">
       {/* Background Image */}
-      <img
+      {/* <img
         src={bg}
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover -z-10"
-      />
+      /> */}
 
       {/* SignUp Card */}
       <div className=" w-full max-w-sm m-10 p-6 mb-5 bg-purple-300 shadow-lg rounded-xl z-10 opacity-70">

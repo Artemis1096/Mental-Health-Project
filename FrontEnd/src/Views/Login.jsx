@@ -13,11 +13,13 @@ import useGoogleAuth from "../Hooks/useGoogleAuthentication";
 //Please add comment when adding or fixing anything in the code.
 
 function Login() {
+  //all necessary states the are required in this section
   const [username, setUsername] = useState(undefined);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  //navigation or dispatch functionality
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authenticate = useGoogleAuth();
@@ -40,6 +42,7 @@ function Login() {
     setIsSubmitted(true);
   };
 
+  //useEffect for login of the user
   useEffect(() => {
     if (!isSubmitted) return;
 

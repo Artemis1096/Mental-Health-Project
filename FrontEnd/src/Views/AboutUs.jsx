@@ -1,3 +1,4 @@
+//importing background image
 import about from "../Assets/about.png";
 
 //Please add comment when adding or fixing anything in the code.

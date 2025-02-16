@@ -1,78 +1,92 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseAuthContext } from "../Context/AuthContext";
-import "../Styles/FriendsList.css"
+import "../Styles/FriendsList.css";
 
 import Loader from "../Components/Loader";
 
 //Please add comment when adding or fixing anything in the code.
 
 const FriendsList = () => {
+  // State to store the list of friends
   const [users, setUsers] = useState([]);
+  // State to manage loading state
   const [loading, setLoading] = useState(true);
+  // State to store error messages
   const [error, setError] = useState(null);
+  // Get authentication context
   const { auth } = UseAuthContext();
 
+  // Extract current user ID from auth context
   const userId = auth.id;
   let navigate = useNavigate();
 
   useEffect(() => {
+    // Function to fetch the list of friends from the backend
     const fetchUsers = async () => {
       try {
         const res = await fetch(`http://localhost:8000/api/friends/${userId}`, {
           credentials: "include",
         });
         const data = await res.json();
-        setUsers(data.friends || []);
+        setUsers(data.friends || []); // Set friends list if available
       } catch (err) {
-        setError("Failed to fetch users.");
+        setError("Failed to fetch users."); // Handle errors
         console.error("Error fetching users:", err);
       } finally {
-        setLoading(false);
+        setLoading(false); // Stop loading once request completes
       }
     };
     if (userId) {
-      fetchUsers();
+      fetchUsers(); // Fetch users only if userId is available
     }
-  }, [userId]);
+  }, [userId]); // Runs whenever userId changes
 
+  // Function to remove a friend from the list
   const removeFriend = async (friendId) => {
     try {
       const res = await fetch("http://localhost:8000/api/friends/remove", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ userId, friendId }),
+        body: JSON.stringify({ userId, friendId }), // Send user and friend ID
       });
       const data = await res.json();
-      alert(data.message);
-      setUsers((prevUsers) =>
-        prevUsers.filter((user) => user._id !== friendId)
+      alert(data.message); // Show response message
+      setUsers(
+        (prevUsers) => prevUsers.filter((user) => user._id !== friendId) // Remove friend from UI
       );
     } catch (err) {
       console.error(
         "Error removing friend:",
         err.response ? err.response.data : err.message
       );
-      alert("Failed to remove friend.");
+      alert("Failed to remove friend."); // Show error message
     }
   };
 
+  // Show loader while fetching data
   if (loading) {
     return <Loader />;
   }
 
   return (
     <div className="friends-list-container">
+      {/* Page title */}
       <h2 className="friends-title">Your Friends</h2>
+
+      {/* Display error message if there's an error */}
       {error && <div className="error-message">{error}</div>}
+
       <div className="friends-content">
         {users.length > 0 ? (
+          // Show friends in a grid layout
           <div className="friends-grid">
             {users.map((user) => (
               <div key={user._id} className="friend-card">
                 <span className="friend-name">{user.name}</span>
                 <div className="friend-actions">
+                  {/* Button to start chat with a friend */}
                   <button
                     className="action-button btn-color"
                     onClick={() =>
@@ -83,6 +97,7 @@ const FriendsList = () => {
                   >
                     Chat
                   </button>
+                  {/* Button to remove a friend */}
                   <button
                     className="action-button btn-color-r"
                     onClick={() => removeFriend(user._id)}
@@ -94,11 +109,14 @@ const FriendsList = () => {
             ))}
           </div>
         ) : (
+          // Show message when no friends are found
           <div className="no-friends-message">
             No friends found. Add some friends to get started!
           </div>
         )}
       </div>
+
+      {/* Inline CSS for styling */}
       <style>{`
         .friends-list-container {
           max-width: 800px;

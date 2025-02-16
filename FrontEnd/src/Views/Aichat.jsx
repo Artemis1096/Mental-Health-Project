@@ -1,20 +1,25 @@
-import "../Styles/Aichat.css";
+import "../Styles/Aichat.css"; // Importing CSS file for styling
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react"; // Importing necessary hooks
+import axios from "axios"; // Importing axios for API requests
+import ReactMarkdown from "react-markdown"; // Importing ReactMarkdown for rendering markdown content
 
-import axios from "axios";
-import ReactMarkdown from "react-markdown";
-
-//Please add comment when adding or fixing anything in the code.
-
+// Aichat component - Manages chat history and AI responses
 function Aichat() {
+  // State to manage chat history
   const [chatHistory, setChatHistory] = useState([]);
+  // State to manage user input question
   const [question, setQuestion] = useState("");
+  // State to handle AI-generated answer (setAnswer is not used here)
   const [setAnswer] = useState("");
+  // State to manage loading state when AI is generating an answer
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
+  // State to manage whether user has submitted a question (for auto-scroll)
   const [userSubmitted, setUserSubmitted] = useState(false);
+  // Reference to the chat container for auto-scrolling
   const chatContainerRef = useRef(null);
 
+  // Effect to scroll down to the latest message when a new message is added
   useEffect(() => {
     if (chatContainerRef.current && userSubmitted) {
       chatContainerRef.current.scrollTop =
@@ -23,21 +28,24 @@ function Aichat() {
     }
   }, [chatHistory]);
 
+  // Function to handle generating AI response
   async function generateAnswer(e) {
     e.preventDefault();
-    if (!question.trim()) return;
+    if (!question.trim()) return; // Prevent empty submissions
 
     setGeneratingAnswer(true);
     setUserSubmitted(true); // Enable scrolling only when the user submits
     const currentQuestion = question;
-    setQuestion("");
+    setQuestion(""); // Clear input field after submitting
 
+    // Add user's question to chat history
     setChatHistory((prev) => [
       ...prev,
       { type: "question", content: currentQuestion },
     ]);
 
     try {
+      // API call to Gemini AI model to generate response
       const response = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
           import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT
@@ -48,18 +56,21 @@ function Aichat() {
         },
       });
 
+      // Extract AI-generated response from API response
       const aiResponse = response.data.candidates[0].content.parts[0].text;
+
+      // Update chat history with AI response
       setChatHistory((prev) => [
         ...prev,
         { type: "answer", content: aiResponse },
       ]);
       setAnswer(aiResponse);
     } catch (error) {
-      console.log(error);
+      console.log(error); // Log error for debugging
       setAnswer("Sorry - Something went wrong. Please try again!");
     }
 
-    setGeneratingAnswer(false);
+    setGeneratingAnswer(false); // Reset loading state
   }
 
   return (
@@ -72,11 +83,12 @@ function Aichat() {
           </h1>
         </header>
 
-        {/* Scrollable Chat Container - Updated className */}
+        {/* Scrollable Chat Container */}
         <div
           ref={chatContainerRef}
           className="h-full chat-container flex-1 mb-7 rounded-lg bg-white shadow-lg p-4 hide-scrollbar"
         >
+          {/* Display introductory message if no chat history exists */}
           {chatHistory.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center p-6">
               <div className="bg-blue-50 rounded-xl p-8 max-w-2xl">
@@ -109,6 +121,7 @@ function Aichat() {
             </div>
           ) : (
             <>
+              {/* Render chat history */}
               {chatHistory.map((chat, index) => (
                 <div
                   key={index}
@@ -131,6 +144,7 @@ function Aichat() {
               ))}
             </>
           )}
+          {/* Display loading animation while generating an answer */}
           {generatingAnswer && (
             <div className="text-left">
               <div className="inline-block bg-black p-3 rounded-lg animate-pulse">
@@ -140,7 +154,7 @@ function Aichat() {
           )}
         </div>
 
-        {/* Fixed Input Form */}
+        {/* Input Form for User's Question */}
         <form
           onSubmit={generateAnswer}
           className="bg-color rounded-lg shadow-lg p-4"
@@ -152,7 +166,6 @@ function Aichat() {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder="Ask anything..."
-              rows="2"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();

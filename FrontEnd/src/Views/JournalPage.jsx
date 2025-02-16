@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import Note from "../Components/Journal/Note";
 import axios from "axios";
-import "../Styles/Journal.css"
+import "../Styles/Journal.css";
 
 const JournalPage = () => {
+  //all necessary states needed in this section
   const [isExpandedId, setIsExpandedId] = useState(null);
   const [newNote, setNewNote] = useState({ title: "", content: "" });
   const [journals, setJournals] = useState([]);
@@ -15,6 +16,7 @@ const JournalPage = () => {
 
   const userId = user.User.id;
 
+  //useEffect to fetch all user's journals
   useEffect(() => {
     const fetchJournals = async () => {
       try {
@@ -30,6 +32,7 @@ const JournalPage = () => {
     fetchJournals();
   }, [userId, sortOrder, journals]);
 
+  //function to sort the journals according to date
   const sortJournalsByDate = (journals, order) => {
     return [...journals].sort((a, b) => {
       return order === "asc"
@@ -44,6 +47,7 @@ const JournalPage = () => {
   const handleToggle = (id) =>
     setIsExpandedId((prevId) => (prevId === id ? null : id));
 
+  //function to delete a journal entry.
   const onDelete = async (id) => {
     setJournals((prev) => prev.filter((note) => note.id !== id));
 
@@ -62,7 +66,7 @@ const JournalPage = () => {
   const handleInputChange = (e) => {
     setNewNote((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+  //function to add a journal entry
   const handleAddNote = async (e) => {
     e.preventDefault();
     if (newNote.title && newNote.content) {
@@ -92,9 +96,7 @@ const JournalPage = () => {
           <h1 className="text-5xl font-bold text-white mb-4">
             Personal Journal
           </h1>
-          <p className="text-white">
-            Capture your thoughts and memories
-          </p>
+          <p className="text-white">Capture your thoughts and memories</p>
         </div>
 
         {/* New Entry Section */}
@@ -142,9 +144,7 @@ const JournalPage = () => {
 
         {/* Entries Section */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold text-white">
-            Your Entries
-          </h2>
+          <h2 className="text-2xl font-semibold text-white">Your Entries</h2>
           <button
             onClick={toggleSortOrder}
             className="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-black rounded-xl shadow-md hover:shadow-lg transition-all duration-300"

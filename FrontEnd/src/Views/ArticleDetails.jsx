@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import axios from "axios";
 import Loader from "../Components/Loader";
 import "../Styles/Articles.css";
 
 const ArticleDetails = () => {
+  // Get user information from Redux store
   const user = useSelector((state) => state.user);
   const isAdmin = user?.User.userType === "admin";
 
+  // Get article ID from URL parameters
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // State variables for article data, update mode, loading, and error handling
   const [article, setArticle] = useState(null);
   const [isUpdate, setIsUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,7 @@ const ArticleDetails = () => {
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
 
+  // Fetch article data when the component mounts
   useEffect(() => {
     const fetchArticle = async () => {
       try {
@@ -28,6 +31,7 @@ const ArticleDetails = () => {
           { withCredentials: true }
         );
 
+        // Set article state and initialize update fields
         setArticle(response.data._doc);
         setUpdatedTitle(response.data.title);
         setUpdatedContent(response.data.content);
@@ -42,17 +46,19 @@ const ArticleDetails = () => {
     fetchArticle();
   }, [id]);
 
+  // Handle article deletion (only accessible to admins)
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8000/api/articles/delete/${id}`, {
         withCredentials: true,
       });
-      navigate(-1);
+      navigate(-1); // Navigate back after deletion
     } catch (error) {
       console.error("Error deleting article:", error);
     }
   };
 
+  // Handle article update
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -62,6 +68,8 @@ const ArticleDetails = () => {
         updatedInfo,
         { withCredentials: true }
       );
+
+      // Update local state after a successful update
       setArticle((prev) => ({
         ...prev,
         title: updatedTitle,
@@ -73,23 +81,25 @@ const ArticleDetails = () => {
     }
   };
 
+  // Show loading screen while fetching data
   if (loading) {
     return (
       <div>
-        {/* <img src={bg} className="absolute h-full w-full" /> */}
         <Loader />
       </div>
     );
   }
 
+  // Show error message if fetching fails
   if (error) {
     return <div className="text-center text-red-500">{error}</div>;
   }
 
   return (
     <>
+      {/* Update modal */}
       {isUpdate && (
-        <div className="fixed top-0 left-0 w-full h-full  bg-opacity-80 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-full h-full bg-opacity-80 flex justify-center items-center z-50">
           <div className="bg-purple-500 rounded-2xl p-6 w-full max-w-lg">
             <h1 className="text-black mb-4">Updating this article</h1>
             <form onSubmit={handleUpdate}>
@@ -119,7 +129,8 @@ const ArticleDetails = () => {
         </div>
       )}
 
-      <div className="flex justify-between  z-30 ">
+      {/* Navigation buttons */}
+      <div className="flex justify-between z-30">
         <button
           className="text-5xl bg-white p-2 rounded-md fixed top-3 ml-5 shadow z-50"
           onClick={() => navigate(-1)}
@@ -127,6 +138,7 @@ const ArticleDetails = () => {
           <p className="back-navigate-btn">&larr;</p>
         </button>
 
+        {/* Admin controls: delete and update buttons */}
         {isAdmin && (
           <div>
             <button
@@ -145,8 +157,10 @@ const ArticleDetails = () => {
         )}
       </div>
 
+      {/* Article details */}
       <div className="max-w-4xl h-screen overflow-y-auto mx-auto my-8 px-8 py-12 bg-purple-200 rounded-lg shadow-lg">
         <div className="h-svh overflow-y-auto">
+          {/* Article image */}
           {article?.image ? (
             <img
               src={article.image}
@@ -159,7 +173,8 @@ const ArticleDetails = () => {
             </div>
           )}
 
-          <h1 className="text-3xl font-semibold text-gray-900 mb-4 break-words ">
+          {/* Article title and content */}
+          <h1 className="text-3xl font-semibold text-gray-900 mb-4 break-words">
             {article?.title || "Untitled Article"}
           </h1>
 
@@ -167,6 +182,7 @@ const ArticleDetails = () => {
             {article?.content || "No content available"}
           </p>
 
+          {/* Article categories */}
           <div className="flex flex-wrap gap-2 mb-4">
             {article?.category?.map((category, index) => (
               <span

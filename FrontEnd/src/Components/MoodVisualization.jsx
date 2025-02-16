@@ -87,9 +87,11 @@ const MoodVisualization = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false, // Allow responsive height control via CSS
     plugins: {
       title: {
         display: true,
+        text: "Mood Trends Over Time",
         color: "white", // Set title text color to white
       },
       tooltip: {
@@ -116,7 +118,7 @@ const MoodVisualization = () => {
   };
 
   return (
-    <div className="w-full h-xl mt-5 text-white p-2 chart-bg rounded-lg">
+    <div className="w-full h-[300px] md:h-[400px] mt-5 text-white p-2 chart-bg rounded-lg">
       <h1 className="text-center text-white">Mood Trends Over Time</h1>
       {loading && <p>Loading...</p>}
       {error && <p className="text-white">{error}</p>}

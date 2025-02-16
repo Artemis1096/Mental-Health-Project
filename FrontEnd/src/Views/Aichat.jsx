@@ -1,18 +1,15 @@
 import "../Styles/Aichat.css"; // Importing CSS file for styling
 
-import { useState, useRef, useEffect } from "react"; // Importing necessary hooks
-import axios from "axios"; // Importing axios for API requests
-import ReactMarkdown from "react-markdown"; // Importing ReactMarkdown for rendering markdown content
+import { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import ReactMarkdown from "react-markdown";
 
-// Aichat component - Manages chat history and AI responses
 function Aichat() {
   // State to manage chat history
   const [chatHistory, setChatHistory] = useState([]);
   // State to manage user input question
   const [question, setQuestion] = useState("");
-  // State to handle AI-generated answer (setAnswer is not used here)
-  const [setAnswer] = useState("");
-  // State to manage loading state when AI is generating an answer
+  const [answer, setAnswer] = useState("");
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
   // State to manage whether user has submitted a question (for auto-scroll)
   const [userSubmitted, setUserSubmitted] = useState(false);
@@ -24,7 +21,7 @@ function Aichat() {
     if (chatContainerRef.current && userSubmitted) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
-      setUserSubmitted(false); // Reset after scrolling once
+      setUserSubmitted(false);
     }
   }, [chatHistory]);
 
@@ -34,7 +31,7 @@ function Aichat() {
     if (!question.trim()) return; // Prevent empty submissions
 
     setGeneratingAnswer(true);
-    setUserSubmitted(true); // Enable scrolling only when the user submits
+    setUserSubmitted(true);
     const currentQuestion = question;
     setQuestion(""); // Clear input field after submitting
 
@@ -52,7 +49,7 @@ function Aichat() {
         }`,
         method: "post",
         data: {
-          contents: [{ parts: [{ text: question }] }],
+          contents: [{ parts: [{ text: currentQuestion }] }],
         },
       });
 
@@ -74,11 +71,11 @@ function Aichat() {
   }
 
   return (
-    <div className="inset-0 bg-color">
-      <div className="max-w-4xl mx-auto flex flex-col p-3">
+    <div className="min-h-screen bg-color flex flex-col">
+      <div className="max-w-4xl w-full mx-auto flex flex-col p-3">
         {/* Fixed Header */}
         <header className="text-center py-4">
-          <h1 className="text-4xl font-bold text-white transition-colors">
+          <h1 className="text-2xl md:text-4xl font-bold text-white transition-colors">
             Sera - Your Own AI Bot
           </h1>
         </header>
@@ -86,13 +83,13 @@ function Aichat() {
         {/* Scrollable Chat Container */}
         <div
           ref={chatContainerRef}
-          className="h-full chat-container flex-1 mb-7 rounded-lg bg-white shadow-lg p-4 hide-scrollbar"
+          className="flex-1 mb-7 rounded-lg bg-white shadow-lg p-4 overflow-auto max-h-[60vh] md:max-h-[70vh] hide-scrollbar"
         >
           {/* Display introductory message if no chat history exists */}
           {chatHistory.length === 0 ? (
             <div className="flex flex-col items-center justify-center text-center p-6">
-              <div className="bg-blue-50 rounded-xl p-8 max-w-2xl">
-                <h2 className="text-2xl font-bold text-black mb-4">
+              <div className="bg-blue-50 rounded-xl p-8 max-w-full sm:max-w-2xl">
+                <h2 className="text-xl md:text-2xl font-bold text-black mb-4">
                   Chat with Sera!
                 </h2>
                 <p className="text-gray-600 mb-4">
@@ -130,15 +127,13 @@ function Aichat() {
                   }`}
                 >
                   <div
-                    className={`inline-block max-w-[80%] p-3 rounded-lg hide-scrollbar ${
+                    className={`inline-block max-w-[80%] p-3 rounded-lg ${
                       chat.type === "question"
                         ? "bg-purple-400 text-white rounded-br-none"
                         : "bg-gray-400 text-white rounded-bl-none"
                     }`}
                   >
-                    <ReactMarkdown className="hide-scrollbar">
-                      {chat.content}
-                    </ReactMarkdown>
+                    <ReactMarkdown>{chat.content}</ReactMarkdown>
                   </div>
                 </div>
               ))}
@@ -154,12 +149,12 @@ function Aichat() {
           )}
         </div>
 
-        {/* Input Form for User's Question */}
+        {/* Fixed Input Form */}
         <form
           onSubmit={generateAnswer}
           className="bg-color rounded-lg shadow-lg p-4"
         >
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               required
               className="flex-1 border border-gray-300 rounded p-3 focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
@@ -172,10 +167,10 @@ function Aichat() {
                   generateAnswer(e);
                 }
               }}
-            ></input>
+            />
             <button
               type="submit"
-              className={`px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors ${
+              className={`w-full sm:w-auto px-4 md:px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors ${
                 generatingAnswer ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={generatingAnswer}

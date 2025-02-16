@@ -8,6 +8,7 @@ import bg from "../Assets/bgx.jpeg";
 import QuoteReel from "./QuotesReel";
 import TaskList from "../Components/TaskList";
 import profile from "../Assets/ProfileVideo.gif";
+import ExpBar from "../Components/ExpBar";
 
 // Please add comments when adding or fixing anything in the code.
 
@@ -83,15 +84,15 @@ const Homepage = () => {
   }
 
   return (
-    <div className="relative flex flex-col min-h-screen pr-10 bg-cyan-700">
-      {/* Background image */}
-      <div className="w-full h-full">
-        <img
+    <div className="relative flex flex-col min-h-screen pr-10">
+      {/* Background image rendered with an img tag */}
+      <div className=" w-full h-full ">
+        {/* <img
           src={bg}
           alt="Background"
           className="absolute w-full h-full rounded-2xl"
           loading="lazy"
-        />
+        /> */}
       </div>
 
       <div className="relative z-10 bg-opacity-80 min-h-screen">
@@ -100,23 +101,20 @@ const Homepage = () => {
           <MoodComponent onMoodSubmit={() => setShowMoodComponent(false)} />
         )}
 
-        {/* Welcome section */}
-        <div className="w-full mt-25">
-          <h1 className="text-center drop-shadow-2xl text-white welcome-text text-8xl">
+        <div className=" w-full mt-25">
+          <h1 className="text-center drop-shadow-2xl text-white welcome-text text-5xl sm:text-8xl">
             Welcome
           </h1>
         </div>
 
-        {/* Display user's name */}
-        <div className="h-84 w-full mt-20 rounded-2xl ml-5 permanent-marker-regular">
-          <h1 className="text-center text-cyan-900 text-9xl drop-shadow-2xl">
+        <div className="h-84 w-full mt-20 mb-5 rounded-2xl  ml-6 permanent-marker-regular">
+          <h1 className="text-center text-white text-4xl md:text-9xl sm:text-6xl drop-shadow-2xl">
             {userData.name || "Guest"}
           </h1>
         </div>
-
-        {/* Profile section */}
-        <div className="mb-10">
-          <div className="profile-card shadow-2xl rounded-2xl p-6 w-full max-w-md text-center">
+        <div className="mb-15 ml-6">
+          {/* Profile Card */}
+          <div className="profile-card shadow-2xl rounded-2xl p-8 w-full max-w-md text-center">
             <img
               src={profile}
               alt="Profile"
@@ -125,6 +123,9 @@ const Homepage = () => {
             <h2 className="text-2xl font-bold text-white mt-4">
               {userData.name || "User"}
             </h2>
+            <h3>
+              <ExpBar />
+            </h3>
           </div>
         </div>
 
@@ -148,17 +149,11 @@ const Homepage = () => {
 
         {/* Article Section */}
         <div className="article-section">
-          <h1 className="text-white text-7xl text-center">Latest Articles</h1>
+          <h1 className="text-white text-7xl mb-5 mt-5 text-center">
+            Latest Articles
+          </h1>
           <QuoteReel />
         </div>
-
-        {/* Placeholder divs for additional content */}
-        <div className="h-96 w-full"></div>
-        <div className="h-96 w-full"></div>
-        <div className="h-96 w-full"></div>
-        <div className="h-96 w-full"></div>
-        <div className="h-96 w-full"></div>
-        <div className="h-96 w-full"></div>
       </div>
     </div>
   );

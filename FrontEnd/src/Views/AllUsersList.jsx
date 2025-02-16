@@ -1,11 +1,10 @@
 import "../Styles/FriendsList.css"; // Importing CSS for styling
 
-import { useState, useEffect } from "react"; // Importing necessary React hooks
-
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../Components/Loader"; // Importing Loader component
 
-// Please add a comment when adding or fixing anything in the code.
+// Please add comment when adding or fixing anything in the code.
 
 function AllUsersList() {
   // State for storing user data
@@ -109,24 +108,24 @@ function AllUsersList() {
   if (error) return <p className="text-center text-red-600">{error}</p>; // Show error message if fetching fails
 
   return (
-    <div className="p-4 bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200 dark:from-black dark:via-purple-950 h-full dark:to-black">
+    <div className="p-4 bg-color h-full dark:to-black">
       <h1 className="text-center text-5xl py-5">Find Your Soulmates</h1>
 
       {/* Main Container */}
-      <div className="flex gap-6 h-vh friend-main-container shadow-2xl border-1 rounded-xl p-6">
+      <div className="flex flex-col md:flex-row gap-6 h-vh friend-main-container shadow-2xl border-1 rounded-xl p-6">
         {/* Users List */}
-        <div className="w-1/2 bg-white p-5 rounded-lg shadow-md">
-          {/* Search Bar */}
-          <div className="w-full flex border-1 rounded-lg text-b !border-purple-500 justify-center mb-4">
-            <h1 className="text-4xl">🔍</h1>
+        <div className="w-full md:w-1/2 bg-white p-5 rounded-lg shadow-md">
+          {/* Responsive Search Bar */}
+          <div className="w-full flex items-center gap-2 mb-4">
+            {/* Changed fixed width "w-96" to "w-full" so the input fills available space */}
             <input
               type="search"
-              className="w-96 p-3 border rounded-md text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-3 border rounded-md text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
               placeholder="Search users..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <h1 className="text-4xl">🔍</h1>
+            <span className="text-2xl sm:text-4xl mt-1">🔍</span>
           </div>
           <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">
             All Users
@@ -158,7 +157,7 @@ function AllUsersList() {
         </div>
 
         {/* Friend Requests List */}
-        <div className="w-1/2 bg-white p-5 rounded-lg shadow-md">
+        <div className="w-full md:w-1/2 bg-white p-5 rounded-lg shadow-md">
           <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">
             Friend Requests
           </h2>
@@ -175,13 +174,13 @@ function AllUsersList() {
                     </span>
                     <div className="flex gap-2">
                       <button
-                        className="px-3 py-1 !bg-green-600 text-white rounded-md hover:!bg-green-700 transition"
+                        className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
                         onClick={() => acceptFriendRequest(request._id)}
                       >
                         Accept
                       </button>
                       <button
-                        className="px-3 py-1 !bg-red-600 text-white rounded-md hover:!bg-red-700 transition"
+                        className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
                         onClick={() => declineFriendRequest(request._id)}
                       >
                         Decline

@@ -5,6 +5,7 @@ import axios from "axios";
 import "../Styles/Articles.css";
 import ArticleCard from "../Components/ArticlesPage/ArticleCard";
 import bg from "../Assets/articlebg.jpg";
+import Loader from '../Components/Loader.jsx';
 import ParallaxShowcase from "./ParallaxShowcase";
 import CategoryDropdown from "../Components/ArticlesPage/CategoryDropdown";
 import Loader from "../Components/Loader";
@@ -156,11 +157,16 @@ function ArticlesPage() {
   }
 
   return (
-    <div>
-      <ParallaxShowcase />
-
-      {/* Page Title */}
-      <h1 className="text-5xl font-bold text-center py-4 mt-5">Articles</h1>
+    <>
+      {/* <ParallaxShowcase /> */}
+      {/* <img
+        src={bg}
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover -z-10"
+      /> */}
+      <h1 className="text-5xl font-bold text-center py-4 mt-5">
+        Articles
+      </h1>
 
       {/* Search & Filter Section */}
       <div className="flex justify-center gap-4 my-4">

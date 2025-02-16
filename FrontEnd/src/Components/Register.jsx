@@ -76,7 +76,7 @@ function Register() {
       <Toaster />
       {!otpFlag ? (
         <form
-          className="space-y-3 p-4 w-full bg-orange-200 shadow rounded-xl  h-96 overflow-y-scroll "
+          className="space-y-3 p-4 w-full shadow rounded-xl  h-96 overflow-y-scroll "
           onSubmit={handleSubmitRegister}
         >
           <div>
@@ -152,7 +152,7 @@ function Register() {
           <Button
             label="Register"
             type="submit"
-            className="w-full bg-blue-900 "
+            className="w-full !bg-orange-900 hover:!bg-orange-700 text-white"
           />
         </form>
       ) : (

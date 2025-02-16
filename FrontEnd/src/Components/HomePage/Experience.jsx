@@ -60,9 +60,8 @@ Have a seat and enjoy the ride!`,
           curvePoints[2].y,
           curvePoints[2].z
         ),
-        title: "Services",
-        subtitle: `Do you want a relax?
-You have choosen the best place!`,
+        title: "",
+        subtitle: ``,
       },
       {
         cameraRailDist: -1,
@@ -71,8 +70,8 @@ You have choosen the best place!`,
           curvePoints[3].y,
           curvePoints[3].z
         ),
-        title: "Fear of Flying?",
-        subtitle: `Our flight attendants will help you on your great journey`,
+        title: "",
+        subtitle: ``,
       },
       {
         cameraRailDist: 1.5,
@@ -81,8 +80,8 @@ You have choosen the best place!`,
           curvePoints[4].y,
           curvePoints[4].z - 12
         ),
-        title: "Movies",
-        subtitle: `We provide a large selection of medias, we highly recommend you Porco Rosso during the flight`,
+        title: "",
+        subtitle: ``,
       },
     ];
   }, []);

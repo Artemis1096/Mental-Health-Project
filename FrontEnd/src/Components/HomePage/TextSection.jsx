@@ -6,7 +6,7 @@ export const TextSection = ({ title, subtitle, ...props }) => {
     <group {...props}>
       {!!title && (
         <Text
-          color="white"
+          color="aqua"
           anchorX={"left"}
           anchorY="bottom"
           fontSize={0.52}
@@ -16,14 +16,14 @@ export const TextSection = ({ title, subtitle, ...props }) => {
         >
           {title}
           <meshStandardMaterial
-            color={"white"}
+            color={"aqua"}
             onBeforeCompile={fadeOnBeforeCompileFlat}
           />
         </Text>
       )}
 
       <Text
-        color="white"
+        color="aqua"
         anchorX={"left"}
         anchorY="top"
         fontSize={0.2}
@@ -32,7 +32,7 @@ export const TextSection = ({ title, subtitle, ...props }) => {
       >
         {subtitle}
         <meshStandardMaterial
-          color={"white"}
+          color={"aqua"}
           onBeforeCompile={fadeOnBeforeCompileFlat}
         />
       </Text>
